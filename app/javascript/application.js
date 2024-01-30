@@ -4,4 +4,4 @@ import "./controllers"
 import * as Bootstrap from "bootstrap"
 import Rails from "@rails/ujs"
 
-Rails.start()
+Rails.start()import * as bootstrap from "bootstrap"
