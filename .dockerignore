@@ -1,0 +1,9 @@
+tmp/
+log/
+public/system/
+.bundle/
+.DS_Store
+.env
+config/secrets.yml
+node_modules/
+webpack/
