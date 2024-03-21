@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  # Rails app service
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://db:5432/myapp_development
+    volumes:
+      - .:/app
+
+  # PostgreSQL service
+  db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: gighive
+      POSTGRES_PASSWORD: 6474
+      POSTGRES_DB: myapp_development

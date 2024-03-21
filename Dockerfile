@@ -1,5 +1,5 @@
 # Use the official Ruby 3.1 image as the base image
-FROM ruby:3.1
+FROM ruby:3.2
 
 # Set working directory
 WORKDIR /app
