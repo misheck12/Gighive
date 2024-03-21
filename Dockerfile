@@ -1,22 +1,38 @@
-# Use the official Ruby 3.1 image as the base image
-FROM ruby:3.2
+# Make sure it matches the Ruby version in .ruby-version and Gemfile
+ARG RUBY_VERSION=3.2.0
+FROM ruby:$RUBY_VERSION
 
-# Set working directory
-WORKDIR /app
+# Install libvips for Active Storage preview support
+RUN apt-get update -qq && \
+    apt-get install -y build-essential libvips bash bash-completion libffi-dev tzdata postgresql nodejs npm yarn && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/man
 
-# Install dependencies
-RUN apt-get update -qq && apt-get install -y nodejs npm
-RUN npm install -g yarn
+# Rails app lives here
+WORKDIR /rails
 
-# Install Rails and bundler
-RUN gem install rails -v '7.0.0'
+# Set production environment
+ENV RAILS_LOG_TO_STDOUT="1" \
+    RAILS_SERVE_STATIC_FILES="true" \
+    RAILS_ENV="production" \
+    BUNDLE_WITHOUT="development"
 
-# Copy Gemfile and install gems
+# Install application gems
 COPY Gemfile Gemfile.lock ./
 RUN bundle install
 
-# Copy the rest of the application code
+# Copy application code
 COPY . .
 
-# Start the Rails server
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# Precompile bootsnap code for faster boot times
+RUN bundle exec bootsnap precompile --gemfile app/ lib/
+
+# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+RUN SECRET_KEY_BASE_DUMMY=1 bundle exec rails assets:precompile
+
+# Entrypoint prepares the database.
+ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+
+# Start the server by default, this can be overwritten at runtime
+EXPOSE 3000
+CMD ["./bin/rails", "server"]
