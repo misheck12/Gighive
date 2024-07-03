@@ -7,3 +7,4 @@ User.create!(
     role: 'admin' # This depends on how your User model defines an admin
   )
   
+  
