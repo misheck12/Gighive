@@ -22,6 +22,7 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: misheck
   password: 6474
+  
 
 development:
   <<: *default
