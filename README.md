@@ -22,3 +22,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+rm config/credentials.yml.enc
+EDITOR=nano bin/rails credentials:edit
+
