@@ -1,7 +1,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create, :create_freelancer]
   before_action :configure_account_update_params, only: [:update]
-  before_action :ensure_admin, only: [:new_freelancer, :create_freelancer]
+  before_action :ensure_admin, only: [:new_freelancer, :create_freelancer, :destroy]
 
   # GET /resource/sign_up
   def new
@@ -38,6 +38,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
       set_minimum_password_length
       respond_with resource
     end
+  end
+
+  # DELETE /users/:id
+  def destroy
+    @user = User.find(params[:id])
+    if @user.destroy
+      flash[:notice] = 'User was successfully deleted.'
+    else
+      flash[:alert] = 'Error deleting user.'
+    end
+    redirect_to users_path
   end
 
   protected
