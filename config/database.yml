@@ -8,6 +8,9 @@ default: &default
   host: <%= ENV['POSTGRES_HOST'] %>
   port: 5432
 
+  username: postgres
+  password: 6474
+
 development:
   <<: *default
   database: video_development
