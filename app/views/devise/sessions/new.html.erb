@@ -39,6 +39,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden; /* This will prevent any overflow from the container */
+    padding: 1rem; /* Added padding for mobile responsiveness */
   }
 
   .login-form {
@@ -74,4 +75,20 @@
     background-color: #8d6e63; /* A darker, richer brown for the hover state */
     border-color: #8d6e63;
   }
+
+  @media (max-width: 768px) {
+    .login-form {
+      padding: 1.5rem; /* Adjust padding for smaller screens */
+    }
+
+    .form-control {
+      font-size: 1rem; /* Adjust font size for better readability on mobile */
+    }
+
+    .btn-primary {
+      font-size: 1rem; /* Adjust button size for mobile */
+    }
+  }
 </style>
+
+
