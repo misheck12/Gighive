@@ -23,7 +23,7 @@
       <% end %>
 
       <div class="form-group">
-        <%= f.submit "Log in", class: 'btn btn-primary btn-block' %>
+        <%= f.submit "Log in", class: 'btn btn-primary btn-block', data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Logging in..." } %>
       </div>
     <% end %>
 
@@ -40,6 +40,7 @@
     justify-content: center;
     overflow: hidden; /* This will prevent any overflow from the container */
     padding: 1rem; /* Added padding for mobile responsiveness */
+    background: linear-gradient(to bottom right, #FFD700, #1E90FF); /* Improved background with gradient */
   }
 
   .login-form {
@@ -89,6 +90,8 @@
       font-size: 1rem; /* Adjust button size for mobile */
     }
   }
+
+  .fa-spinner {
+    margin-right: 0.5rem;
+  }
 </style>
-
-
