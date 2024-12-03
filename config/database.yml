@@ -14,8 +14,8 @@ default: &default
 development:
   <<: *default
   database: video_development
-  username: <%= ENV['POSTGRES_USER'] %>
-  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  username: <%= ENV['postgres'] %>
+  password: <%= ENV['6474'] %>
 
 test:
   <<: *default
