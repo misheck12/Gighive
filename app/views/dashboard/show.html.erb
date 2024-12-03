@@ -192,53 +192,56 @@
       </div>
 
       <!-- Tasks Section -->
-      <% Task.statuses.keys.each do |status| %>
-        <div class="my-4">
-          <h5 class="text-primary mb-3">Your Tasks - <%= status.titleize %></h5>
-          <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-              <thead class="thead-dark">
-                <tr>
-                  <th>Title</th>
-                  <th>Description</th>
-                  <th>Budget</th>
-                  <th>Category</th>
-                  <th>Deadline</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% current_user.tasks_as_client.where(status: status).each do |task| %>
-                  <tr>
-                    <td><%= content_tag :span, task.title, class: 'btn-disabled text-black' %></td>
-                    <td><%= task.description %></td>
-                    <td><%= humanized_money_with_symbol(task.budget) %></td>
-                    <td><%= task.category %></td>
-                    <td><%= task.deadline.strftime('%b %d, %Y') %></td>
-                    <td><span class="badge <%= badge_color_for_status(task.status) %>"><%= task.status.titleize %></span></td>
-                    <td>
-                      <% if task.completed? %>
-                        <% if task.payment.nil? %>
-                          <%= link_to 'Pay', new_task_payment_path(task), class: 'btn btn-success btn-sm' %>
-                        <% elsif task.payment.rejected? %>
-                          <span class="badge badge-danger">Rejected</span>
-                          <%= link_to 'Pay Again', new_task_payment_path(task), class: 'btn btn-success btn-sm' %>
-                        <% elsif task.payment.approved? %>
-                          <%= link_to 'View', task_path(task), class: 'btn btn-primary btn-sm' %>
-                        <% end %>
-                      <% end %>
-                    </td>
-                  </tr>
+<% Task.statuses.keys.each do |status| %>
+  <div class="my-4">
+    <h5 class="text-primary mb-3">Your Tasks - <%= status.titleize %></h5>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Budget</th>
+            <th>Category</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% current_user.tasks_as_client.where(status: status).each do |task| %>
+            <tr>
+              <td><%= content_tag :span, task.title, class: 'btn-disabled text-black' %></td>
+              <td><%= task.description %></td>
+              <td><%= humanized_money_with_symbol(task.budget) %></td>
+              <td><%= task.category %></td>
+              <td>
+                <span class="countdown" data-deadline="<%= task.deadline %>"></span>
+              </td>
+              <td><span class="badge <%= badge_color_for_status(task.status) %>"><%= task.status.titleize %></span></td>
+              <td>
+                <% if task.completed? %>
+                  <% if task.payment.nil? %>
+                    <%= link_to 'Pay', new_task_payment_path(task), class: 'btn btn-success btn-sm' %>
+                  <% elsif task.payment.rejected? %>
+                    <span class="badge badge-danger">Rejected</span>
+                    <%= link_to 'Pay Again', new_task_payment_path(task), class: 'btn btn-success btn-sm' %>
+                  <% elsif task.payment.approved? %>
+                    <%= link_to 'View', task_path(task), class: 'btn btn-primary btn-sm' %>
+                  <% end %>
                 <% end %>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
+<% end %>
 </div>
+</div>
+</div>
+
 
   <!-- Your Reviews Section -->
 <div class="card shadow mb-4 animated fadeIn">
