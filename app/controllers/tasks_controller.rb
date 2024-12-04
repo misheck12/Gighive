@@ -17,6 +17,8 @@ class TasksController < ApplicationController
     @task.client = current_user  # Set the client to the current user
 
     if @task.save
+      # Send email to client about task creation
+      TaskMailer.task_created(@task).deliver_later
       redirect_to @task, notice: 'Task was successfully created.'
     else
       render :new
@@ -42,6 +44,10 @@ class TasksController < ApplicationController
   def accept
     if current_user.freelancer? && @task.open?
       @task.update(freelancer: current_user, status: :in_progress)
+      
+      # Send email to freelancer about task assignment
+      TaskMailer.task_assigned(@task).deliver_later
+
       redirect_to @task, notice: 'Task has been accepted!'
     else
       redirect_to @task, alert: 'You cannot accept this task!'
@@ -50,6 +56,9 @@ class TasksController < ApplicationController
 
   def complete
     if @task.update(completed_file: params[:completed_file], status: "completed")
+      # Send email to client about task completion
+      TaskMailer.task_completed(@task).deliver_later
+      
       redirect_to @task, notice: 'Task was successfully completed.'
     else
       render :show, alert: 'Unable to complete task.'
@@ -59,6 +68,10 @@ class TasksController < ApplicationController
   def changes
     if current_user == @task.client && @task.completed?
       @task.update(status: 'changes_requested')
+
+      # Send email to freelancer about change request
+      TaskMailer.change_requested(@task).deliver_later
+
       redirect_to @task, notice: 'Change request has been sent to the freelancer.'
     else
       redirect_to @task, alert: 'You are not authorized to request changes for this task.'
@@ -71,6 +84,9 @@ class TasksController < ApplicationController
       if params[:revised_file].present?
         @task.revised_file.attach(params[:revised_file])
         @task.update(status: 'completed') # Update the task status as needed
+
+        # Optionally, notify the client about the submitted changes
+        TaskMailer.task_completed(@task).deliver_later
 
         redirect_to @task, notice: 'Your changes have been submitted successfully.'
       else
