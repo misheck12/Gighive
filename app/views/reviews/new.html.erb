@@ -1,38 +1,51 @@
 <!-- app/views/reviews/new.html.erb -->
-<h2>New Review for <%= @task.title %></h2>
+<h2 class="text-center mb-4" style="color: #2A2A2A;">New Review for <%= @task.title %></h2>
 
-<!-- form_with creates a form for the @review associated with @task -->
-<%= form_with(model: [@task, @review], local: true) do |f| %>
-  <!-- Render error messages if there are any -->
-  <%= render "devise/shared/error_messages", resource: @review %>
+<%= form_with(model: [@task, @review], local: true, html: { class: 'needs-validation', novalidate: true }) do |f| %>
+  <% if payment.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger" role="alert">
+      <h2 class="alert-heading"><%= pluralize(payment.errors.count, "error") %> prohibited this payment from being saved:</h2>
+      <ul>
+        <% payment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-  <!-- Field for the review rating -->
-  <div class="field">
-    <%= f.label :rating %><br />
-    <!-- number_field for rating, restricted to values between 1 and 5 -->
-    <%= f.number_field :rating, in: 1..5, required: true, class: 'form-control' %>
-  </div>
+  <div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
 
-  <!-- Field for the review comment -->
-  <div class="field">
-    <%= f.label :comment %><br />
-    <!-- text_area for comment, with a maximum length of 500 characters -->
-    <%= f.text_area :comment, maxlength: 500, class: 'form-control' %>
-  </div>
+        <div class="form-group mb-3">
+          <%= f.label :rating, class: 'form-label' %>
+          <%= f.number_field :rating, in: 1..5, required: true, class: 'form-control' %>
+        </div>
 
-  <!-- Submit button for the form -->
-  <div class="actions">
-    <%= f.submit "Create Review", class: 'btn btn-primary' %>
+        <div class="form-group mb-3">
+          <%= f.label :comment, class: 'form-label' %>
+          <%= f.text_area :comment, maxlength: 500, class: 'form-control', rows: 4 %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "Create Review", class: 'btn btn-block', style: 'background-color: #2A2A2A; color: #FF6F61; border-color: #2A2A2A;' %>
+        </div>
+
+      </div>
+    </div>
   </div>
 <% end %>
 
-<!-- Link to go back to the task -->
-<%= link_to 'Back to Task', task_path(@task), class: 'btn btn-secondary' %>
+<%= link_to 'Back to Task', task_path(@task), class: 'btn btn-block mt-3', style: 'background-color: #2A2A2A; color: #FF6F61; border-color: #2A2A2A;' %>
 
-<!-- Styling for the form -->
 <style>
   .field {
     margin-bottom: 1em;
+  }
+
+  .form-label {
+    font-weight: bold;
+    color: #2A2A2A; /* Charcoal for form labels */
   }
 
   .form-control {
@@ -43,16 +56,24 @@
     margin-bottom: 1rem;
   }
 
-  .btn-primary {
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
+  #error_explanation {
+    background-color: #FFD700; /* Gold for error background */
+    border: 1px solid #2A2A2A; /* Charcoal border */
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
   }
 
-  .btn-secondary {
-    color: #fff;
-    background-color: #6c757d;
-    border-color: #6c757d;
+  .btn {
+    color: #FF6F61 !important; /* Coral for button text */
+    background-color: #2A2A2A !important; /* Charcoal for button background */
+    border-color: #2A2A2A !important; /* Charcoal for button border */
+  }
+
+  .btn:hover {
+    color: #FFFFFF !important; /* White for button text on hover */
+    background-color: #2A2A2A !important; /* Charcoal for button background on hover */
+    border-color: #2A2A2A !important; /* Charcoal for button border on hover */
   }
 
   .actions {
