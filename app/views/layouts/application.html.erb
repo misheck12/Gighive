@@ -5,68 +5,66 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <!-- CSS stylesheets -->
-  <%= stylesheet_link_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', media: 'all' %>
-  <%= stylesheet_link_tag 'application', media: 'all' %>
-  <%= javascript_importmap_tags %>
-
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-..." crossorigin="anonymous">
 
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+
+  <!-- Application CSS -->
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload", media: 'all' %>
+
+  <!-- Importmap (if using importmap for JavaScript modules) -->
+  <%= javascript_importmap_tags %>
 
   <%= favicon_link_tag 'GigHive_logo.png' %>
-
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-    <%= link_to 'GigHive', root_path, class: 'navbar-brand' %>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
-        <% if user_signed_in? %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-user-circle"></i> <%= current_user.name %>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-              <%= link_to 'Edit Profile', edit_user_registration_path, class: 'dropdown-item' %>
-              <%= link_to 'Dashboard', dashboard_path, class: 'dropdown-item' %>
-              <div class="dropdown-divider"></div>
-              <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
-            </div>
-          </li>
-        <% else %>
-          <li class="nav-item">
-            <%= link_to 'Sign in', new_user_session_path, class: 'nav-link' %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'Sign up', new_user_registration_path, class: 'nav-link' %>
-          </li>
-        <% end %>
-      </ul>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <%= link_to 'GigHive', root_path, class: 'navbar-brand' %>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto"> <!-- Changed from ml-auto to ms-auto -->
+          <% if user_signed_in? %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-user-circle"></i> <%= current_user.name %>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"> <!-- Changed from dropdown-menu-right to dropdown-menu-end -->
+                <li><%= link_to 'Edit Profile', edit_user_registration_path, class: 'dropdown-item' %></li>
+                <li><%= link_to 'Dashboard', dashboard_path, class: 'dropdown-item' %></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'dropdown-item' %></li>
+              </ul>
+            </li>
+          <% else %>
+            <li class="nav-item">
+              <%= link_to 'Sign in', new_user_session_path, class: 'nav-link' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Sign up', new_user_registration_path, class: 'nav-link' %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<main class="container my-5">
-  <%= yield %>
-</main>
+  <main class="container my-5">
+    <%= yield %>
+  </main>
 
-<footer>
-  <div class="container">
-    <p>GigHive &copy; <%= Time.now.year %></p>
-  </div>
-</footer>
+  <footer>
+    <div class="container">
+      <p>GigHive &copy; <%= Time.now.year %></p>
+    </div>
+  </footer>
 
-<!-- Bootstrap and JQuery scripts -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <!-- Bootstrap 5 JS Bundle (includes Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous" defer></script>
 </body>
 </html>
