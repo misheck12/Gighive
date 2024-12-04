@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Hello <%= @freelancer.name %>,</h1>
+    <p>The client has requested changes for the task "<strong><%= @task.title %></strong>".</p>
+    <p>Details:</p>
+    <ul>
+      <li><strong>Client:</strong> <%= @client.name %></li>
+      <li><strong>Requested Changes:</strong> Please review the task and make the necessary updates.</li>
+    </ul>
+    <p>You can view the task and submit changes <a href="<%= task_url(@task) %>">here</a>.</p>
+    <p>Thank you for using GigHive!</p>
+  </body>
+</html>
