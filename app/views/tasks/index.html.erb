@@ -1,16 +1,26 @@
-<h1>All Tasks</h1>
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h1 class="text-center mb-4" style="color: #2A2A2A;">All Tasks</h1>
 
-<%= link_to 'New Task', new_task_path %>
+      <div class="mb-3 text-end">
+        <%= link_to 'New Task', new_task_path, class: 'btn btn-primary', style: 'background-color: #FF6F61; border-color: #FF6F61;' %>
+      </div>
 
-<ul>
-  <% @tasks.each do |task| %>
-    <li>
-      <strong><%= link_to task.title, task %></strong><br>
-      Description: <%= task.description %><br>
-      Budget: <%= task.budget %><br>
-      Deadline: <%= task.deadline %><br>
-      <%= link_to 'Edit', edit_task_path(task) %> |
-      <%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' } %>
-    </li>
-  <% end %>
-</ul>
+      <ul class="list-group">
+        <% @tasks.each do |task| %>
+          <li class="list-group-item mb-2" style="border-color: #FF6F61;">
+            <h5><%= link_to task.title, task, class: 'text-decoration-none', style: 'color: #FF6F61;' %></h5>
+            <p class="mb-1"><strong>Description:</strong> <%= task.description %></p>
+            <p class="mb-1"><strong>Budget:</strong> ZMK <%= task.budget %></p>
+            <p class="mb-1"><strong>Deadline:</strong> <%= task.deadline.strftime('%b %d, %Y %H:%M') %></p>
+            <div>
+              <%= link_to 'Edit', edit_task_path(task), class: 'btn btn-secondary btn-sm', style: 'background-color: #FFD700; border-color: #FFD700;' %> 
+              <%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
