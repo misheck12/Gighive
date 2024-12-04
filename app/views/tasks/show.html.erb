@@ -1,14 +1,14 @@
 <div class="task-details">
-  <h1 class="display-4"><%= @task.title %></h1>
+  <h1 class="display-4" style="color: #2A2A2A;"><%= @task.title %></h1>
 
-  <div class="card">
+  <div class="card mb-4" style="border-color: #FF6F61;">
     <div class="card-body">
       <p class="card-text">
         <strong>Description:</strong> <%= @task.description %><br>
-        <strong>Budget:</strong> <%= humanized_money_with_symbol(@task.budget, unit:"ZMK") %><br>
+        <strong>Budget:</strong> <%= humanized_money_with_symbol(@task.budget, unit: "ZMK") %><br>
         <strong>Category:</strong> <%= @task.category %><br>
         <% if @task.attachment.attached? %>
-          <strong>Attachment:</strong> <%= link_to @task.attachment.filename, rails_blob_path(@task.attachment, disposition: "attachment"), class: 'btn btn-link' %><br>
+          <strong>Attachment:</strong> <%= link_to @task.attachment.filename, rails_blob_path(@task.attachment, disposition: "attachment"), class: 'btn btn-link', style: 'color: #FF6F61;' %><br>
         <% end %>
         <strong>Deadline:</strong> <%= @task.deadline.strftime("%B %d, %Y") %><br>
         <strong>Status:</strong> <%= @task.status.titleize %><br>
@@ -17,10 +17,10 @@
       <% if current_user == @task.client %>
         <% if @task.completed? %>
           <% if @task.completed_file.attached? %>
-            <p>Completed file: <%= link_to @task.completed_file.filename, rails_blob_path(@task.completed_file, disposition: "attachment"), class: 'btn btn-link' %></p>
+            <p>Completed file: <%= link_to @task.completed_file.filename, rails_blob_path(@task.completed_file, disposition: "attachment"), class: 'btn btn-link', style: 'color: #FF6F61;' %></p>
           <% end %>
           <% unless @task.reviewed? %>
-            <%= link_to 'Give a Review', new_task_review_path(@task), class: 'btn btn-primary' %>
+            <%= link_to 'Give a Review', new_task_review_path(@task), class: 'btn btn-primary', style: 'background-color: #FF6F61; border-color: #FF6F61;' %>
           <% end %>
           <% unless @task.reviewed? %>
             <%= form_with url: changes_task_path(@task), method: :post do |form| %>
@@ -28,22 +28,22 @@
             <% end %>
           <% end %>
         <% else %>
-          <%= link_to 'Edit', edit_task_path(@task), class: 'btn btn-secondary' %>
+          <%= link_to 'Edit', edit_task_path(@task), class: 'btn btn-secondary', style: 'background-color: #FFD700; border-color: #FFD700;' %>
         <% end %>
       <% elsif current_user.freelancer? %>
         <% if @task.open? %>
           <%= form_with url: accept_task_path(@task), method: :post do %>
-            <%= submit_tag 'Accept', class: 'btn btn-primary' %>
+            <%= submit_tag 'Accept', class: 'btn btn-primary', style: 'background-color: #FF6F61; border-color: #FF6F61;' %>
           <% end %>
         <% elsif @task.status == 'changes_requested' && @task.freelancer == current_user %>
           <%= form_with url: submit_changes_task_path(@task), method: :post, html: { multipart: true } do |form| %>
             <%= form.file_field :revised_file, class: 'form-control-file' %>
-            <%= form.submit 'Submit Changes', class: 'btn btn-primary mt-2' %>
+            <%= form.submit 'Submit Changes', class: 'btn btn-primary mt-2', style: 'background-color: #FF6F61; border-color: #FF6F61;' %>
           <% end %>
         <% elsif @task.in_progress? && @task.freelancer == current_user %>
           <%= form_with url: complete_task_path(@task), method: :post, html: { multipart: true } do |form| %>
             <%= form.file_field :completed_file, class: 'form-control-file' %>
-            <%= form.submit 'Submit Task', class: 'btn btn-primary mt-2' %>
+            <%= form.submit 'Submit Task', class: 'btn btn-primary mt-2', style: 'background-color: #FF6F61; border-color: #FF6F61;' %>
           <% end %>
         <% end %>
       <% end %>
@@ -53,7 +53,7 @@
         <%= link_to 'Delete Task', task_path(@task), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger mt-2' %>
       <% end %>
 
-      <%= link_to 'Back', dashboard_show_path, class: 'btn btn-secondary mt-2' %>
+      <%= link_to 'Back', dashboard_show_path, class: 'btn btn-secondary mt-2', style: 'background-color: #FFD700; border-color: #FFD700;' %>
     </div>
   </div>
 </div>
@@ -72,5 +72,6 @@
   .btn-link {
     padding: 0;
     margin-left: 5px;
+    color: #FF6F61; /* Coral for link buttons */
   }
 </style>
