@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Hello <%= @client.name %>,</h1>
+    <p>Your task "<strong><%= @task.title %></strong>" has been successfully created.</p>
+    <p>Details:</p>
+    <ul>
+      <li><strong>Description:</strong> <%= @task.description %></li>
+      <li><strong>Category:</strong> <%= @task.category %></li>
+      <li><strong>Budget:</strong> <%= humanized_money_with_symbol(@task.budget) %></li>
+      <li><strong>Deadline:</strong> <%= @task.deadline.strftime("%B %d, %Y") %></li>
+    </ul>
+    <p>You can view your task <a href="<%= task_url(@task) %>">here</a>.</p>
+    <p>Thank you for using GigHive!</p>
+  </body>
+</html>
