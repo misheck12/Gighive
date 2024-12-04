@@ -1,29 +1,28 @@
 <div class="payment-details">
-  <h1 class="display-4">Payment Details</h1>
+  <h1 class="display-4" style="color: #2A2A2A;">Payment Details</h1>
 
-  <div class="card">
+  <div class="card mb-4" style="border-color: #FF6F61;">
     <div class="card-body">
       <p class="card-text">
         <strong>Transaction ID:</strong> <%= @payment.transaction_id %><br>
-        <strong>Network:</strong> <%= @payment.network%><br>
+        <strong>Network:</strong> <%= @payment.network %><br>
         <strong>Status:</strong> <%= @payment.status.capitalize %><br>
         <strong>Created At:</strong> <%= @payment.created_at.strftime("%B %d, %Y %H:%M:%S") %><br>
         <strong>Updated At:</strong> <%= @payment.updated_at.strftime("%B %d, %Y %H:%M:%S") %><br>
       </p>
 
       <!-- Display associated task details -->
-      <h2 class="display-5 mt-4">Associated Task</h2>
+      <h2 class="display-5 mt-4" style="color: #FF6F61;">Associated Task</h2>
       <p class="card-text">
         <strong>Title:</strong> <%= @payment.task.title %><br>
         <strong>Description:</strong> <%= @payment.task.description %><br>
         <strong>Budget:</strong> <%= humanized_money_with_symbol(@payment.task.budget) %><br>
         <strong>Deadline:</strong> <%= @payment.task.deadline.strftime("%B %d, %Y") %><br>
-        <!-- Add more task details as needed -->
       </p>
 
       <!-- Display payment proof if attached -->
       <% if @payment.payment_proof.attached? %>
-        <h2 class="display-5 mt-4">Payment Proof</h2>
+        <h2 class="display-5 mt-4" style="color: #FF6F61;">Payment Proof</h2>
         <p class="card-text">
           <%= image_tag rails_blob_path(@payment.payment_proof, only_path: true), class: 'img-fluid', alt: 'Payment Proof' %>
         </p>
@@ -31,24 +30,38 @@
 
       <div>
         <% if current_user.admin? || current_user.client? %>
-          <%= link_to "Back", root_path %>
+          <%= link_to "Back", root_path, class: 'btn btn-secondary', style: 'background-color: #FFD700; border-color: #FFD700;' %>
         <% end %>
 
         <% if current_user.client? %>
-          <%= link_to "Edit this payment", edit_payment_path(@payment) %>
+          <%= link_to "Edit this payment", edit_payment_path(@payment), class: 'btn btn-primary', style: 'background-color: #FF6F61; border-color: #FF6F61;' %>
         <% end %>
 
         <% if current_user.admin? %>
-          <%= button_to "Accept", accept_task_payment_path(@payment), method: :patch, class: 'btn btn-success' %>
-          <%= button_to "Reject", reject_task_payment_path(@payment), method: :patch, class: 'btn btn-danger' %>
-        <% end %>
-
-        <% if current_user.client? %>
-          <%= link_to "Edit this payment", edit_payment_path(@payment) %>
+          <%= button_to "Accept", accept_task_payment_path(@payment), method: :patch, class: 'btn btn-success', style: 'background-color: #28a745; border-color: #28a745;' %>
+          <%= button_to "Reject", reject_task_payment_path(@payment), method: :patch, class: 'btn btn-danger', style: 'background-color: #dc3545; border-color: #dc3545;' %>
         <% end %>
       </div>
 
-      <%= link_to 'Dashboard', root_path, class: 'btn btn-secondary mt-2' %>
+      <%= link_to 'Dashboard', root_path, class: 'btn btn-secondary mt-2', style: 'background-color: #FFD700; border-color: #FFD700;' %>
     </div>
   </div>
 </div>
+
+<style>
+  .payment-details {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+  }
+
+  .card-text strong {
+    font-weight: bold;
+  }
+
+  .btn-link {
+    padding: 0;
+    margin-left: 5px;
+    color: #FF6F61; /* Coral for link buttons */
+  }
+</style>
