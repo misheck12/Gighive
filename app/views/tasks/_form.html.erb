@@ -15,50 +15,50 @@
   <div class="container mt-4">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <h1 class="text-center mb-4">Create a New Task</h1>
+        <h1 class="text-center mb-4" style="color: #2A2A2A;">Create a New Task</h1>
 
-        <div class="form-group">
-          <%= form.label :title %>
+        <div class="form-group mb-3">
+          <%= form.label :title, class: 'form-label' %>
           <%= form.text_field :title, class: 'form-control', placeholder: 'Enter a catchy title for your task' %>
         </div>
 
-        <div class="form-group">
-          <%= form.label :description %>
+        <div class="form-group mb-3">
+          <%= form.label :description, class: 'form-label' %>
           <%= form.text_area :description, class: 'form-control', rows: 3, placeholder: 'What needs to be done?' %>
         </div>
 
-        <div class="form-group">
-          <label for="pages">Number of pages:</label>
+        <div class="form-group mb-3">
+          <label for="pages" class="form-label">Number of pages:</label>
           <input type="number" id="pages" name="pages" class="form-control" min="1" value="1" onchange="calculatePrice()">
         </div>
 
-        <div class="form-group">
-          <label for="price">Price ZMK:</label>
+        <div class="form-group mb-3">
+          <label for="price" class="form-label">Price ZMK:</label>
           <input type="text" id="price" name="price" class="form-control" disabled>
         </div>
 
-        <div class="form-group">
-          <%= form.label :budget %>
+        <div class="form-group mb-3">
+          <%= form.label :budget, class: 'form-label' %>
           <%= form.number_field :budget, class: 'form-control', placeholder: 'Total budget for the task' %>
         </div>
 
-        <div class="form-group">
-          <%= form.label :category %>
+        <div class="form-group mb-3">
+          <%= form.label :category, class: 'form-label' %>
           <%= form.text_field :category, class: 'form-control', placeholder: 'e.g. Web Development' %>
         </div>
 
-        <div class="form-group">
-          <%= form.label :deadline %>
+        <div class="form-group mb-3">
+          <%= form.label :deadline, class: 'form-label' %>
           <%= form.datetime_select :deadline, class: 'form-control' %>
         </div>
 
-        <div class="form-group">
-          <%= form.label :attachment %>
+        <div class="form-group mb-3">
+          <%= form.label :attachment, class: 'form-label' %>
           <%= form.file_field :attachment, direct_upload: true, class: 'form-control-file' %>
         </div>
 
         <div class="actions">
-          <%= form.submit 'Create Task', class: 'btn btn-primary btn-block' %>
+          <%= form.submit 'Create Task', class: 'btn btn-primary btn-block', style: 'background-color: #FF6F61; border-color: #FF6F61;' %>
         </div>
       </div>
     </div>
