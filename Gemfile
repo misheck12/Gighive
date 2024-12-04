@@ -8,6 +8,7 @@ gem 'sassc-rails'
 gem 'bootstrap', '~> 5.3.0'
 gem 'fontawesome5-rails'
 gem 'money-rails', '~> 1.12'
+gem 'sendgrid-ruby'
 
 
 
