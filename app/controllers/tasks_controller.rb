@@ -17,6 +17,7 @@ class TasksController < ApplicationController
     @task.client = current_user  # Set the client to the current user
 
     if @task.save
+      UserMailer.task_notification(@task.client, @task).deliver_now
       redirect_to @task, notice: 'Task was successfully created.'
     else
       render :new
@@ -28,6 +29,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
+      UserMailer.task_status_update(@task.client, @task).deliver_now
       redirect_to @task, notice: 'Task was successfully updated.'
     else
       render :edit
@@ -42,6 +44,7 @@ class TasksController < ApplicationController
   def accept
     if current_user.freelancer? && @task.open?
       @task.update(freelancer: current_user, status: :in_progress)
+      UserMailer.task_accepted(@task.client, @task).deliver_now
       redirect_to @task, notice: 'Task has been accepted!'
     else
       redirect_to @task, alert: 'You cannot accept this task!'
@@ -50,6 +53,7 @@ class TasksController < ApplicationController
 
   def complete
     if @task.update(completed_file: params[:completed_file], status: "completed")
+      UserMailer.task_completed(@task.client, @task).deliver_now
       redirect_to @task, notice: 'Task was successfully completed.'
     else
       render :show, alert: 'Unable to complete task.'
@@ -72,6 +76,7 @@ class TasksController < ApplicationController
         @task.revised_file.attach(params[:revised_file])
         @task.update(status: 'completed') # Update the task status as needed
 
+        UserMailer.task_completed(@task.client, @task).deliver_now
         redirect_to @task, notice: 'Your changes have been submitted successfully.'
       else
         redirect_to @task, alert: 'You must attach a file to submit changes.'
