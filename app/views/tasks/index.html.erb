@@ -12,6 +12,7 @@
           <li class="list-group-item mb-2" style="border-color: #FF6F61;">
             <h5><%= link_to task.title, task, class: 'text-decoration-none', style: 'color: #FF6F61;' %></h5>
             <p class="mb-1"><strong>Description:</strong> <%= task.description %></p>
+            <p class="mb-1"><strong>Category:</strong> <%= task.task_category.name if task.task_category %></p>
             <p class="mb-1"><strong>Budget:</strong> ZMK <%= task.budget %></p>
             <p class="mb-1"><strong>Deadline:</strong> <%= task.deadline.strftime('%b %d, %Y %H:%M') %></p>
             <div>
