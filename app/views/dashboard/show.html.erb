@@ -319,155 +319,155 @@
     </ul>
 
     <div class="tab-content" id="freelancerDashboardContent">
-      <!-- Available Tasks Tab -->
-      <div class="tab-pane fade show active" id="available-tasks" role="tabpanel" aria-labelledby="available-tasks-tab">
-        <div class="card mt-3">
-          <div class="card-body">
-            <h4 class="text-secondary">Available Tasks</h4>
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Earning</th>
-                    <th>Category</th>
-                    <th>Deadline</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% Task.open_tasks.each do |task| %>
-                    <tr>
-                      <td><%= link_to task.title, task_path(task) %></td>
-                      <td><%= task.description %></td>
-                      <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
-                      <td><%= task.category %></td>
-                      <td><%= l(task.deadline, format: :short) %></td>
-                      <td><%= task.status %></td>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Your Tasks Tab -->
-      <div class="tab-pane fade" id="working-tasks" role="tabpanel" aria-labelledby="working-tasks-tab">
-        <div class="card mt-3">
-          <div class="card-body">
-            <h4 class="text-secondary">Tasks You're Working On</h4>
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Budget</th>
-                    <th>Category</th>
-                    <th>Deadline</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% current_user.tasks_as_freelancer.each do |task| %>
-                    <tr>
-                      <td><%= link_to task.title, task_path(task) %></td>
-                      <td><%= task.description %></td>
-                      <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
-                      <td><%= task.category %></td>
-                      <td><%= l(task.deadline, format: :short) %></td>
-                      <td><%= task.status %></td>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tasks Requiring Changes Tab -->
-      <div class="tab-pane fade" id="tasks-changes" role="tabpanel" aria-labelledby="tasks-changes-tab">
-        <div class="card mt-3">
-          <div class="card-body">
-            <% if current_user.tasks_requiring_changes.any? %>
-              <h4 class="text-secondary">Tasks Requiring Changes</h4>
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>Title</th>
-                      <th>Description</th>
-                      <th>Budget</th>
-                      <th>Category</th>
-                      <th>Deadline</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% current_user.tasks_requiring_changes.each do |task| %>
-                      <tr>
-                        <td><%= link_to task.title, task_path(task) %></td>
-                        <td><%= task.description %></td>
-                        <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
-                        <td><%= task.category %></td>
-                        <td><%= l(task.deadline, format: :short) %></td>
-                        <td><span class="badge bg-warning"><%= task.status %></span></td>
-                        <td>
-                          <%= link_to 'View Task', task_path(task), class: 'btn btn-primary btn-sm' %>
-                        </td>
-                      </tr>
-                    <% end %>
-                  </tbody>
-                </table>
-              </div>
-            <% else %>
-              <p>No tasks requiring changes at the moment.</p>
-            <% end %>
-          </div>
-        </div>
-      </div>
-
-      <!-- Reviews Received Tab -->
-      <div class="tab-pane fade" id="reviews-received" role="tabpanel" aria-labelledby="reviews-received-tab">
-        <div class="card mt-3">
-          <div class="card-body">
-            <% if current_user.reviews_received.any? %>
-              <h4 class="text-secondary">Reviews Received</h4>
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>Task Title</th>
-                      <th>Rating</th>
-                      <th>Comment</th>
-                      <th>Reviewed By</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% current_user.reviews_received.each do |review| %>
-                      <tr>
-                        <td><%= link_to review.task.title, task_path(review.task) %></td>
-                        <td><%= review.rating %> stars</td>
-                        <td><%= review.comment %></td>
-                        <td><%= review.reviewer.email %></td>
-                      </tr>
-                    <% end %>
-                  </tbody>
-                </table>
-              </div>
-            <% else %>
-              <p>No reviews received yet.</p>
-            <% end %>
-          </div>
+  <!-- Available Tasks Tab -->
+  <div class="tab-pane fade show active" id="available-tasks" role="tabpanel" aria-labelledby="available-tasks-tab">
+    <div class="card mt-3">
+      <div class="card-body">
+        <h4 class="text-secondary">Available Tasks</h4>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Earning</th>
+                <th>Category</th>
+                <th>Deadline</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% Task.open_tasks.each do |task| %>
+                <tr>
+                  <td><%= link_to task.title, task_path(task) %></td>
+                  <td><%= task.description %></td>
+                  <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
+                  <td><%= task.task_category.name if task.task_category %></td>
+                  <td><%= l(task.deadline, format: :short) %></td>
+                  <td><%= task.status %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-  <% end %>
+  </div>
+
+  <!-- Your Tasks Tab -->
+  <div class="tab-pane fade" id="working-tasks" role="tabpanel" aria-labelledby="working-tasks-tab">
+    <div class="card mt-3">
+      <div class="card-body">
+        <h4 class="text-secondary">Tasks You're Working On</h4>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Budget</th>
+                <th>Category</th>
+                <th>Deadline</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% current_user.tasks_as_freelancer.each do |task| %>
+                <tr>
+                  <td><%= link_to task.title, task_path(task) %></td>
+                  <td><%= task.description %></td>
+                  <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
+                  <td><%= task.task_category.name if task.task_category %></td>
+                  <td><%= l(task.deadline, format: :short) %></td>
+                  <td><%= task.status %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tasks Requiring Changes Tab -->
+  <div class="tab-pane fade" id="tasks-changes" role="tabpanel" aria-labelledby="tasks-changes-tab">
+    <div class="card mt-3">
+      <div class="card-body">
+        <% if current_user.tasks_requiring_changes.any? %>
+          <h4 class="text-secondary">Tasks Requiring Changes</h4>
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Budget</th>
+                  <th>Category</th>
+                  <th>Deadline</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% current_user.tasks_requiring_changes.each do |task| %>
+                  <tr>
+                    <td><%= link_to task.title, task_path(task) %></td>
+                    <td><%= task.description %></td>
+                    <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
+                    <td><%= task.task_category.name if task.task_category %></td>
+                    <td><%= l(task.deadline, format: :short) %></td>
+                    <td><span class="badge bg-warning"><%= task.status %></span></td>
+                    <td>
+                      <%= link_to 'View Task', task_path(task), class: 'btn btn-primary btn-sm' %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% else %>
+          <p>No tasks requiring changes at the moment.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reviews Received Tab -->
+  <div class="tab-pane fade" id="reviews-received" role="tabpanel" aria-labelledby="reviews-received-tab">
+    <div class="card mt-3">
+      <div class="card-body">
+        <% if current_user.reviews_received.any? %>
+          <h4 class="text-secondary">Reviews Received</h4>
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Task Title</th>
+                  <th>Rating</th>
+                  <th>Comment</th>
+                  <th>Reviewed By</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% current_user.reviews_received.each do |review| %>
+                  <tr>
+                    <td><%= link_to review.task.title, task_path(review.task) %></td>
+                    <td><%= review.rating %> stars</td>
+                    <td><%= review.comment %></td>
+                    <td><%= review.reviewer.email %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% else %>
+          <p>No reviews received yet.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<%end%>
 
   <style>
     /* Simple fade-in animation */
