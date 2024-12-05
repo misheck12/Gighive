@@ -11,6 +11,7 @@ gem 'money-rails', '~> 1.12'
 gem 'sendgrid-ruby'
 gem 'sidekiq'
 gem 'redis'
+gem 'rails-ujs'
 
 
 # Gemfile
