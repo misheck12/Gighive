@@ -197,94 +197,97 @@
     </div>
 
   <% elsif current_user.client? %>
-    <!-- Client Dashboard -->
-    <div class="card shadow mb-4 animated fadeIn">
-      <div class="card-header py-3 bg-dark text-white">
-        <h6 class="m-0 font-weight-bold">Client Dashboard</h6>
+  <!-- Client Dashboard -->
+  <div class="card shadow mb-4 animated fadeIn">
+    <div class="card-header py-3 bg-dark text-white">
+      <h6 class="m-0 font-weight-bold">Client Dashboard</h6>
+    </div>
+    <div class="card-body">
+      <%= link_to 'Create New Task', new_task_path, class: "btn btn-primary mb-3" %>
+
+      <!-- Payment Information Section -->
+      <div class="payments-info mb-4 p-3 border rounded">
+        <h5 class="text-primary">Payments</h5>
+        <p>For payments, you can transfer funds to the following mobile numbers:</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">MTN: <span class="font-weight-bold">+260960231978</span></li>
+          <li class="list-group-item">Airtel: <span class="font-weight-bold">+260777945779</span></li>
+        </ul>
       </div>
-      <div class="card-body">
-        <%= link_to 'Create New Task', new_task_path, class: "btn btn-primary mb-3" %>
 
-        <!-- Payment Information Section -->
-        <div class="payments-info mb-4 p-3 border rounded">
-          <h5 class="text-primary">Payments</h5>
-          <p>For payments, you can transfer funds to the following mobile numbers:</p>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">MTN: <span class="font-weight-bold">+260960231978</span></li>
-            <li class="list-group-item">Airtel: <span class="font-weight-bold">+260777945779</span></li>
-          </ul>
-        </div>
-
-        <!-- Tasks Section -->
-        <% Task.statuses.keys.each do |status| %>
-          <div class="my-4">
-            <h5 class="text-primary mb-3">Your Tasks - <%= status.titleize %></h5>
-            <div class="table-responsive">
-              <table class="table table-bordered table-hover">
-                <thead class="thead-dark">
+      <!-- Tasks Section -->
+      <% Task.statuses.keys.each do |status| %>
+        <div class="my-4">
+          <h5 class="text-primary mb-3">Your Tasks - <%= status.titleize %></h5>
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Budget</th>
+                  <th>Category</th>
+                  <th>Deadline</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% current_user.tasks_as_client.where(status: status).each do |task| %>
                   <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Budget</th>
-                    <th>Category</th>
-                    <th>Deadline</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% current_user.tasks_as_client.where(status: status).each do |task| %>
-                    <tr>
-                      <td><%= content_tag :span, task.title, class: 'btn-disabled text-black' %></td>
-                      <td><%= task.description %></td>
-                      <td><%= humanized_money_with_symbol(task.budget) %></td>
-                      <td><%= task.category %></td>
-                      <td>
-                        <span class="countdown" data-deadline="<%= task.deadline %>"></span>
-                      </td>
-                      <td><span class="badge <%= badge_color_for_status(task.status) %>"><%= task.status.titleize %></span></td>
-                      <td>
-                        <% if task.completed? %>
-                          <% if task.payment.nil? %>
-                            <%= link_to 'Pay', new_task_payment_path(task), class: 'btn btn-success btn-sm' %>
-                          <% elsif task.payment.rejected? %>
-                            <span class="badge badge-danger">Rejected</span>
-                            <%= link_to 'Pay Again', new_task_payment_path(task), class: 'btn btn-success btn-sm' %>
-                          <% elsif task.payment.approved? %>
-                            <%= link_to 'View', task_path(task), class: 'btn btn-primary btn-sm' %>
-                          <% end %>
+                    <td><%= content_tag :span, task.title, class: 'btn-disabled text-black' %></td>
+                    <td><%= task.description %></td>
+                    <td><%= humanized_money_with_symbol(task.budget) %></td>
+                    <td><%= task.task_category.name if task.task_category %></td>
+                    <td>
+                      <span class="countdown" data-deadline="<%= task.deadline %>"></span>
+                    </td>
+                    <td><span class="badge <%= badge_color_for_status(task.status) %>"><%= task.status.titleize %></span></td>
+                    <td>
+                      <% if task.completed? %>
+                        <% if task.payment.nil? %>
+                          <%= link_to 'Pay', new_task_payment_path(task), class: 'btn btn-success btn-sm' %>
+                        <% elsif task.payment.rejected? %>
+                          <span class="badge badge-danger">Rejected</span>
+                          <%= link_to 'Pay Again', new_task_payment_path(task), class: 'btn btn-success btn-sm' %>
+                        <% elsif task.payment.approved? %>
+                          <%= link_to 'View', task_path(task), class: 'btn btn-primary btn-sm' %>
                         <% end %>
-                      </td>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        <% end %>
-
-        <!-- Your Reviews Section -->
-        <div class="card shadow mb-4 animated fadeIn">
-          <div class="card-header py-3 bg-dark text-white">
-            <h6 class="m-0 font-weight-bold">Your Reviews</h6>
-          </div>
-          <div class="card-body">
-            <ul class="list-group list-group-flush">
-              <% if current_user&.given_reviews&.any? %>
-                <% current_user.given_reviews.each do |review| %>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Review for <%= link_to review.task.title, task_path(review.task), class: 'text-primary' %>
-                    <span class="badge <%= badge_color_for_rating(review.rating) %> badge-pill"><%= review.rating %> stars</span> - <%= review.comment %>
-                  </li>
+                      <% else %>
+                        <%= link_to 'Edit', edit_task_path(task), class: 'btn btn-secondary btn-sm', style: 'background-color: #FFD700; border-color: #FFD700;' %> 
+                        <%= link_to 'Delete', task_path(task), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+                      <% end %>
+                    </td>
+                  </tr>
                 <% end %>
-              <% else %>
-                <li class="list-group-item">No reviews available.</li>
-              <% end %>
-            </ul>
+              </tbody>
+            </table>
           </div>
+        </div>
+      <% end %>
+
+      <!-- Your Reviews Section -->
+      <div class="card shadow mb-4 animated fadeIn">
+        <div class="card-header py-3 bg-dark text-white">
+          <h6 class="m-0 font-weight-bold">Your Reviews</h6>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <% if current_user&.given_reviews&.any? %>
+              <% current_user.given_reviews.each do |review| %>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Review for <%= link_to review.task.title, task_path(review.task), class: 'text-primary' %>
+                  <span class="badge <%= badge_color_for_rating(review.rating) %> badge-pill"><%= review.rating %> stars</span> - <%= review.comment %>
+                </li>
+              <% end %>
+            <% else %>
+              <li class="list-group-item">No reviews available.</li>
+            <% end %>
+          </ul>
         </div>
       </div>
     </div>
+  </div>
 
   <% elsif current_user.freelancer? %>
     <!-- Freelancer Dashboard -->
@@ -294,7 +297,7 @@
         <h6 class="m-0 font-weight-bold">Total Earning</h6>
       </div>
       <div class="card-body">
-        <p>Your total earning: <%= current_user.email %></p>
+        <p>Total earning details will appear here.</p>
         <h2><%= humanized_money_with_symbol(Task.total_earning_for_freelancer(current_user.id).pluck(:budget).sum.to_f * 0.8, symbol: "ZMK", position: :before) %></h2>
       </div>
     </div>
