@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_16_081035) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_05_062901) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -67,6 +67,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_16_081035) do
     t.index ["task_id"], name: "index_reviews_on_task_id"
   end
 
+  create_table "task_categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tasks", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -78,8 +84,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_16_081035) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "category"
+    t.bigint "task_category_id", null: false
     t.index ["client_id"], name: "index_tasks_on_client_id"
     t.index ["freelancer_id"], name: "index_tasks_on_freelancer_id"
+    t.index ["task_category_id"], name: "index_tasks_on_task_category_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -103,6 +111,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_16_081035) do
   add_foreign_key "payments", "users", column: "client_id"
   add_foreign_key "reviews", "tasks"
   add_foreign_key "reviews", "users", column: "reviewer_id"
+  add_foreign_key "tasks", "task_categories"
   add_foreign_key "tasks", "users", column: "client_id"
   add_foreign_key "tasks", "users", column: "freelancer_id"
 end
