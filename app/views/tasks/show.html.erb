@@ -6,7 +6,7 @@
       <p class="card-text">
         <strong>Description:</strong> <%= @task.description %><br>
         <strong>Budget:</strong> <%= humanized_money_with_symbol(@task.budget, unit: "ZMK") %><br>
-        <strong>Category:</strong> <%= @task.category %><br>
+        <strong>Category:</strong> <%= @task.task_category.name if @task.task_category %><br>
         <% if @task.attachment.attached? %>
           <strong>Attachment:</strong> <%= link_to @task.attachment.filename, rails_blob_path(@task.attachment, disposition: "attachment"), class: 'btn btn-link', style: 'color: #FF6F61;' %><br>
         <% end %>
