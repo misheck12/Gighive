@@ -6,8 +6,11 @@ Rails.application.routes.draw do
   get 'dashboard/show'
   get 'dashboard', to: 'dashboard#show', as: 'dashboard'
 
-  # Devise routes for user authentication with custom controllers for registrations
-  devise_for :users, controllers: { registrations: 'users/registrations' }
+  # Devise routes for user authentication with custom controllers
+  devise_for :users, controllers: { 
+    registrations: 'users/registrations',
+    sessions: 'users/sessions' # Include custom sessions controller
+  }
 
   # Custom routes within Devise for handling special user registration flows
   devise_scope :user do
@@ -24,7 +27,6 @@ Rails.application.routes.draw do
       post 'complete'
       post 'changes'
       post 'submit_changes'
-
     end
 
     # Nested routes for reviews and payments within tasks
@@ -40,8 +42,7 @@ Rails.application.routes.draw do
   # Independent routes for reviews
   resources :reviews, only: [:show, :edit, :update, :destroy]
 
-  # Any additional routes can be added below
-
+  # Mount Sidekiq web interface
   require 'sidekiq/web'
-mount Sidekiq::Web => '/sidekiq'
+  mount Sidekiq::Web => '/sidekiq'
 end
