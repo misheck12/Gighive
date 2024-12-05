@@ -10,6 +10,7 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @task_categories = TaskCategory.all  # Fetch task categories for the form
   end
 
   def create
@@ -21,17 +22,20 @@ class TasksController < ApplicationController
       TaskMailer.task_created(@task).deliver_later
       redirect_to @task, notice: 'Task was successfully created.'
     else
+      @task_categories = TaskCategory.all  # Ensure categories are available in case of validation errors
       render :new
     end
   end
 
   def edit
+    @task_categories = TaskCategory.all  # Fetch task categories for the form
   end
 
   def update
     if @task.update(task_params)
       redirect_to @task, notice: 'Task was successfully updated.'
     else
+      @task_categories = TaskCategory.all  # Ensure categories are available in case of validation errors
       render :edit
     end
   end
@@ -44,7 +48,7 @@ class TasksController < ApplicationController
   def accept
     if current_user.freelancer? && @task.open?
       @task.update(freelancer: current_user, status: :in_progress)
-      
+
       # Send email to freelancer about task assignment
       TaskMailer.task_assigned(@task).deliver_later
 
@@ -58,7 +62,7 @@ class TasksController < ApplicationController
     if @task.update(completed_file: params[:completed_file], status: "completed")
       # Send email to client about task completion
       TaskMailer.task_completed(@task).deliver_later
-      
+
       redirect_to @task, notice: 'Task was successfully completed.'
     else
       render :show, alert: 'Unable to complete task.'
@@ -104,6 +108,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :budget, :deadline, :category, :status, :client_id, :freelancer_id, :completed_file, :attachment, :revised_file)
+    params.require(:task).permit(:title, :description, :budget, :deadline, :task_category_id, :status, :client_id, :freelancer_id, :completed_file, :attachment, :revised_file)
   end
 end
