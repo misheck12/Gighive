@@ -10,6 +10,8 @@ gem 'fontawesome5-rails'
 gem 'money-rails', '~> 1.12'
 gem 'sendgrid-ruby'
 gem 'sidekiq'
+gem 'redis'
+
 
 # Gemfile
 
