@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
+  <h1>New Review Received</h1>
+  <p>Hi, <%= @user.name %>!</p>
+  <p>You have received a new review on your task: "<%= @review.task.title %>".</p>
+  <p>Rating: <%= @review.rating %></p>
+  <p>Comment: <%= @review.comment %></p>
+</body>
+</html>
