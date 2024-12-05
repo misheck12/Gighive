@@ -376,7 +376,7 @@
                       <td><%= link_to task.title, task_path(task) %></td>
                       <td><%= task.description %></td>
                       <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
-                                      <td><%= task.task_category.name if task.task_category %></td> <!-- Display Category -->
+                      <td><%= task.task_category.name if task.task_category %></td> <!-- Display Category -->
 
                       <td><%= l(task.deadline, format: :short) %></td>
                       <td><%= task.status %></td>
@@ -414,7 +414,7 @@
                         <td><%= link_to task.title, task_path(task) %></td>
                         <td><%= task.description %></td>
                         <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
-                                        <td><%= task.task_category.name if task.task_category %></td> <!-- Display Category -->
+                        <td><%= task.task_category.name if task.task_category %></td> <!-- Display Category -->
 
                         <td><%= l(task.deadline, format: :short) %></td>
                         <td><span class="badge bg-warning"><%= task.status %></span></td>
