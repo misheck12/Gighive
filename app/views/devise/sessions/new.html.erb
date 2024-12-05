@@ -3,6 +3,7 @@
     <h2 style="text-align: center; margin-bottom: 1.5rem;">Log in</h2>
 
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-horizontal' }) do |f| %>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
       <div class="form-group">
         <%= f.label :email, class: 'control-label' %>
         <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
