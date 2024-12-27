@@ -66,14 +66,15 @@
 <% end %>
 
 <script>
-  const COST_PER_PAGE = 30; // Change this to your actual cost per page
+  const COST_PER_PAGE = 30; // Adjust as needed
 
   function calculatePrice() {
     const pages = document.getElementById("pages").value;
     const price = pages * COST_PER_PAGE;
+
     document.getElementById("price").value = price.toFixed(2);
-    
-    // Update the budget field in the form
+
+    // Update the budget field
     const budgetInput = document.querySelector('input[name="task[budget]"]');
     if (budgetInput) {
       budgetInput.value = price.toFixed(2);
@@ -81,5 +82,7 @@
   }
 
   // Initialize price on load
-  document.addEventListener('DOMContentLoaded', calculatePrice);
+  document.addEventListener('DOMContentLoaded', () => {
+    calculatePrice();
+  });
 </script>
