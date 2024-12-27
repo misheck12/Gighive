@@ -10,10 +10,10 @@ document.addEventListener('turbo:load', () => {
       priceInput.value = price.toFixed(2);
   
       // Optionally update the budget field if it's necessary
-      // const budgetInput = document.querySelector('input[name="task[budget]"]');
-      // if (budgetInput) {
-      //   budgetInput.value = price.toFixed(2);
-      // }
+       const budgetInput = document.querySelector('input[name="task[budget]"]');
+       if (budgetInput) {
+         budgetInput.value = price.toFixed(2);
+       }
     }
   
     if (pagesInput) {

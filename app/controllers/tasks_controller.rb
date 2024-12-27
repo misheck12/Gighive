@@ -16,12 +16,49 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     @task.client = current_user  # Set the client to the current user
 
-    if @task.save
-      UserMailer.task_notification(@task.client, @task).deliver_now
-      redirect_to @task, notice: 'Task was successfully created.'
+    # Calculate the required payment
+    amount = @task.pages * ZynlePaymentService::COST_PER_PAGE
+
+    # Initialize payment service
+    payment_service = ZynlePaymentService.new(
+      api_key: ENV['ZYNLE_API_KEY'],
+      api_id: ENV['ZYNLE_API_ID'],
+      service_id: ENV['ZYNLE_SERVICE_ID'],
+      merchant_id: ENV['ZYNLE_MERCHANT_ID'],
+      channel: ENV['ZYNLE_CHANNEL'],
+      mode: :sandbox # Change to :production in production environment
+    )
+
+    # Generate a unique reference number
+    reference_no = SecureRandom.uuid
+
+    # Initiate payment
+    response = payment_service.momo_deposit(
+      sender_id: current_user.phone_number, # Ensure current_user has phone_number attribute
+      reference_no: reference_no,
+      amount: amount
+    )
+
+    # Check payment response
+    if response['response']['response_code'] == '120'
+      # Payment successful, assign payment details to the task
+      @task.price = amount
+      @task.reference_no = reference_no
+      @task.transaction_id = response['response']['transaction_id'] || 'N/A' # Adjust based on actual response
+
+      if @task.save
+        UserMailer.task_notification(@task.client, @task).deliver_now
+        redirect_to @task, notice: 'Task was successfully created and payment initiated.'
+      else
+        # Payment was successful but task creation failed
+        redirect_to new_task_path, alert: 'Payment was successful, but there was an error creating the task.'
+      end
     else
-      render :new
+      # Payment failed
+      redirect_to new_task_path, alert: "Payment failed: #{response['response']['response_description']}"
     end
+  rescue StandardError => e
+    redirect_to new_task_path, alert: "An error occurred during payment: #{e.message}"
   end
 
   def edit
@@ -93,6 +130,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :budget, :deadline, :category, :status, :client_id, :freelancer_id, :completed_file, :attachment, :revised_file, :pages)
+    params.require(:task).permit(:title, :description, :pages, :price, :deadline, :category, :status, :client_id, :freelancer_id, :completed_file, :attachment, :revised_file, :reference_no, :transaction_id)
   end
 end
