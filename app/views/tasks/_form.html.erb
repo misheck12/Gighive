@@ -28,16 +28,27 @@
         </div>
 
         <div class="form-group mb-3">
-  <label for="pages" class="form-label">Number of pages:</label>
-  <input type="number" id="pages" name="pages" class="form-control" min="1" value="1" oninput="calculatePrice()">
-</div>
+          <label for="pages" class="form-label">Number of pages:</label>
+          <input
+            type="number"
+            id="pages"
+            name="pages"
+            class="form-control"
+            min="1"
+            value="1"
+            oninput="calculatePrice()">
+        </div>
 
-
-        <!-- Removed the budget field, replaced disabled with readonly for showing price -->
+        <!-- Display the computed price in read-only mode -->
         <div class="form-group mb-3">
-  <label for="price" class="form-label">Price ZMK:</label>
-  <input type="text" id="price" name="price" class="form-control" readonly>
-</div>
+          <label for="price" class="form-label">Price ZMK:</label>
+          <input
+            type="text"
+            id="price"
+            name="price"
+            class="form-control"
+            readonly>
+        </div>
 
         <div class="form-group mb-3">
           <%= form.label :category, class: 'form-label' %>
@@ -63,7 +74,7 @@
 <% end %>
 
 <script>
-   const COST_PER_PAGE = 30; // Change the cost as needed
+  const COST_PER_PAGE = 30; // Adjust as needed
 
   function calculatePrice() {
     const pagesInput = document.getElementById("pages");
@@ -74,5 +85,6 @@
     const calculatedPrice = pages * COST_PER_PAGE;
     priceInput.value = calculatedPrice.toFixed(2);
   }
+
   document.addEventListener('DOMContentLoaded', calculatePrice);
 </script>
