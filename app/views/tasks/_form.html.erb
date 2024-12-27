@@ -1,3 +1,5 @@
+<!-- filepath: /app/views/tasks/_form.html.erb -->
+
 <%= form_with(model: task, local: true, html: { class: 'needs-validation', novalidate: true, multipart: true }) do |form| %>
   <% if task.errors.any? %>
     <div id="error_explanation" class="alert alert-danger" role="alert">
@@ -17,46 +19,49 @@
       <div class="col-md-6">
         <h1 class="text-center mb-4" style="color: #2A2A2A;">Create a New Task</h1>
 
+        <!-- Title -->
         <div class="form-group mb-3">
           <%= form.label :title, class: 'form-label' %>
           <%= form.text_field :title, class: 'form-control', placeholder: 'Enter a catchy title for your task' %>
         </div>
 
+        <!-- Description -->
         <div class="form-group mb-3">
           <%= form.label :description, class: 'form-label' %>
           <%= form.text_area :description, class: 'form-control', rows: 3, placeholder: 'What needs to be done?' %>
         </div>
 
+        <!-- Number of Pages -->
         <div class="form-group mb-3">
-          <label for="pages" class="form-label">Number of pages:</label>
-          <input type="number" id="pages" name="pages" class="form-control" min="1" value="1" onchange="calculatePrice()">
+          <%= form.label :pages, "Number of pages:", class: 'form-label' %>
+          <%= form.number_field :pages, id: "pages", class: 'form-control', min: 1, value: 1 %>
         </div>
 
+        <!-- Price -->
         <div class="form-group mb-3">
-          <label for="price" class="form-label">Price ZMK:</label>
-          <input type="text" id="price" name="price" class="form-control" disabled>
+          <%= form.label :price, "Price ZMK:", class: 'form-label' %>
+          <%= form.text_field :price, id: "price", class: 'form-control', readonly: true %>
         </div>
 
-        <div class="form-group mb-3">
-          <%= form.label :budget, class: 'form-label' %>
-          <%= form.number_field :budget, class: 'form-control', placeholder: 'Total budget for the task' %>
-        </div>
-
+        <!-- Category -->
         <div class="form-group mb-3">
           <%= form.label :category, class: 'form-label' %>
           <%= form.text_field :category, class: 'form-control', placeholder: 'e.g. Web Development' %>
         </div>
 
+        <!-- Deadline -->
         <div class="form-group mb-3">
           <%= form.label :deadline, class: 'form-label' %>
           <%= form.datetime_select :deadline, class: 'form-control' %>
         </div>
 
+        <!-- Attachment -->
         <div class="form-group mb-3">
           <%= form.label :attachment, class: 'form-label' %>
           <%= form.file_field :attachment, direct_upload: true, class: 'form-control-file' %>
         </div>
 
+        <!-- Submit -->
         <div class="actions">
           <%= form.submit 'Create Task', class: 'btn btn-primary btn-block', style: 'background-color: #FF6F61; border-color: #FF6F61;' %>
         </div>
@@ -64,25 +69,3 @@
     </div>
   </div>
 <% end %>
-
-<script>
-  const COST_PER_PAGE = 30; // Adjust as needed
-
-  function calculatePrice() {
-    const pages = document.getElementById("pages").value;
-    const price = pages * COST_PER_PAGE;
-
-    document.getElementById("price").value = price.toFixed(2);
-
-    // Update the budget field
-    const budgetInput = document.querySelector('input[name="task[budget]"]');
-    if (budgetInput) {
-      budgetInput.value = price.toFixed(2);
-    }
-  }
-
-  // Initialize price on load
-  document.addEventListener('DOMContentLoaded', () => {
-    calculatePrice();
-  });
-</script>
