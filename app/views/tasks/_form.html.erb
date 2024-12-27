@@ -16,68 +16,47 @@
     <div class="row justify-content-center">
       <div class="col-md-6">
         <h1 class="text-center mb-4" style="color: #2A2A2A;">Create a New Task</h1>
-        
-        <!-- Title -->
+
         <div class="form-group mb-3">
-          <%= form.label :title, "Title", class: 'form-label' %>
+          <%= form.label :title, class: 'form-label' %>
           <%= form.text_field :title, class: 'form-control', placeholder: 'Enter a catchy title for your task' %>
         </div>
-        
-        <!-- Description -->
+
         <div class="form-group mb-3">
-          <%= form.label :description, "Description", class: 'form-label' %>
+          <%= form.label :description, class: 'form-label' %>
           <%= form.text_area :description, class: 'form-control', rows: 3, placeholder: 'What needs to be done?' %>
         </div>
-        
-        <!-- Pages -->
+
         <div class="form-group mb-3">
-          <label class="form-label" for="pages">Number of pages:</label>
-          <input
-            type="number"
-            id="pages"
-            name="pages"
-            class="form-control"
-            min="1"
-            value="10"
-            oninput="calculatePrice()"
-          >
+          <label for="pages" class="form-label">Number of pages:</label>
+          <input type="number" id="pages" name="pages" class="form-control" min="1" value="1" onchange="calculatePrice()">
         </div>
-        
-        <!-- Price -->
+
         <div class="form-group mb-3">
-          <label class="form-label" for="price">Price ZMK:</label>
-          <input
-            type="text"
-            id="price"
-            name="price"
-            class="form-control"
-            readonly
-          >
+          <label for="price" class="form-label">Price ZMK:</label>
+          <input type="text" id="price" name="price" class="form-control" disabled>
         </div>
-        
-        <!-- Category -->
+
         <div class="form-group mb-3">
-          <%= form.label :category, "Category", class: 'form-label' %>
+          <%= form.label :budget, class: 'form-label' %>
+          <%= form.number_field :budget, class: 'form-control', placeholder: 'Total budget for the task' %>
+        </div>
+
+        <div class="form-group mb-3">
+          <%= form.label :category, class: 'form-label' %>
           <%= form.text_field :category, class: 'form-control', placeholder: 'e.g. Web Development' %>
         </div>
-        
-        <!-- Deadline -->
+
         <div class="form-group mb-3">
-          <%= form.label :deadline, "Deadline", class: 'form-label' %>
-          <%= form.datetime_select :deadline,
-                                  start_year: Date.today.year,
-                                  end_year: 2025,
-                                  default: Time.local(2024, 12, 27, 7, 29),
-                                  class: 'form-control' %>
+          <%= form.label :deadline, class: 'form-label' %>
+          <%= form.datetime_select :deadline, class: 'form-control' %>
         </div>
-        
-        <!-- Attachment -->
+
         <div class="form-group mb-3">
-          <%= form.label :attachment, "Attachment", class: 'form-label' %>
+          <%= form.label :attachment, class: 'form-label' %>
           <%= form.file_field :attachment, direct_upload: true, class: 'form-control-file' %>
         </div>
-        
-        <!-- Submit -->
+
         <div class="actions">
           <%= form.submit 'Create Task', class: 'btn btn-primary btn-block', style: 'background-color: #FF6F61; border-color: #FF6F61;' %>
         </div>
@@ -87,18 +66,23 @@
 <% end %>
 
 <script>
-  const COST_PER_PAGE = 30;
-  
+  const COST_PER_PAGE = 30; // Adjust as needed
+
   function calculatePrice() {
-    const pagesInput = document.getElementById("pages");
-    const priceInput = document.getElementById("price");
-    if (!pagesInput || !priceInput) return;
-    
-    const pages = Number(pagesInput.value) || 1;
-    const calculatedPrice = pages * COST_PER_PAGE;
-    priceInput.value = calculatedPrice.toFixed(2);
+    const pages = document.getElementById("pages").value;
+    const price = pages * COST_PER_PAGE;
+
+    document.getElementById("price").value = price.toFixed(2);
+
+    // Update the budget field
+    const budgetInput = document.querySelector('input[name="task[budget]"]');
+    if (budgetInput) {
+      budgetInput.value = price.toFixed(2);
+    }
   }
-  
-  // Initialize price when the page loads
-  document.addEventListener('DOMContentLoaded', calculatePrice);
+
+  // Initialize price on load
+  document.addEventListener('DOMContentLoaded', () => {
+    calculatePrice();
+  });
 </script>
