@@ -1,3 +1,5 @@
+// app/javascript/tasks_form.js
+
 document.addEventListener('turbo:load', () => {
     const COST_PER_PAGE = 30; // Cost per page in ZMK
   
