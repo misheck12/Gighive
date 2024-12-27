@@ -29,17 +29,13 @@
 
         <div class="form-group mb-3">
           <label for="pages" class="form-label">Number of pages:</label>
-          <input type="number" id="pages" name="pages" class="form-control" min="1" value="1" onchange="calculatePrice()">
+          <input type="number" id="pages" name="pages" class="form-control" min="1" value="1" oninput="calculatePrice()">
         </div>
 
+        <!-- Removed the budget field, replaced disabled with readonly for showing price -->
         <div class="form-group mb-3">
           <label for="price" class="form-label">Price ZMK:</label>
-          <input type="text" id="price" name="price" class="form-control" disabled>
-        </div>
-
-        <div class="form-group mb-3">
-          <%= form.label :budget, class: 'form-label' %>
-          <%= form.number_field :budget, class: 'form-control', placeholder: 'Total budget for the task' %>
+          <input type="text" id="price" name="price" class="form-control" readonly>
         </div>
 
         <div class="form-group mb-3">
@@ -66,23 +62,19 @@
 <% end %>
 
 <script>
-  const COST_PER_PAGE = 30; // Adjust as needed
+  const COST_PER_PAGE = 30;
 
   function calculatePrice() {
-    const pages = document.getElementById("pages").value;
-    const price = pages * COST_PER_PAGE;
+    const pagesInput = document.getElementById("pages");
+    const priceInput = document.getElementById("price");
 
-    document.getElementById("price").value = price.toFixed(2);
+    if (!pagesInput || !priceInput) return;
 
-    // Update the budget field
-    const budgetInput = document.querySelector('input[name="task[budget]"]');
-    if (budgetInput) {
-      budgetInput.value = price.toFixed(2);
-    }
+    const pages = Number(pagesInput.value) || 1; // default to 1 if empty
+    const calculatedPrice = pages * COST_PER_PAGE;
+
+    priceInput.value = calculatedPrice.toFixed(2);
   }
 
-  // Initialize price on load
-  document.addEventListener('DOMContentLoaded', () => {
-    calculatePrice();
-  });
+  document.addEventListener('DOMContentLoaded', calculatePrice);
 </script>
