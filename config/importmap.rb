@@ -1,6 +1,4 @@
 # Pin npm packages by running ./bin/importmap
-#//= link application.bootstrap.css
-
 
 pin "application"
 pin "@hotwired/turbo-rails", to: "turbo.min.js", preload: true
