@@ -2,27 +2,27 @@
   <h3 class="mb-4 text-secondary">Welcome, <%= current_user.name %>!</h3>
 
   <% if current_user.admin? %>
-    <!-- Admin Dashboard Tabs -->
-    <ul class="nav nav-tabs" id="adminDashboardTabs" role="tablist">
-      <li class="nav-item" role="presentation">
-        <a class="nav-link active" id="pending-payments-tab" data-bs-toggle="tab" href="#pending-payments" role="tab" aria-controls="pending-payments" aria-selected="true">Pending Payments</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="accepted-payments-tab" data-bs-toggle="tab" href="#accepted-payments" role="tab" aria-controls="accepted-payments" aria-selected="false">Accepted Payments</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="rejected-payments-tab" data-bs-toggle="tab" href="#rejected-payments" role="tab" aria-controls="rejected-payments" aria-selected="false">Rejected Payments</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="all-tasks-tab" data-bs-toggle="tab" href="#all-tasks" role="tab" aria-controls="all-tasks" aria-selected="false">All Tasks</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="all-reviews-tab" data-bs-toggle="tab" href="#all-reviews" role="tab" aria-controls="all-reviews" aria-selected="false">All Reviews</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="manage-users-tab" data-bs-toggle="tab" href="#manage-users" role="tab" aria-controls="manage-users" aria-selected="false">Manage Users</a>
-      </li>
-    </ul>
+     <!-- Admin Dashboard Tabs -->
+  <ul class="nav nav-tabs" id="adminDashboardTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="pending-payments-tab" data-bs-toggle="tab" href="#pending-payments" role="tab" aria-controls="pending-payments" aria-selected="true">Pending Payments</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="accepted-payments-tab" data-bs-toggle="tab" href="#accepted-payments" role="tab" aria-controls="accepted-payments" aria-selected="false">Accepted Payments</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="rejected-payments-tab" data-bs-toggle="tab" href="#rejected-payments" role="tab" aria-controls="rejected-payments" aria-selected="false">Rejected Payments</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="all-tasks-tab" data-bs-toggle="tab" href="#all-tasks" role="tab" aria-controls="all-tasks" aria-selected="false">All Tasks</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="all-reviews-tab" data-bs-toggle="tab" href="#all-reviews" role="tab" aria-controls="all-reviews" aria-selected="false">All Reviews</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="manage-users-tab" data-bs-toggle="tab" href="#manage-users" role="tab" aria-controls="manage-users" aria-selected="false">Manage Users</a>
+    </li>
+  </ul>
 
     <div class="tab-content" id="adminDashboardContent">
       <!-- Pending Payments Tab -->
