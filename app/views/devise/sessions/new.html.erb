@@ -32,42 +32,67 @@
 </div>
 
 <style>
+  /* Reduced brightness for the login container */
   .login-container {
     width: auto;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* This will prevent any overflow from the container */
+    overflow: hidden; /* Prevent overflow */
+    background-color: #2c3e50; /* Darker background color */
   }
 
+  /* Enhanced contrast for the login form */
   .login-form {
     padding: 2rem;
-    background: rgba(245, 245, 245, 0.85); /* A soft background color */
+    background: rgba(44, 62, 80, 0.9); /* Darker and less bright background */
     border-radius: 0.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     max-width: 400px;
     width: 100%;
     margin: auto;
+    color: #ecf0f1; /* Light text color for better readability */
   }
 
+  /* Darker input fields with light text */
   .form-control {
     margin-bottom: 1rem;
-    background: #ffffff; /* A clear and simple input background */
+    background: #34495e; /* Dark input background */
+    color: #ecf0f1; /* Light input text */
+    border: 1px solid #7f8c8d;
   }
 
+  /* Placeholder text color */
+  .form-control::placeholder {
+    color: #bdc3c7; /* Lighter placeholder text */
+  }
+
+  /* Primary button with a vibrant color */
   .btn-primary {
-    background-color: #6c757d; /* A softer, more neutral color */
-    border-color: #6c757d;
+    background-color: #2980b9; /* Vibrant blue color */
+    border-color: #2980b9;
     color: white;
   }
   
+  /* Darker shade on hover for the button */
   .btn-primary:hover {
-    background-color: #5a6268; /* A slightly darker shade for hover state */
-    border-color: #5a6268;
+    background-color: #1c5980; /* Darker blue on hover */
+    border-color: #1c5980;
   }
   
+  /* Checkbox padding */
   .form-horizontal .checkbox {
     padding-left: 20px;
+  }
+
+  /* Light header text */
+  h2 {
+    color: #ecf0f1; /* Light color for the header */
+  }
+
+  /* Light label text */
+  .control-label {
+    color: #ecf0f1; /* Light color for labels */
   }
 </style>
