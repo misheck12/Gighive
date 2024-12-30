@@ -1,45 +1,50 @@
-<div class="signup-container">
-  <h2 class="text-center">Sign Up</h2>
+<div class="container">
+  <!-- Responsive row -->
+  <div class="row">
+    <!-- Responsive column -->
+    <div class="col">
+      <!-- Your HTML code -->
+      <div class="signup-container">
+        <h2 class="text-center text-primary">Sign Up</h2>
 
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-horizontal' }) do |f| %>
-    <%= render "devise/shared/error_messages", resource: resource %>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-horizontal' }) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
 
-    <div class="form-group">
-      <%= f.label :name, class: 'form-label' %>
-      <%= f.text_field :name, autofocus: true, class: 'form-control' %>
+          <div class="form-group">
+            <%= f.label :name, class: 'form-label' %>
+            <%= f.text_field :name, autofocus: true, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :email, class: 'form-label' %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :password, class: 'form-label' %>
+            <% if @minimum_password_length %>
+              <em class="text-muted">(<%= @minimum_password_length %> characters minimum)</em>
+            <% end %>
+            <%= f.password_field :password, autocomplete: "new-password", class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :password_confirmation, class: 'form-label' %>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.submit "Sign Up", class: 'btn btn-primary btn-block', data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Signing up..." } %>
+          </div>
+        <% end %>
+
+        <%= render "devise/shared/links" %>
+      </div>
     </div>
-
-    <div class="form-group">
-      <%= f.label :email, class: 'form-label' %>
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
-    </div>
-
-    <div class="form-group">
-      <%= f.label :password, class: 'form-label' %>
-      <% if @minimum_password_length %>
-        <em class="text-muted">(<%= @minimum_password_length %> characters minimum)</em>
-      <% end %>
-      <%= f.password_field :password, autocomplete: "new-password", class: 'form-control' %>
-    </div>
-
-    <div class="form-group">
-      <%= f.label :password_confirmation, class: 'form-label' %>
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
-    </div>
-
-    <div class="form-group">
-      <%= f.submit "Sign Up", class: 'btn btn-primary btn-block' %>
-    </div>
-  <% end %>
-
-  <%= render "devise/shared/links" %>
+  </div>
 </div>
 
 <style>
-  body {
-    background-color: #f5f5f5;
-  }
-
   .signup-container {
     width: 100%;
     height: 100vh;
@@ -47,23 +52,17 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
-    background: #ffffff;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
+    background: linear-gradient(to bottom right, #FFD700, #1E90FF); /* Gradient background */
+    padding: 1rem;
   }
 
   .form-horizontal {
-    width: 100%;
     max-width: 400px;
     margin: 20px auto;
-  }
-
-  .text-center {
-    color: #333333;
-    margin-bottom: 1rem;
-    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
   .form-control {
@@ -72,28 +71,37 @@
     margin-bottom: 1rem;
   }
 
-  .form-label {
-    font-weight: bold;
-    color: #555555;
-  }
-
   .btn-primary {
-    background-color: #fbbd08; /* Yellow color from the logo */
-    border-color: #fbbd08; /* Yellow color from the logo */
+    background-color: #FFD700; /* Hive Yellow */
+    border-color: #FFD700;
     color: white;
     padding: 0.375rem 0.75rem;
     border-radius: 0.25rem;
     display: block;
     width: 100%;
-    transition: background-color 0.3s ease;
   }
 
   .btn-primary:hover {
-    background-color: #00bcd4; /* Light blue color from the logo */
-    border-color: #00bcd4; /* Light blue color from the logo */
+    background-color: #FF4500; /* Sunset Orange */
+    border-color: #FF4500;
   }
 
   .form-horizontal .checkbox {
     padding-left: 20px;
+  }
+
+  /* Media query for small devices */
+  @media (max-width: 576px) {
+    .signup-container {
+      height: 80vh;
+    }
+
+    .form-horizontal {
+      padding: 1rem;
+    }
+  }
+
+  .fa-spinner {
+    margin-right: 0.5rem;
   }
 </style>
