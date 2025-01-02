@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_02_113508) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_02_114518) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -100,8 +100,12 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_02_113508) do
     t.string "category"
     t.string "reference_no"
     t.string "transaction_id"
+    t.bigint "category_id"
+    t.bigint "subcategory_id"
+    t.index ["category_id"], name: "index_tasks_on_category_id"
     t.index ["client_id"], name: "index_tasks_on_client_id"
     t.index ["freelancer_id"], name: "index_tasks_on_freelancer_id"
+    t.index ["subcategory_id"], name: "index_tasks_on_subcategory_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -126,6 +130,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_02_113508) do
   add_foreign_key "reviews", "tasks"
   add_foreign_key "reviews", "users", column: "reviewer_id"
   add_foreign_key "subcategories", "categories"
+  add_foreign_key "tasks", "categories"
+  add_foreign_key "tasks", "subcategories"
   add_foreign_key "tasks", "users", column: "client_id"
   add_foreign_key "tasks", "users", column: "freelancer_id"
 end
