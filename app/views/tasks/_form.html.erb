@@ -1,3 +1,104 @@
+Rails.application.routes.draw do
+  # Define root path
+  root 'dashboard#show'
+
+  # Dashboard routes
+  get 'dashboard/show'
+  get 'dashboard', to: 'dashboard#show', as: 'dashboard'
+
+  # Devise routes for user authentication with custom controllers for registrations
+  devise_for :users, controllers: { registrations: 'users/registrations' }
+
+  # Custom routes within Devise for handling special user registration flows
+  devise_scope :user do
+    get 'users/new_freelancer', to: 'users/registrations#new_freelancer', as: :new_freelancer_registration
+    post 'users/create_freelancer', to: 'users/registrations#create_freelancer', as: :create_freelancer_registration
+    delete 'users/:id', to: 'users/registrations#destroy', as: :admin_destroy_user
+    get '/users/sign_out', to: 'devise/sessions#destroy'
+  end
+
+  # Routes for tasks
+  resources :tasks do
+    member do
+      post 'accept'
+      post 'complete'
+      post 'changes'
+      post 'submit_changes'
+    end
+
+    # Removed nested categories under tasks
+
+    # Nested routes for reviews and payments within tasks
+    resources :reviews, only: [:new, :create]
+    resources :payments, only: [:new, :create, :show] do
+      member do
+        patch 'accept', to: 'payments#accept'
+        patch 'reject', to: 'payments#reject'
+      end
+    end
+  end
+
+  # Independent routes for categories
+  resources :categories, only: [] do
+    member do
+      get :subcategories
+    end
+  end
+
+  # Independent routes for reviews
+  resources :reviews, only: [:show, :edit, :update, :destroy]
+
+  # Any additional routes can be added below
+end
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const categorySelect = document.getElementById('category_select');
+    const subcategorySelect = document.getElementById('subcategory_select');
+
+    // Function to fetch and populate subcategories
+    function fetchSubcategories(categoryId, selectedSubcategoryId = null) {
+      subcategorySelect.innerHTML = '<option value="">Select a subcategory</option>';
+
+      if (categoryId) {
+        fetch(`/categories/${categoryId}/subcategories`)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            data.subcategories.forEach(subcategory => {
+              const option = document.createElement('option');
+              option.value = subcategory.id;
+              option.textContent = subcategory.name;
+              if (selectedSubcategoryId && subcategory.id === selectedSubcategoryId) {
+                option.selected = true;
+              }
+              subcategorySelect.appendChild(option);
+            });
+          })
+          .catch(error => {
+            console.error('Error fetching subcategories:', error);
+            subcategorySelect.innerHTML = '<option value="">Error loading subcategories</option>';
+          });
+      }
+    }
+
+    // Event listener for category selection
+    categorySelect.addEventListener('change', function () {
+      const categoryId = this.value;
+      fetchSubcategories(categoryId);
+    });
+
+    // Pre-populate subcategories if editing an existing task
+    <% if task.persisted? && task.subcategory_id.present? %>
+      fetchSubcategories(<%= task.category_id %>, <%= task.subcategory_id %>);
+    <% end %>
+  });
+</script>
+
 <%= form_with(model: task, local: true, html: { class: 'needs-validation', novalidate: true, multipart: true }) do |form| %>
   <% if task.errors.any? %>
     <div id="error_explanation" class="alert alert-danger" role="alert">
@@ -80,52 +181,3 @@
     </div>
   </div>
 <% end %>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const categorySelect = document.getElementById('category_select');
-    const subcategorySelect = document.getElementById('subcategory_select');
-
-    // Function to fetch and populate subcategories
-    function fetchSubcategories(categoryId, selectedSubcategoryId = null) {
-      // Clear existing subcategories
-      subcategorySelect.innerHTML = '<option value="">Select a subcategory</option>';
-
-      if (categoryId) {
-        fetch(`/categories/${categoryId}/subcategories`)
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            return response.json();
-          })
-          .then(data => {
-            data.subcategories.forEach(subcategory => {
-              const option = document.createElement('option');
-              option.value = subcategory.id;
-              option.textContent = subcategory.name;
-              if (selectedSubcategoryId && subcategory.id === selectedSubcategoryId) {
-                option.selected = true;
-              }
-              subcategorySelect.appendChild(option);
-            });
-          })
-          .catch(error => {
-            console.error('Error fetching subcategories:', error);
-            subcategorySelect.innerHTML = '<option value="">Error loading subcategories</option>';
-          });
-      }
-    }
-
-    // Event listener for category selection
-    categorySelect.addEventListener('change', function () {
-      const categoryId = this.value;
-      fetchSubcategories(categoryId);
-    });
-
-    // Pre-populate subcategories if editing an existing task
-    <% if task.persisted? && task.subcategory_id.present? %>
-      fetchSubcategories(<%= task.category_id %>, <%= task.subcategory_id %>);
-    <% end %>
-  });
-</script>
