@@ -10,7 +10,7 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
-    @categories = TaskCategory.all
+    @categories = Category.all
     # Fetch categories for the dropdown
   end
 
