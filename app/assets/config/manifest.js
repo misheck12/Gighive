@@ -3,8 +3,8 @@
 //= link_tree ../builds
 //= link rails-ujs.js
 //= link application.css
+//= link bootstrap/dist/css/bootstrap.css
+//= link bootstrap.bundle.js
 
-//= link_directory ../javascripts .js
-//= link_directory ../stylesheets .css
 
 //= link application.bootstrap.css

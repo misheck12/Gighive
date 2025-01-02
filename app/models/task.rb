@@ -1,9 +1,61 @@
 class Task < ApplicationRecord
+
+  CATEGORY_SUBCATEGORIES = {
+    'Web Development' => {
+      'Front-End Development' => 1_000,
+      'Back-End Development' => 1_500,
+      'Full Stack Development' => 2_500,
+      'E-commerce Development' => 2_000
+    },
+    'Graphic Design' => {
+      'Logo Design' => 800,
+      'Web Design' => 1_000,
+      'Branding & Identity' => 1_200,
+      'Social Media Graphics' => 500
+    },
+    'Content Writing' => {
+      'Blog Writing' => 500,
+      'Copywriting' => 800,
+      'Technical Writing' => 1_000,
+      'SEO Writing' => 700
+    },
+    'App Development' => {
+      'Mobile App Development (iOS)' => 2_000,
+      'Mobile App Development (Android)' => 2_000,
+      'Cross-Platform App Development' => 3_000
+    },
+    'Academics' => {
+      'Assignment Writing' => 300,
+      'Essay Writing' => 500,
+      'Research Paper Writing' => 800,
+      'Thesis Writing' => 1_500,
+      'Online Tutoring' => 500
+    },
+    'Business' => {
+      'Business Plan Writing' => 1_000,
+      'Market Research' => 800,
+      'Business Consulting' => 1_500,
+      'Financial Analysis' => 1_200,
+      'Startup Advice' => 1_000
+    }
+  }
+
+  def self.subcategory_options_for_category(category)
+    CATEGORY_SUBCATEGORIES[category] || {}
+  end
+
   # Validations
   validates :title, presence: true, length: { minimum: 5, maximum: 100 }
   validates :description, presence: true, length: { minimum: 10 }
-  validates :budget, presence: true, numericality: { greater_than: 0 }
+  validates :budget, presence: true, numericality: { greater_than: 0, message: "must be greater than 0" }
   validates :deadline, presence: true
+  validates :category, presence: true, inclusion: { in: %w[Development Design Marketing Writing Other], message: "%{value} is not a valid category" }
+  validates :subcategory, presence: true
+  validates :complexity, presence: true
+  validates :time_commitment, presence: true
+  validates :urgency, presence: true
+  validates :revisions, presence: true
+  validate :budget_above_minimum_price
 
   has_one_attached :completed_file
   has_one_attached :revised_file
@@ -16,7 +68,7 @@ class Task < ApplicationRecord
   before_validation :set_default_status, on: :create
 
   # Scopes
-  scope :open_tasks, -> { where(status: :open) } # Note: Use symbol :open instead of string 'open'
+  scope :open_tasks, -> { where(status: :open) } 
 
   # Associations
   belongs_to :client, class_name: 'User'
@@ -28,14 +80,67 @@ class Task < ApplicationRecord
     reviews.exists?
   end
 
-  def self.total_earning_for_freelancer (user_id)
-  joins(:payment).where(freelancer_id: user_id, payments: {status: :approved})
-
+  def self.total_earning_for_freelancer(user_id)
+    joins(:payment).where(freelancer_id: user_id, payments: {status: :approved})
   end
 
   private
 
+  # Set default status
   def set_default_status
     self.status ||= :open
+  end
+
+  # Validate that the budget is above the minimum price for the selected subcategory
+  def budget_above_minimum_price
+    min_price = get_minimum_price_for_subcategory(subcategory)
+
+    if budget < min_price
+      errors.add(:budget, "must be at least #{min_price} ZMK for the selected subcategory.")
+    end
+  end
+
+  # Get the minimum price for the selected subcategory
+  def get_minimum_price_for_subcategory(subcategory)
+    price_ranges = {
+      # Web Development
+      'Front-End Development' => 1_000,
+      'Back-End Development' => 1_500,
+      'Full Stack Development' => 2_500,
+      'E-commerce Development' => 2_000,
+
+      # Graphic Design
+      'Logo Design' => 800,
+      'Web Design' => 1_000,
+      'Branding & Identity' => 1_200,
+      'Social Media Graphics' => 500,
+
+      # Content Writing
+      'Blog Writing' => 500,
+      'Copywriting' => 800,
+      'Technical Writing' => 1_000,
+      'SEO Writing' => 700,
+
+      # App Development
+      'Mobile App Development (iOS)' => 2_000,
+      'Mobile App Development (Android)' => 2_000,
+      'Cross-Platform App Development' => 3_000,
+
+      # Academics
+      'Assignment Writing' => 300,
+      'Essay Writing' => 500,
+      'Research Paper Writing' => 800,
+      'Thesis Writing' => 1_500,
+      'Online Tutoring' => 500,
+
+      # Business
+      'Business Plan Writing' => 1_000,
+      'Market Research' => 800,
+      'Business Consulting' => 1_500,
+      'Financial Analysis' => 1_200,
+      'Startup Advice' => 1_000
+    }
+
+    price_ranges[subcategory] || 0 # Default to 0 if subcategory is not found
   end
 end

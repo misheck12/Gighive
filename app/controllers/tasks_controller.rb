@@ -10,11 +10,25 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @categories = Category.all # Fetch categories for the dropdown
+  end
+
+  # Action to fetch subcategories based on the selected category
+  def get_subcategories
+    category = Category.find(params[:category_id])
+    subcategories = category.subcategories
+    render json: { subcategories: subcategories }
   end
 
   def create
     @task = Task.new(task_params)
     @task.client = current_user  # Set the client to the current user
+
+    # Validate budget against the subcategory's minimum price
+    if @task.budget < @task.get_minimum_price_for_subcategory(@task.subcategory)
+      flash.now[:alert] = "Budget must be at least #{@task.get_minimum_price_for_subcategory(@task.subcategory)} ZMK for the selected subcategory."
+      render :new and return
+    end
 
     if @task.save
       redirect_to @task, notice: 'Task was successfully created.'
@@ -27,6 +41,12 @@ class TasksController < ApplicationController
   end
 
   def update
+    # Ensure the budget is above the minimum price when editing
+    if @task.budget < @task.get_minimum_price_for_subcategory(@task.subcategory)
+      flash.now[:alert] = "Budget must be at least #{@task.get_minimum_price_for_subcategory(@task.subcategory)} ZMK for the selected subcategory."
+      render :edit and return
+    end
+
     if @task.update(task_params)
       redirect_to @task, notice: 'Task was successfully updated.'
     else
@@ -66,11 +86,10 @@ class TasksController < ApplicationController
   end
 
   def submit_changes
-    # Ensure that only the assigned freelancer can submit changes
     if current_user == @task.freelancer
       if params[:revised_file].present?
         @task.revised_file.attach(params[:revised_file])
-        @task.update(status: 'completed') # Update the task status as needed
+        @task.update(status: 'completed') # Update the task status after submitting changes
 
         redirect_to @task, notice: 'Your changes have been submitted successfully.'
       else
@@ -88,6 +107,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :budget, :deadline, :category, :status, :client_id, :freelancer_id, :completed_file, :attachment, :revised_file)
+    params.require(:task).permit(:title, :description, :budget, :deadline, :category, :subcategory, :status, :client_id, :freelancer_id, :completed_file, :attachment, :revised_file)
   end
 end

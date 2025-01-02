@@ -17,6 +17,18 @@
       <div class="col-md-6">
         <h1 class="text-center mb-4">Create a New Task</h1>
 
+        <!-- Category Field -->
+        <div class="form-group">
+          <%= form.label :category, 'Category' %>
+          <%= form.select :category, options_from_collection_for_select(Category.all, :id, :name), prompt: 'Select a category', id: 'category_select', class: 'form-control' %>
+        </div>
+
+        <!-- Subcategory Field (Initially Empty) -->
+        <div class="form-group">
+          <%= form.label :subcategory, 'Subcategory' %>
+          <%= form.select :subcategory, [], prompt: 'Select a subcategory', id: 'subcategory_select', class: 'form-control' %>
+        </div>
+
         <div class="form-group">
           <%= form.label :title %>
           <%= form.text_field :title, class: 'form-control', placeholder: 'Enter a catchy title for your task' %>
@@ -28,23 +40,8 @@
         </div>
 
         <div class="form-group">
-          <label for="pages">Number of pages:</label>
-          <input type="number" id="pages" name="pages" class="form-control" min="1" value="1" onchange="calculatePrice()">
-        </div>
-
-        <div class="form-group">
-          <label for="price">Price ZMK:</label>
-          <input type="text" id="price" name="price" class="form-control" disabled>
-        </div>
-
-        <div class="form-group">
           <%= form.label :budget %>
           <%= form.number_field :budget, class: 'form-control', placeholder: 'Total budget for the task' %>
-        </div>
-
-        <div class="form-group">
-          <%= form.label :category %>
-          <%= form.text_field :category, class: 'form-control', placeholder: 'e.g. Web Development' %>
         </div>
 
         <div class="form-group">
@@ -53,8 +50,7 @@
         </div>
 
         <div class="form-group">
-          <%= form.label :attachment %>
-          <%= form.file_field :attachment, direct_upload: true, class: 'form-control-file' %>
+          <%= form.file_field :attachment, class: 'form-control-file' %>
         </div>
 
         <div class="actions">
@@ -66,20 +62,30 @@
 <% end %>
 
 <script>
-  const COST_PER_PAGE = 30; // Change this to your actual cost per page
+  document.addEventListener('DOMContentLoaded', function () {
+    const categorySelect = document.getElementById('category_select');
+    const subcategorySelect = document.getElementById('subcategory_select');
 
-  function calculatePrice() {
-    const pages = document.getElementById("pages").value;
-    const price = pages * COST_PER_PAGE;
-    document.getElementById("price").value = price.toFixed(2);
-    
-    // Update the budget field in the form
-    const budgetInput = document.querySelector('input[name="task[budget]"]');
-    if (budgetInput) {
-      budgetInput.value = price.toFixed(2);
-    }
-  }
+    // When category changes, fetch the subcategories
+    categorySelect.addEventListener('change', function () {
+      const categoryId = categorySelect.value;
+      
+      // Clear previous subcategories
+      subcategorySelect.innerHTML = '<option value="">Select a subcategory</option>';
 
-  // Initialize price on load
-  document.addEventListener('DOMContentLoaded', calculatePrice);
+      if (categoryId) {
+        // Fetch subcategories based on selected category
+        fetch(`/categories/${categoryId}/subcategories`)
+          .then(response => response.json())
+          .then(data => {
+            data.subcategories.forEach(subcategory => {
+              const option = document.createElement('option');
+              option.value = subcategory.id;
+              option.textContent = subcategory.name;
+              subcategorySelect.appendChild(option);
+            });
+          });
+      }
+    });
+  });
 </script>

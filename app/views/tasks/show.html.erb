@@ -5,7 +5,7 @@
     <div class="card-body">
       <p class="card-text">
         <strong>Description:</strong> <%= @task.description %><br>
-        <strong>Budget:</strong> <%= humanized_money_with_symbol(@task.budget, unit:"ZMK") %><br>
+        <strong>Budget:</strong> <%= humanized_money_with_symbol(@task.budget, unit: "ZMK") %><br>
         <strong>Category:</strong> <%= @task.category %><br>
         <% if @task.attachment.attached? %>
           <strong>Attachment:</strong> <%= link_to @task.attachment.filename, rails_blob_path(@task.attachment, disposition: "attachment"), class: 'btn btn-link' %><br>
@@ -21,8 +21,6 @@
           <% end %>
           <% unless @task.reviewed? %>
             <%= link_to 'Give a Review', new_task_review_path(@task), class: 'btn btn-primary' %>
-          <% end %>
-          <% unless @task.reviewed? %>
             <%= form_with url: changes_task_path(@task), method: :post do |form| %>
               <%= form.submit 'Request Changes', class: 'btn btn-warning' %>
             <% end %>
@@ -48,7 +46,6 @@
         <% end %>
       <% end %>
 
-      <%# Task Deletion Option for Admin and Client %>
       <% if current_user == @task.client || current_user.admin? %>
         <%= link_to 'Delete Task', task_path(@task), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger mt-2' %>
       <% end %>
@@ -72,5 +69,9 @@
   .btn-link {
     padding: 0;
     margin-left: 5px;
+  }
+
+  .btn-primary, .btn-warning, .btn-secondary, .btn-danger {
+    margin-top: 10px;
   }
 </style>
