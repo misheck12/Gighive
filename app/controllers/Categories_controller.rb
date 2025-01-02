@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!  # Ensure users are authenticated
 
   def subcategories
     category = Category.find(params[:id])
