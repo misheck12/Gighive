@@ -14,12 +14,12 @@ class TasksController < ApplicationController
     # Fetch categories for the dropdown
   end
 
-  # Action to fetch subcategories based on the selected category
-  def get_subcategories
-    category = Category.find(params[:category_id])
-    subcategories = category.subcategories
-    render json: { subcategories: subcategories }
-  end
+  # Remove the get_subcategories action as it will be handled by CategoriesController
+  # def get_subcategories
+  #   category = Category.find(params[:category_id])
+  #   subcategories = category.subcategories
+  #   render json: { subcategories: subcategories }
+  # end
 
   def create
     @task = Task.new(task_params)
@@ -34,11 +34,13 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to @task, notice: 'Task was successfully created.'
     else
+      @categories = Category.all
       render :new
     end
   end
 
   def edit
+    @categories = Category.all
   end
 
   def update
@@ -51,6 +53,7 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       redirect_to @task, notice: 'Task was successfully updated.'
     else
+      @categories = Category.all
       render :edit
     end
   end
@@ -108,6 +111,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :budget, :deadline, :category, :subcategory, :status, :client_id, :freelancer_id, :completed_file, :attachment, :revised_file)
+    params.require(:task).permit(:title, :description, :budget, :deadline, :category_id, :subcategory_id, :status, :completed_file, :attachment, :revised_file, :complexity, :time_commitment, :urgency, :revisions)
   end
 end
