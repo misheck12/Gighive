@@ -10,67 +10,74 @@
     </div>
   <% end %>
 
-  <%= form.hidden_field :client_id, value: current_user.id %>
+  <!-- Removed the hidden client_id field for security reasons -->
+  <!-- <%= form.hidden_field :client_id, value: current_user.id %> -->
 
   <div class="container mt-4">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <h1 class="text-center mb-4">Create a New Task</h1>
+        <h1 class="text-center mb-4"><%= task.new_record? ? 'Create a New Task' : 'Edit Task' %></h1>
 
         <!-- Category Field -->
         <div class="mb-3">
           <%= form.label :category_id, 'Category', class: 'form-label' %>
-          <%= form.select :category_id, options_from_collection_for_select(@categories, :id, :name, @task.category_id), { prompt: 'Select a category' }, class: 'form-select', id: 'category_select' %>
+          <%= form.select :category_id, options_from_collection_for_select(@categories, :id, :name, task.category_id), { prompt: 'Select a category' }, class: 'form-select', id: 'category_select' %>
         </div>
 
-        <!-- Subcategory Field (Initially Empty) -->
-        <div class="form-group">
-          <%= form.label :subcategory_id, 'Subcategory' %>
-          <%= form.select :subcategory_id, [], prompt: 'Select a subcategory', id: 'subcategory_select', class: 'form-control' %>
+        <!-- Subcategory Field -->
+        <div class="form-group mb-3">
+          <%= form.label :subcategory_id, 'Subcategory', class: 'form-label' %>
+          <%= form.select :subcategory_id, options_for_select([], selected: task.subcategory_id), prompt: 'Select a subcategory', id: 'subcategory_select', class: 'form-select' %>
         </div>
 
-        <div class="form-group">
-          <%= form.label :title %>
+        <!-- Title Field -->
+        <div class="form-group mb-3">
+          <%= form.label :title, class: 'form-label' %>
           <%= form.text_field :title, class: 'form-control', placeholder: 'Enter a catchy title for your task', required: true %>
           <div class="invalid-feedback">
             Please provide a title.
           </div>
         </div>
 
-        <div class="form-group">
-          <%= form.label :description %>
+        <!-- Description Field -->
+        <div class="form-group mb-3">
+          <%= form.label :description, class: 'form-label' %>
           <%= form.text_area :description, class: 'form-control', rows: 3, placeholder: 'What needs to be done?', required: true %>
           <div class="invalid-feedback">
             Please provide a description.
           </div>
         </div>
 
-        <div class="form-group">
-          <%= form.label :budget %>
+        <!-- Budget Field -->
+        <div class="form-group mb-3">
+          <%= form.label :budget, class: 'form-label' %>
           <%= form.number_field :budget, class: 'form-control', placeholder: 'Total budget for the task', required: true %>
           <div class="invalid-feedback">
             Please provide a budget.
           </div>
         </div>
 
-        <div class="form-group">
-          <%= form.label :deadline %>
+        <!-- Deadline Field -->
+        <div class="form-group mb-3">
+          <%= form.label :deadline, class: 'form-label' %>
           <%= form.datetime_select :deadline, class: 'form-control', required: true %>
           <div class="invalid-feedback">
             Please provide a deadline.
           </div>
         </div>
 
-        <div class="form-group">
-          <%= form.label :attachment %>
+        <!-- Attachment Field -->
+        <div class="form-group mb-3">
+          <%= form.label :attachment, class: 'form-label' %>
           <%= form.file_field :attachment, class: 'form-control-file', required: true %>
           <div class="invalid-feedback">
             Please attach a file.
           </div>
         </div>
 
-        <div class="actions">
-          <%= form.submit 'Create Task', class: 'btn btn-primary btn-block' %>
+        <!-- Submit Button -->
+        <div class="actions text-center">
+          <%= form.submit task.new_record? ? 'Create Task' : 'Update Task', class: 'btn btn-primary btn-block' %>
         </div>
       </div>
     </div>
@@ -82,22 +89,27 @@
     const categorySelect = document.getElementById('category_select');
     const subcategorySelect = document.getElementById('subcategory_select');
 
-    // When category changes, fetch the subcategories
-    categorySelect.addEventListener('change', function () {
-      const categoryId = categorySelect.value;
-      
-      // Clear previous subcategories
+    // Function to fetch and populate subcategories
+    function fetchSubcategories(categoryId, selectedSubcategoryId = null) {
+      // Clear existing subcategories
       subcategorySelect.innerHTML = '<option value="">Select a subcategory</option>';
 
       if (categoryId) {
-        // Fetch subcategories based on selected category
         fetch(`/categories/${categoryId}/subcategories`)
-          .then(response => response.json())
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
           .then(data => {
             data.subcategories.forEach(subcategory => {
               const option = document.createElement('option');
               option.value = subcategory.id;
               option.textContent = subcategory.name;
+              if (selectedSubcategoryId && subcategory.id === selectedSubcategoryId) {
+                option.selected = true;
+              }
               subcategorySelect.appendChild(option);
             });
           })
@@ -106,6 +118,17 @@
             subcategorySelect.innerHTML = '<option value="">Error loading subcategories</option>';
           });
       }
+    }
+
+    // Event listener for category selection
+    categorySelect.addEventListener('change', function () {
+      const categoryId = this.value;
+      fetchSubcategories(categoryId);
     });
+
+    // Pre-populate subcategories if editing an existing task
+    <% if task.persisted? && task.subcategory_id.present? %>
+      fetchSubcategories(<%= task.category_id %>, <%= task.subcategory_id %>);
+    <% end %>
   });
 </script>
