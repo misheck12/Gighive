@@ -96,10 +96,11 @@ class Task < ApplicationRecord
 
   # Validate that the budget is above the minimum price for the selected subcategory
   def budget_above_minimum_price
-    min_price = CATEGORY_SUBCATEGORIES.dig(category.name, subcategory.name) || 0
-
+    min_price = subcategory.minimum_price || 0
+  
     if budget < min_price
       errors.add(:budget, "must be at least #{min_price} ZMK for the selected subcategory.")
     end
   end
+  
 end
