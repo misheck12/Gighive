@@ -73,6 +73,8 @@ class Task < ApplicationRecord
   # Associations
   belongs_to :client, class_name: 'User'
   belongs_to :freelancer, class_name: 'User', optional: true
+  belongs_to :task_category, foreign_key: :category, primary_key: :name, optional: true
+
   has_many :reviews, dependent: :destroy
   has_one :payment, dependent: :destroy
 
