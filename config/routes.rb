@@ -26,12 +26,7 @@ Rails.application.routes.draw do
       post 'submit_changes'
     end
 
-    # Nested routes for categories to fetch subcategories
-    resources :categories, only: [] do
-      member do
-        get :subcategories
-      end
-    end
+    # Removed nested categories under tasks
 
     # Nested routes for reviews and payments within tasks
     resources :reviews, only: [:new, :create]
@@ -40,6 +35,13 @@ Rails.application.routes.draw do
         patch 'accept', to: 'payments#accept'
         patch 'reject', to: 'payments#reject'
       end
+    end
+  end
+
+  # Independent routes for categories
+  resources :categories, only: [] do
+    member do
+      get :subcategories
     end
   end
 
