@@ -49,8 +49,8 @@ class Task < ApplicationRecord
   validates :description, presence: true, length: { minimum: 10 }
   validates :budget, presence: true, numericality: { greater_than: 0, message: "must be greater than 0" }
   validates :deadline, presence: true
-  validates :category, presence: true, inclusion: { in: %w[Development Design Marketing Writing Other], message: "%{value} is not a valid category" }
-  validates :subcategory, presence: true
+  validates :category_id, presence: true
+  validates :subcategory_id, presence: true
   validates :complexity, presence: true
   validates :time_commitment, presence: true
   validates :urgency, presence: true
@@ -73,7 +73,8 @@ class Task < ApplicationRecord
   # Associations
   belongs_to :client, class_name: 'User'
   belongs_to :freelancer, class_name: 'User', optional: true
-  belongs_to :task_category, foreign_key: :category, primary_key: :name, optional: true
+  belongs_to :category
+  belongs_to :subcategory
 
   has_many :reviews, dependent: :destroy
   has_one :payment, dependent: :destroy
@@ -95,54 +96,10 @@ class Task < ApplicationRecord
 
   # Validate that the budget is above the minimum price for the selected subcategory
   def budget_above_minimum_price
-    min_price = get_minimum_price_for_subcategory(subcategory)
+    min_price = CATEGORY_SUBCATEGORIES.dig(category.name, subcategory.name) || 0
 
     if budget < min_price
       errors.add(:budget, "must be at least #{min_price} ZMK for the selected subcategory.")
     end
-  end
-
-  # Get the minimum price for the selected subcategory
-  def get_minimum_price_for_subcategory(subcategory)
-    price_ranges = {
-      # Web Development
-      'Front-End Development' => 1_000,
-      'Back-End Development' => 1_500,
-      'Full Stack Development' => 2_500,
-      'E-commerce Development' => 2_000,
-
-      # Graphic Design
-      'Logo Design' => 800,
-      'Web Design' => 1_000,
-      'Branding & Identity' => 1_200,
-      'Social Media Graphics' => 500,
-
-      # Content Writing
-      'Blog Writing' => 500,
-      'Copywriting' => 800,
-      'Technical Writing' => 1_000,
-      'SEO Writing' => 700,
-
-      # App Development
-      'Mobile App Development (iOS)' => 2_000,
-      'Mobile App Development (Android)' => 2_000,
-      'Cross-Platform App Development' => 3_000,
-
-      # Academics
-      'Assignment Writing' => 300,
-      'Essay Writing' => 500,
-      'Research Paper Writing' => 800,
-      'Thesis Writing' => 1_500,
-      'Online Tutoring' => 500,
-
-      # Business
-      'Business Plan Writing' => 1_000,
-      'Market Research' => 800,
-      'Business Consulting' => 1_500,
-      'Financial Analysis' => 1_200,
-      'Startup Advice' => 1_000
-    }
-
-    price_ranges[subcategory] || 0 # Default to 0 if subcategory is not found
   end
 end
