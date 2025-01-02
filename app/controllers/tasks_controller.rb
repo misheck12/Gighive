@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy, :complete, :changes, :accept, :submit_changes]
+  before_action :load_categories, only: [:new, :edit, :create, :update]
 
   def index
     @tasks = Task.all
@@ -10,16 +11,9 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
-    @categories = Category.all
-    # Fetch categories for the dropdown
   end
 
-  # Remove the get_subcategories action as it will be handled by CategoriesController
-  # def get_subcategories
-  #   category = Category.find(params[:category_id])
-  #   subcategories = category.subcategories
-  #   render json: { subcategories: subcategories }
-  # end
+  # Removed the get_subcategories action as it is handled by CategoriesController
 
   def create
     @task = Task.new(task_params)
@@ -34,13 +28,11 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to @task, notice: 'Task was successfully created.'
     else
-      @categories = Category.all
       render :new
     end
   end
 
   def edit
-    @categories = Category.all
   end
 
   def update
@@ -53,7 +45,6 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       redirect_to @task, notice: 'Task was successfully updated.'
     else
-      @categories = Category.all
       render :edit
     end
   end
@@ -110,7 +101,26 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
+  def load_categories
+    @categories = Category.all
+  end
+
   def task_params
-    params.require(:task).permit(:title, :description, :budget, :deadline, :category_id, :subcategory_id, :status, :completed_file, :attachment, :revised_file, :complexity, :time_commitment, :urgency, :revisions)
+    params.require(:task).permit(
+      :title,
+      :description,
+      :budget,
+      :deadline,
+      :category_id,
+      :subcategory_id,
+      :status,
+      :completed_file,
+      :attachment,
+      :revised_file,
+      :complexity,
+      :time_commitment,
+      :urgency,
+      :revisions
+    )
   end
 end
