@@ -20,7 +20,7 @@
         <!-- Category Field -->
         <div class="mb-3">
           <%= form.label :category, 'Category', class: 'form-label' %>
-          <%= form.select :category, options_from_collection_for_select(@categories, :name, :name, @task.category), { prompt: 'Select a category' }, class: 'form-select', id: 'category_select' %>
+          <%= form.select :category, options_from_collection_for_select(@categories, :id, :name, @task.category), { prompt: 'Select a category' }, class: 'form-select', id: 'category_select' %>
         </div>
 
         <!-- Subcategory Field (Initially Empty) -->
