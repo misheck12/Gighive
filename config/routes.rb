@@ -24,7 +24,13 @@ Rails.application.routes.draw do
       post 'complete'
       post 'changes'
       post 'submit_changes'
+    end
 
+    # Nested routes for categories to fetch subcategories
+    resources :categories, only: [] do
+      member do
+        get :subcategories
+      end
     end
 
     # Nested routes for reviews and payments within tasks
