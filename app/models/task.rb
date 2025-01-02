@@ -41,7 +41,7 @@ class Task < ApplicationRecord
   }
 
   def self.subcategory_options_for_category(category)
-    CATEGORY_SUBCATEGORIES[category] || {}
+    Category.find_by(name: category)&.subcategories&.pluck(:name, :id) || []
   end
 
   # Validations
@@ -102,5 +102,5 @@ class Task < ApplicationRecord
       errors.add(:budget, "must be at least #{min_price} ZMK for the selected subcategory.")
     end
   end
-  
+
 end
