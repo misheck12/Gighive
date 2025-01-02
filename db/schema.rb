@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_27_082112) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_02_113508) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_27_082112) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "payments", force: :cascade do |t|
     t.bigint "client_id"
     t.bigint "task_id", null: false
@@ -65,6 +71,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_27_082112) do
     t.datetime "updated_at", null: false
     t.index ["reviewer_id"], name: "index_reviews_on_reviewer_id"
     t.index ["task_id"], name: "index_reviews_on_task_id"
+  end
+
+  create_table "subcategories", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "category_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_subcategories_on_category_id"
   end
 
   create_table "task_categories", force: :cascade do |t|
@@ -111,6 +125,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_27_082112) do
   add_foreign_key "payments", "users", column: "client_id"
   add_foreign_key "reviews", "tasks"
   add_foreign_key "reviews", "users", column: "reviewer_id"
+  add_foreign_key "subcategories", "categories"
   add_foreign_key "tasks", "users", column: "client_id"
   add_foreign_key "tasks", "users", column: "freelancer_id"
 end
