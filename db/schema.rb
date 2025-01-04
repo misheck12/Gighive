@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_02_143355) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_03_212533) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -78,7 +78,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_02_143355) do
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "minimum_price"
+    t.decimal "minimum_price", precision: 10, scale: 2, default: "0.0", null: false
     t.index ["category_id"], name: "index_subcategories_on_category_id"
   end
 
@@ -92,9 +92,13 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_02_143355) do
     t.bigint "freelancer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "revisions", default: 1, null: false
     t.string "category"
     t.bigint "category_id"
     t.bigint "subcategory_id"
+    t.string "complexity"
+    t.string "time_commitment"
+    t.string "urgency"
     t.index ["category_id"], name: "index_tasks_on_category_id"
     t.index ["client_id"], name: "index_tasks_on_client_id"
     t.index ["freelancer_id"], name: "index_tasks_on_freelancer_id"

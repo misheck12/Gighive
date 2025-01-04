@@ -19,11 +19,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     @task.client = current_user  # Set the client to the current user
 
-    # Validate budget against the subcategory's minimum price
-    if @task.budget < @task.get_minimum_price_for_subcategory(@task.subcategory)
-      flash.now[:alert] = "Budget must be at least #{@task.get_minimum_price_for_subcategory(@task.subcategory)} ZMK for the selected subcategory."
-      render :new and return
-    end
+    # Removed manual budget validation
 
     if @task.save
       redirect_to @task, notice: 'Task was successfully created.'
@@ -36,11 +32,7 @@ class TasksController < ApplicationController
   end
 
   def update
-    # Ensure the budget is above the minimum price when editing
-    if @task.budget < @task.get_minimum_price_for_subcategory(@task.subcategory)
-      flash.now[:alert] = "Budget must be at least #{@task.get_minimum_price_for_subcategory(@task.subcategory)} ZMK for the selected subcategory."
-      render :edit and return
-    end
+    # Removed manual budget validation
 
     if @task.update(task_params)
       redirect_to @task, notice: 'Task was successfully updated.'

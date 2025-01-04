@@ -1,4 +1,4 @@
-<%= form_with(model: task, local: true, html: { class: 'needs-validation', novalidate: true, multipart: true }) do |form| %>
+<%= form_with(model: task, local: false, html: { class: 'needs-validation', novalidate: true, multipart: true, id: 'task_form' }) do |form| %>
   <% if task.errors.any? %>
     <div id="error_explanation" class="alert alert-danger" role="alert">
       <h4 class="alert-heading"><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h4>
@@ -10,57 +10,93 @@
     </div>
   <% end %>
 
-  <!-- Removed the hidden client_id field for security reasons -->
-  <!-- <%= form.hidden_field :client_id, value: current_user.id %> -->
-
   <div class="container mt-4">
     <div class="row justify-content-center">
       <div class="col-md-6">
         <h1 class="text-center mb-4"><%= task.new_record? ? 'Create a New Task' : 'Edit Task' %></h1>
 
-        <!-- Category Field -->
-        <div class="mb-3">
-          <%= form.label :category_id, 'Category', class: 'form-label' %>
-          <%= form.select :category_id, options_from_collection_for_select(@categories, :id, :name, task.category_id), { prompt: 'Select a category' }, class: 'form-select', id: 'category_select' %>
-        </div>
-
-        <!-- Subcategory Field -->
-        <div class="form-group mb-3">
-          <%= form.label :subcategory_id, 'Subcategory', class: 'form-label' %>
-          <%= form.select :subcategory_id, options_for_select([], selected: task.subcategory_id), prompt: 'Select a subcategory', id: 'subcategory_select', class: 'form-select' %>
-        </div>
-
         <!-- Title Field -->
         <div class="form-group mb-3">
-          <%= form.label :title, class: 'form-label' %>
-          <%= form.text_field :title, class: 'form-control', placeholder: 'Enter a catchy title for your task', required: true %>
+          <%= form.label :title, 'Title', class: 'form-label' %>
+          <%= form.text_field :title, class: 'form-control', placeholder: 'Enter task title', required: true, id: 'task_title' %>
           <div class="invalid-feedback">
-            Please provide a title.
+            Please provide a title for the task (minimum 5 characters).
           </div>
         </div>
 
         <!-- Description Field -->
         <div class="form-group mb-3">
-          <%= form.label :description, class: 'form-label' %>
-          <%= form.text_area :description, class: 'form-control', rows: 3, placeholder: 'What needs to be done?', required: true %>
+          <%= form.label :description, 'Description', class: 'form-label' %>
+          <%= form.text_area :description, class: 'form-control', placeholder: 'Enter task description', required: true, rows: 4, id: 'task_description' %>
           <div class="invalid-feedback">
-            Please provide a description.
+            Please provide a description for the task (minimum 10 characters).
+          </div>
+        </div>
+
+        <!-- Category Field -->
+        <div class="mb-3">
+          <%= form.label :category_id, 'Category', class: 'form-label' %>
+          <%= form.select :category_id, options_from_collection_for_select(@categories, :id, :name, task.category_id), { prompt: 'Select a category' }, class: 'form-select', id: 'category_select', required: true %>
+          <div class="invalid-feedback">
+            Please select a category.
+          </div>
+        </div>
+
+        <!-- Subcategory Field -->
+        <div class="form-group mb-3">
+          <%= form.label :subcategory_id, 'Subcategory', class: 'form-label' %>
+          <%= form.select :subcategory_id, options_for_select([], selected: task.subcategory_id), { prompt: 'Select a subcategory' }, { id: 'subcategory_select', class: 'form-select', required: true } %>
+          <div class="invalid-feedback">
+            Please select a subcategory.
+          </div>
+        </div>
+
+        <!-- Minimum Price Display (Non-Task Attribute) -->
+        <div class="form-group mb-3">
+          <%= label_tag 'minimum_price_field', 'Minimum Price (ZMK)', class: 'form-label' %>
+          <input type="number" class="form-control" id="minimum_price_field" readonly placeholder="Minimum price will appear here">
+        </div>
+
+        <!-- Complexity Field -->
+        <div class="form-group mb-3">
+          <%= form.label :complexity, 'Complexity', class: 'form-label' %>
+          <%= form.select :complexity, ['Low', 'Medium', 'High'], { prompt: 'Select complexity' }, class: 'form-select', id: 'complexity_select', required: true %>
+          <div class="invalid-feedback">
+            Please select a complexity level.
+          </div>
+        </div>
+
+        <!-- Urgency Field -->
+        <div class="form-group mb-3">
+          <%= form.label :urgency, 'Urgency', class: 'form-label' %>
+          <%= form.select :urgency, ['Low', 'Normal', 'High'], { prompt: 'Select urgency' }, class: 'form-select', id: 'urgency_select', required: true %>
+          <div class="invalid-feedback">
+            Please select an urgency level.
+          </div>
+        </div>
+
+        <!-- Revisions Field -->
+        <div class="form-group mb-3">
+          <%= form.label :revisions, 'Revisions', class: 'form-label' %>
+          <%= form.number_field :revisions, class: 'form-control', placeholder: 'Number of revisions', required: true, min: 1, value: task.revisions || 1, id: 'revisions_input' %>
+          <div class="invalid-feedback">
+            Please provide a number of revisions.
           </div>
         </div>
 
         <!-- Budget Field -->
         <div class="form-group mb-3">
-          <%= form.label :budget, class: 'form-label' %>
-          <%= form.number_field :budget, class: 'form-control', placeholder: 'Total budget for the task', required: true %>
+          <%= form.label :budget, 'Budget (ZMK)', class: 'form-label' %>
+          <%= form.number_field :budget, class: 'form-control', placeholder: 'Budget will be calculated automatically', readonly: true, id: 'budget_field' %>
           <div class="invalid-feedback">
-            Please provide a budget.
+            Budget must be greater than or equal to the minimum price.
           </div>
         </div>
 
         <!-- Deadline Field -->
         <div class="form-group mb-3">
-          <%= form.label :deadline, class: 'form-label' %>
-          <%= form.datetime_select :deadline, class: 'form-control', required: true %>
+          <%= form.label :deadline, 'Deadline', class: 'form-label' %>
+          <%= form.datetime_select :deadline, class: 'form-control', required: true, id: 'deadline_select' %>
           <div class="invalid-feedback">
             Please provide a deadline.
           </div>
@@ -68,8 +104,8 @@
 
         <!-- Attachment Field -->
         <div class="form-group mb-3">
-          <%= form.label :attachment, class: 'form-label' %>
-          <%= form.file_field :attachment, class: 'form-control-file', required: true %>
+          <%= form.label :attachment, 'Attachment', class: 'form-label' %>
+          <%= form.file_field :attachment, class: 'form-control-file', required: true, id: 'attachment_field' %>
           <div class="invalid-feedback">
             Please attach a file.
           </div>
@@ -85,54 +121,180 @@
 <% end %>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
   const categorySelect = document.getElementById('category_select');
   const subcategorySelect = document.getElementById('subcategory_select');
+  const minimumPriceField = document.getElementById('minimum_price_field');
+  const revisionsField = document.getElementById('revisions_input');
+  const budgetField = document.getElementById('budget_field');
+  const revisionCost = 100; // Adjust based on model's revision_cost
+
+  // Utility function to create option elements
+  const createOption = (value, text, isSelected = false) => {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = text;
+    if (isSelected) option.selected = true;
+    return option;
+  };
 
   // Function to fetch and populate subcategories
-  function fetchSubcategories(categoryId, selectedSubcategoryId = null) {
-    // Clear existing subcategories
-    subcategorySelect.innerHTML = '<option value="">Select a subcategory</option>';
-
-    if (categoryId) {
-      fetch(`/categories/${categoryId}/subcategories`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          if (data.subcategories && data.subcategories.length > 0) {
-            data.subcategories.forEach(subcategory => {
-              const option = document.createElement('option');
-              option.value = subcategory.id;
-              option.textContent = subcategory.name;
-              if (selectedSubcategoryId && subcategory.id === selectedSubcategoryId) {
-                option.selected = true;
-              }
-              subcategorySelect.appendChild(option);
-            });
-          } else {
-            subcategorySelect.innerHTML = '<option value="">No subcategories available</option>';
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching subcategories:', error);
-          subcategorySelect.innerHTML = '<option value="">Error loading subcategories</option>';
-        });
+  const fetchSubcategories = async (categoryId, selectedSubcategoryId = null) => {
+    if (!subcategorySelect) {
+      console.error('Subcategory select element not found!');
+      return;
     }
-  }
+
+    console.log(`Fetching subcategories for Category ID: ${categoryId}`);
+
+    // Clear existing subcategories and show loading state
+    subcategorySelect.innerHTML = '';
+    subcategorySelect.appendChild(createOption('', 'Loading...', false));
+    subcategorySelect.disabled = true;
+
+    try {
+      const response = await fetch(`/categories/${categoryId}/subcategories`, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin' // Include credentials for CSRF protection if necessary
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch subcategories: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('Received subcategories:', data.subcategories);
+
+      // Clear loading state
+      subcategorySelect.innerHTML = '';
+
+      if (data.subcategories && data.subcategories.length > 0) {
+        subcategorySelect.appendChild(createOption('', 'Select a subcategory', false));
+        data.subcategories.forEach(subcategory => {
+          const isSelected = selectedSubcategoryId && subcategory.id === selectedSubcategoryId;
+          const option = createOption(subcategory.id, subcategory.name, isSelected);
+          option.dataset.minimumPrice = subcategory.minimum_price;
+          subcategorySelect.appendChild(option);
+        });
+      } else {
+        subcategorySelect.appendChild(createOption('', 'No subcategories available', false));
+      }
+
+      // If editing an existing task, set the minimum price and autofill budget
+      if (selectedSubcategoryId) {
+        const selectedOption = subcategorySelect.querySelector(`option[value="${selectedSubcategoryId}"]`);
+        if (selectedOption) {
+          const minPrice = selectedOption.dataset.minimumPrice;
+          minimumPriceField.value = minPrice;
+
+          // Autofill the budget field with the minimum price
+          budgetField.dataset.baseBudget = minPrice;
+          budgetField.value = minPrice;
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching subcategories:', error);
+      subcategorySelect.innerHTML = '';
+      subcategorySelect.appendChild(createOption('', 'Error loading subcategories', false));
+      minimumPriceField.value = '';
+      budgetField.value = '';
+    } finally {
+      subcategorySelect.disabled = false;
+    }
+  };
 
   // Event listener for category selection
-  categorySelect.addEventListener('change', function () {
-    const categoryId = this.value;
-    fetchSubcategories(categoryId);
-  });
+  if (categorySelect) {
+    categorySelect.addEventListener('change', function () {
+      const categoryId = this.value;
+      if (categoryId) {
+        fetchSubcategories(categoryId);
+        // Reset minimum price and budget when category changes
+        minimumPriceField.value = '';
+        budgetField.value = '';
+      } else {
+        // If no category is selected, reset subcategory and minimum price fields
+        subcategorySelect.innerHTML = '';
+        subcategorySelect.appendChild(createOption('', 'Select a subcategory', false));
+        minimumPriceField.value = '';
+        budgetField.value = '';
+      }
+    });
+  } else {
+    console.error('Category select element not found!');
+  }
 
-  // Pre-populate subcategories if editing an existing task
-  <% if task.persisted? && task.subcategory_id.present? %>
-    fetchSubcategories(<%= task.category_id %>, <%= task.subcategory_id %>);
-  <% end %>
+  // Event listener for subcategory selection to update minimum price and autofill budget
+  if (subcategorySelect && minimumPriceField && budgetField) {
+    subcategorySelect.addEventListener('change', function () {
+      const selectedOption = this.options[this.selectedIndex];
+      if (selectedOption && selectedOption.dataset.minimumPrice) {
+        const minPrice = parseFloat(selectedOption.dataset.minimumPrice);
+        minimumPriceField.value = minPrice.toFixed(2);
+
+        // Autofill the budget field with the minimum price
+        budgetField.dataset.baseBudget = minPrice.toFixed(2);
+        budgetField.value = minPrice.toFixed(2);
+
+        // Optionally, trigger budget recalculation
+        updateBudget();
+      } else {
+        minimumPriceField.value = '';
+        budgetField.value = '';
+      }
+    });
+  } else {
+    console.error('Subcategory select, Minimum Price field, or Budget field not found!');
+  }
+
+  // Event listener for revisions to adjust budget
+  if (revisionsField && budgetField) {
+    revisionsField.addEventListener('input', updateBudget);
+  } else {
+    console.error('Revisions or Budget field not found!');
+  }
+
+  // Function to calculate and update the budget
+  const updateBudget = () => {
+  const revisions = parseInt(revisionsField.value) || 1;
+  const baseBudget = parseFloat(budgetField.dataset.baseBudget) || 0;
+
+  const complexity = document.getElementById('complexity_select').value;
+  const urgency = document.getElementById('urgency_select').value;
+
+  const complexityMultipliers = {
+    'Low': 1.0,
+    'Medium': 1.2,
+    'High': 1.5
+  };
+
+  const urgencyMultipliers = {
+    'Low': 1.0,
+    'Normal': 1.1,
+    'High': 1.3
+  };
+
+  const complexityMultiplier = complexityMultipliers[complexity] || 1.0;
+  const urgencyMultiplier = urgencyMultipliers[urgency] || 1.0;
+
+  const extraRevisions = revisions - 1;
+  const revisionCost = 100; // Adjust based on model's revision_cost
+
+  const totalBudget = (baseBudget * complexityMultiplier * urgencyMultiplier) + (extraRevisions * revisionCost);
+  budgetField.value = totalBudget.toFixed(2);
+};
+
+// Initialize base budget
+if (!budgetField.dataset.baseBudget) {
+  budgetField.dataset.baseBudget = parseFloat(budgetField.value) || 0;
+}
+
+// Pre-populate subcategories and minimum price if editing an existing task
+<% if task.persisted? && task.subcategory_id.present? %>
+  fetchSubcategories(<%= task.category_id %>, <%= task.subcategory_id %>);
+<% end %>
 });
 </script>

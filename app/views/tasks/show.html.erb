@@ -1,56 +1,93 @@
 <div class="task-details">
-  <h1 class="display-4"><%= @task.title %></h1>
+  <h1 class="display-4 mb-4"><%= @task.title %></h1>
 
-  <div class="card">
+  <div class="card mb-4">
     <div class="card-body">
-      <p class="card-text">
-        <strong>Description:</strong> <%= @task.description %><br>
-        <strong>Budget:</strong> <%= humanized_money_with_symbol(@task.budget, unit: "ZMK") %><br>
-        <strong>Category:</strong> <%= @task.category %><br>
+      <dl class="row">
+        <dt class="col-sm-3">Description:</dt>
+        <dd class="col-sm-9"><%= @task.description %></dd>
+
+        <dt class="col-sm-3">Category:</dt>
+        <dd class="col-sm-9"><%= @task.category.name %></dd>
+
         <% if @task.attachment.attached? %>
-          <strong>Attachment:</strong> <%= link_to @task.attachment.filename, rails_blob_path(@task.attachment, disposition: "attachment"), class: 'btn btn-link' %><br>
+          <dt class="col-sm-3">Attachment:</dt>
+          <dd class="col-sm-9">
+            <%= link_to rails_blob_path(@task.attachment, disposition: "attachment"), class: 'btn btn-link btn-download' do %>
+              <i class="bi bi-file-earmark-arrow-down"></i> Download <%= @task.attachment.filename %>
+            <% end %>
+          </dd>
         <% end %>
-        <strong>Deadline:</strong> <%= @task.deadline.strftime("%B %d, %Y") %><br>
-        <strong>Status:</strong> <%= @task.status.titleize %><br>
-      </p>
+
+        <dt class="col-sm-3">Deadline:</dt>
+        <dd class="col-sm-9"><%= @task.deadline.strftime("%B %d, %Y") %></dd>
+
+        <dt class="col-sm-3">Status:</dt>
+        <dd class="col-sm-9">
+          <span class="badge <%= badge_color_for_status(@task.status) %>"><%= @task.status.titleize %></span>
+        </dd>
+      </dl>
 
       <% if current_user == @task.client %>
         <% if @task.completed? %>
           <% if @task.completed_file.attached? %>
-            <p>Completed file: <%= link_to @task.completed_file.filename, rails_blob_path(@task.completed_file, disposition: "attachment"), class: 'btn btn-link' %></p>
+            <dl class="row">
+              <dt class="col-sm-3">Completed File:</dt>
+              <dd class="col-sm-9">
+                <%= link_to rails_blob_path(@task.completed_file, disposition: "attachment"), class: 'btn btn-link btn-download' do %>
+                  <i class="bi bi-file-earmark-arrow-down"></i> Download <%= @task.completed_file.filename %>
+                <% end %>
+              </dd>
+            </dl>
           <% end %>
           <% unless @task.reviewed? %>
-            <%= link_to 'Give a Review', new_task_review_path(@task), class: 'btn btn-primary' %>
-            <%= form_with url: changes_task_path(@task), method: :post do |form| %>
-              <%= form.submit 'Request Changes', class: 'btn btn-warning' %>
-            <% end %>
+            <div class="d-flex gap-2 mt-3">
+              <%= link_to 'Give a Review', new_task_review_path(@task), class: 'btn btn-primary' %>
+              <%= form_with url: changes_task_path(@task), method: :post, local: true do |form| %>
+                <%= form.submit 'Request Changes', class: 'btn btn-warning' %>
+              <% end %>
+            </div>
           <% end %>
         <% else %>
-          <%= link_to 'Edit', edit_task_path(@task), class: 'btn btn-secondary' %>
+          <div class="mt-3">
+            <%= link_to 'Edit', edit_task_path(@task), class: 'btn btn-secondary' %>
+          </div>
         <% end %>
       <% elsif current_user.freelancer? %>
-        <% if @task.open? %>
-          <%= form_with url: accept_task_path(@task), method: :post do %>
-            <%= submit_tag 'Accept', class: 'btn btn-primary' %>
+        <div class="mt-3">
+          <% if @task.open? %>
+            <%= form_with url: accept_task_path(@task), method: :post, local: true do |form| %>
+              <%= form.submit 'Accept', class: 'btn btn-primary' %>
+            <% end %>
+          <% elsif @task.status == 'changes_requested' && @task.freelancer == current_user %>
+            <%= form_with url: submit_changes_task_path(@task), method: :post, html: { multipart: true }, local: true do |form| %>
+              <div class="mb-2">
+                <%= form.label :revised_file, 'Upload Revised File', class: 'form-label' %>
+                <%= form.file_field :revised_file, class: 'form-control-file' %>
+              </div>
+              <%= form.submit 'Submit Changes', class: 'btn btn-primary mt-2' %>
+            <% end %>
+          <% elsif @task.in_progress? && @task.freelancer == current_user %>
+            <%= form_with url: complete_task_path(@task), method: :post, html: { multipart: true }, local: true do |form| %>
+              <div class="mb-2">
+                <%= form.label :completed_file, 'Upload Completed File', class: 'form-label' %>
+                <%= form.file_field :completed_file, class: 'form-control-file' %>
+              </div>
+              <%= form.submit 'Submit Task', class: 'btn btn-primary mt-2' %>
+            <% end %>
           <% end %>
-        <% elsif @task.status == 'changes_requested' && @task.freelancer == current_user %>
-          <%= form_with url: submit_changes_task_path(@task), method: :post, html: { multipart: true } do |form| %>
-            <%= form.file_field :revised_file, class: 'form-control-file' %>
-            <%= form.submit 'Submit Changes', class: 'btn btn-primary mt-2' %>
-          <% end %>
-        <% elsif @task.in_progress? && @task.freelancer == current_user %>
-          <%= form_with url: complete_task_path(@task), method: :post, html: { multipart: true } do |form| %>
-            <%= form.file_field :completed_file, class: 'form-control-file' %>
-            <%= form.submit 'Submit Task', class: 'btn btn-primary mt-2' %>
-          <% end %>
-        <% end %>
+        </div>
       <% end %>
 
       <% if current_user == @task.client || current_user.admin? %>
-        <%= link_to 'Delete Task', task_path(@task), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger mt-2' %>
+        <div class="mt-3">
+          <%= link_to 'Delete Task', task_path(@task), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+        </div>
       <% end %>
 
-      <%= link_to 'Back', dashboard_show_path, class: 'btn btn-secondary mt-2' %>
+      <div class="mt-3">
+        <%= link_to 'Back', dashboard_show_path, class: 'btn btn-secondary' %>
+      </div>
     </div>
   </div>
 </div>
@@ -62,16 +99,44 @@
     padding: 20px;
   }
 
-  .card-text strong {
-    font-weight: bold;
+  .badge-success {
+    background-color: #28a745;
   }
 
-  .btn-link {
-    padding: 0;
-    margin-left: 5px;
+  .badge-warning {
+    background-color: #ffc107;
+  }
+
+  .badge-danger {
+    background-color: #dc3545;
+  }
+
+  .badge-primary {
+    background-color: #0d6efd;
+  }
+
+  .form-control-file {
+    width: 100%;
+  }
+
+  .btn-link i {
+    margin-right: 5px;
   }
 
   .btn-primary, .btn-warning, .btn-secondary, .btn-danger {
     margin-top: 10px;
+  }
+
+  .d-flex.gap-2 > * {
+    flex: 1;
+  }
+
+  .btn-download {
+    display: flex;
+    align-items: center;
+  }
+
+  .btn-download i {
+    margin-right: 5px;
   }
 </style>
