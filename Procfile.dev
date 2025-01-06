@@ -1,2 +1,6 @@
 web: env RUBY_DEBUG_OPEN=true bin/rails server
 css: yarn watch:css
+<<<<<<< HEAD
+=======
+js: yarn build --watch
+>>>>>>> extra_costs

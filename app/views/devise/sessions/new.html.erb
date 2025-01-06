@@ -1,4 +1,4 @@
-<div class="login-container" style="background-image: url('<%= image_path('login.png') %>'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+<div class="login-container">
   <div class="login-form">
     <h2 style="text-align: center; margin-bottom: 1.5rem;">Log in</h2>
 
@@ -23,7 +23,7 @@
       <% end %>
 
       <div class="form-group">
-        <%= f.submit "Log in", class: 'btn btn-primary btn-block' %>
+        <%= f.submit "Log in", class: 'btn btn-primary btn-block', data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Logging in..." } %>
       </div>
     <% end %>
 
@@ -39,6 +39,8 @@
     align-items: center;
     justify-content: center;
     overflow: hidden; /* This will prevent any overflow from the container */
+    padding: 1rem; /* Added padding for mobile responsiveness */
+    background: linear-gradient(to bottom right, #FFD700, #1E90FF); /* Improved background with gradient */
   }
 
   .login-form {
@@ -50,7 +52,6 @@
     width: 100%;
     margin: auto;
     background: rgba(250, 245, 235, 0.85); /* A light background color to give a parchment-like feel */
-
   }
 
   .form-control {
@@ -58,13 +59,13 @@
   }
 
   .btn-primary {
-    background-color: #0056b3;
-    border-color: #0056b3;
+    background-color: #FFD700; /* Hive Yellow */
+    border-color: #FFD700;
   }
   
   .btn-primary:hover {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #FF4500; /* Sunset Orange */
+    border-color: #FF4500;
   }
   
   .form-horizontal .checkbox {
@@ -72,7 +73,25 @@
   }
 
   .btn-primary:hover {
-  background-color: #8d6e63; /* A darker, richer brown for the hover state */
-  border-color: #8d6e63;
+    background-color: #8d6e63; /* A darker, richer brown for the hover state */
+    border-color: #8d6e63;
+  }
+
+  @media (max-width: 768px) {
+    .login-form {
+      padding: 1.5rem; /* Adjust padding for smaller screens */
+    }
+
+    .form-control {
+      font-size: 1rem; /* Adjust font size for better readability on mobile */
+    }
+
+    .btn-primary {
+      font-size: 1rem; /* Adjust button size for mobile */
+    }
+  }
+
+  .fa-spinner {
+    margin-right: 0.5rem;
   }
 </style>

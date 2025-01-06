@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy, :complete, :changes, :accept, :submit_changes]
+  before_action :load_categories, only: [:new, :edit, :create, :update]
 
   def index
     @tasks = Task.all
@@ -12,9 +13,13 @@ class TasksController < ApplicationController
     @task = Task.new
   end
 
+  # Removed the get_subcategories action as it is handled by CategoriesController
+
   def create
     @task = Task.new(task_params)
     @task.client = current_user  # Set the client to the current user
+
+    # Removed manual budget validation
 
     if @task.save
       redirect_to @task, notice: 'Task was successfully created.'
@@ -27,6 +32,8 @@ class TasksController < ApplicationController
   end
 
   def update
+    # Removed manual budget validation
+
     if @task.update(task_params)
       redirect_to @task, notice: 'Task was successfully updated.'
     else
@@ -66,11 +73,10 @@ class TasksController < ApplicationController
   end
 
   def submit_changes
-    # Ensure that only the assigned freelancer can submit changes
     if current_user == @task.freelancer
       if params[:revised_file].present?
         @task.revised_file.attach(params[:revised_file])
-        @task.update(status: 'completed') # Update the task status as needed
+        @task.update(status: 'completed') # Update the task status after submitting changes
 
         redirect_to @task, notice: 'Your changes have been submitted successfully.'
       else
@@ -87,7 +93,26 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
+  def load_categories
+    @categories = Category.all
+  end
+
   def task_params
-    params.require(:task).permit(:title, :description, :budget, :deadline, :category, :status, :client_id, :freelancer_id, :completed_file, :attachment, :revised_file)
+    params.require(:task).permit(
+      :title,
+      :description,
+      :budget,
+      :deadline,
+      :category_id,
+      :subcategory_id,
+      :status,
+      :completed_file,
+      :attachment,
+      :revised_file,
+      :complexity,
+      :time_commitment,
+      :urgency,
+      :revisions
+    )
   end
 end

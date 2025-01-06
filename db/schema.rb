@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_16_081035) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_03_212533) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_16_081035) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "payments", force: :cascade do |t|
     t.bigint "client_id"
     t.bigint "task_id", null: false
@@ -67,6 +73,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_16_081035) do
     t.index ["task_id"], name: "index_reviews_on_task_id"
   end
 
+  create_table "subcategories", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "category_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "minimum_price", precision: 10, scale: 2, default: "0.0", null: false
+    t.index ["category_id"], name: "index_subcategories_on_category_id"
+  end
+
   create_table "tasks", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -77,9 +92,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_16_081035) do
     t.bigint "freelancer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "revisions", default: 1, null: false
     t.string "category"
+    t.bigint "category_id"
+    t.bigint "subcategory_id"
+    t.string "complexity"
+    t.string "time_commitment"
+    t.string "urgency"
+    t.index ["category_id"], name: "index_tasks_on_category_id"
     t.index ["client_id"], name: "index_tasks_on_client_id"
     t.index ["freelancer_id"], name: "index_tasks_on_freelancer_id"
+    t.index ["subcategory_id"], name: "index_tasks_on_subcategory_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -103,6 +126,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_16_081035) do
   add_foreign_key "payments", "users", column: "client_id"
   add_foreign_key "reviews", "tasks"
   add_foreign_key "reviews", "users", column: "reviewer_id"
+  add_foreign_key "subcategories", "categories"
+  add_foreign_key "tasks", "categories"
+  add_foreign_key "tasks", "subcategories"
   add_foreign_key "tasks", "users", column: "client_id"
   add_foreign_key "tasks", "users", column: "freelancer_id"
 end
