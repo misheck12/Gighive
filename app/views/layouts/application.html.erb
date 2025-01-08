@@ -22,7 +22,7 @@
   <%= favicon_link_tag 'GigHive_logo.png', rel: 'icon', type: 'image/png', sizes: '32x32' %>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <%= link_to 'GigHive', root_path, class: 'navbar-brand' %>
@@ -56,7 +56,7 @@
     </div>
   </nav>
 
-  <main class="container my-5">
+  <main class="container my-5 flex-grow-1">
     <%= yield %>
   </main>
 
