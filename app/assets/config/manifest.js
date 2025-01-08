@@ -5,6 +5,6 @@
 //= link application.css
 //= link bootstrap/dist/css/bootstrap.css
 //= link bootstrap.bundle.js
-
+//= link application.js
 
 //= link application.bootstrap.css
