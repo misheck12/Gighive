@@ -1,7 +1,8 @@
-<%= form_with(model: [task, payment], local: true) do |form| %>
+<!-- filepath: /c:/Users/mishe/Documents/just rails/Gighive/app/views/payments/_form.html.erb -->
+<%= form_with(model: [task, payment], local: true, html: { multipart: true }) do |form| %>
   <% if payment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(payment.errors.count, "error") %> prohibited this payment from being saved:</h2>
+    <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading"><%= pluralize(payment.errors.count, "error") %> prohibited this payment from being saved:</h4>
       <ul>
         <% payment.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -10,22 +11,24 @@
     </div>
   <% end %>
 
-   <%= form.hidden_field :user_id, value: current_user.id %>
+  <%= form.hidden_field :user_id, value: current_user.id %>
 
-     <div class="field">
-    <%= form.label :network %>
-    <%= form.text_field :network, class: 'form-control', placeholder: 'MTN or Airtel Mobile money' %>
+  <div class="mb-3">
+    <%= form.label :network, class: 'form-label' %>
+    <%= form.text_field :network, class: 'form-control', placeholder: 'MTN or Airtel Mobile Money', required: true %>
   </div>
 
-  <div class="field">
-    <%= form.label :transaction_id %>
-    <%= form.text_field :transaction_id, class: 'form-control', placeholder: 'Enter your transaction ID' %>
+  <div class="mb-3">
+    <%= form.label :transaction_id, class: 'form-label' %>
+    <%= form.text_field :transaction_id, class: 'form-control', placeholder: 'Enter your transaction ID', required: true %>
   </div>
 
-  <div class="field">
-    <%= form.label :payment_proof, "Upload Payment Screenshot" %>
-    <%= form.file_field :payment_proof, class: 'form-control' %>
+  <div class="mb-3">
+    <%= form.label :payment_proof, "Upload Payment Screenshot", class: 'form-label' %>
+    <%= form.file_field :payment_proof, class: 'form-control', required: true %>
   </div>
 
-  <%= form.submit "Submit Payment", class: 'btn btn-primary' %>
+  <div class="d-grid">
+    <%= form.submit "Submit Payment", class: 'btn btn-primary' %>
+  </div>
 <% end %>
