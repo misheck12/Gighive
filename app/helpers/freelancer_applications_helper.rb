@@ -1,0 +1,2 @@
+module FreelancerApplicationsHelper
+end

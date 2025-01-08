@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   # Define root path
-  root 'dashboard#show'
+  root 'home#index'
+
+  # Home page routes
+  get 'home/index', as: 'home'
 
   # Dashboard routes
   get 'dashboard/show'
@@ -26,9 +29,6 @@ Rails.application.routes.draw do
       post 'submit_changes'
     end
 
-    # Removed nested categories under tasks
-
-    # Nested routes for reviews and payments within tasks
     resources :reviews, only: [:new, :create]
     resources :payments, only: [:new, :create, :show] do
       member do
@@ -37,6 +37,9 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  # Routes for freelancer applications
+  resources :freelancer_applications, only: [:new, :create, :index, :show, :edit, :update, :destroy]
 
   # Independent routes for categories
   resources :categories, only: [] do
