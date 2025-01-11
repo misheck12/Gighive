@@ -53,19 +53,21 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <!-- Public Navigation Links with Enhanced Styles -->
-          <li class="nav-item">
-            <%= link_to 'Home', root_path, class: "nav-link btn-nav #{'active' if current_page?(root_path)}", aria: { label: 'Home' } %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'About Us', about_us_path, class: "nav-link btn-nav #{'active' if current_page?(about_us_path)}", aria: { label: 'About Us' } %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'Working with Us', working_with_us_path, class: "nav-link btn-nav #{'active' if current_page?(working_with_us_path)}", aria: { label: 'Working with Us' } %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'contact us', contact_us_path, class: "nav-link btn-nav #{'active' if current_page?(contact_us_path)}", aria: { label: 'Contact Us' } %>
-          </li>
+          <% unless user_signed_in? %>
+            <!-- Public Navigation Links with Enhanced Styles -->
+            <li class="nav-item">
+              <%= link_to 'Home', root_path, class: "nav-link btn-nav #{'active' if current_page?(root_path)}", aria: { label: 'Home' } %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'About Us', about_us_path, class: "nav-link btn-nav #{'active' if current_page?(about_us_path)}", aria: { label: 'About Us' } %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Working with Us', working_with_us_path, class: "nav-link btn-nav #{'active' if current_page?(working_with_us_path)}", aria: { label: 'Working with Us' } %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Contact Us', contact_us_path, class: "nav-link btn-nav #{'active' if current_page?(contact_us_path)}", aria: { label: 'Contact Us' } %>
+            </li>
+          <% end %>
 
           <% if user_signed_in? %>
             <!-- User Dropdown Menu -->
