@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   # About Us
   get 'about_us', to: 'pages#about_us'
 
+   # contact Us
+  get 'contact_us', to: 'pages#contact_us'
+
   # Working with Us
   get 'working_with_us', to: 'pages#working_with_us'
 
