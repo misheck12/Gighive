@@ -91,6 +91,14 @@ class TasksController < ApplicationController
 
   private
 
+  def calculate_estimated_price(task)
+    base_price = task.subcategory&.minimum_price || 0
+    complexity_factor = { 'Low' => 1, 'Medium' => 2, 'High' => 3 }[task.complexity] || 1
+    urgency_factor = { 'Low' => 1, 'Normal' => 1.5, 'High' => 2 }[task.urgency] || 1
+    revisions = task.revisions.presence || 1
+    (base_price * complexity_factor * urgency_factor * revisions).round(2)
+ end
+
   def set_task
     @task = Task.find(params[:id])
   end
