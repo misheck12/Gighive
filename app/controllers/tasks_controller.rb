@@ -17,10 +17,11 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    @task.client = current_user  # Set the client to the current user
-
-    # Removed manual budget validation
-
+    @task.client = current_user
+    
+    # Set initial budget before saving
+    @task.budget = calculate_estimated_price(@task)
+    
     if @task.save
       redirect_to @task, notice: 'Task was successfully created.'
     else
