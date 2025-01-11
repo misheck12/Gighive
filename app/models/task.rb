@@ -78,6 +78,9 @@ class Task < ApplicationRecord
     reviews.exists?
   end
 
+  after_create :send_task_created_notification
+  after_update :send_task_update_notifications, if: :saved_change_to_status?
+
   # ---------------------------------------------------------------------------
   # Private Methods
   # ---------------------------------------------------------------------------
@@ -196,4 +199,5 @@ class Task < ApplicationRecord
   def send_changes_submitted_notification
     TaskMailer.changes_submitted(self).deliver_later
   end
+
 end
