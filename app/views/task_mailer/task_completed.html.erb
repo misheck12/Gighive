@@ -1,0 +1,17 @@
+<!-- filepath: /c:/Users/mishe/Documents/just rails/Gighive/app/views/task_mailer/task_completed.html.erb -->
+
+<p>Dear <%= @client.name %>,</p>
+
+<p>Your task "<strong><%= @task.title %></strong>" has been marked as completed by <%= @freelancer.name %>.</p>
+
+<p>Here are the details:</p>
+<ul>
+  <li><strong>Description:</strong> <%= @task.description %></li>
+  <li><strong>Budget:</strong> <%= @task.budget %> ZMK</li>
+  <li><strong>Deadline:</strong> <%= @task.deadline.strftime("%B %d, %Y") %></li>
+  <li><strong>Status:</strong> <%= @task.status.capitalize %></li>
+</ul>
+
+<p>You can review the completed work and provide a review.</p>
+
+<p>Thank you for using Gighive!</p>

@@ -1,0 +1,16 @@
+<!-- filepath: /c:/Users/mishe/Documents/just rails/Gighive/app/views/task_mailer/changes_submitted.html.erb -->
+
+<p>Dear <%= @client.name %>,</p>
+
+<p><%= @freelancer.name %> has submitted the requested changes for your task "<strong><%= @task.title %></strong>".</p>
+
+<p>Here are the updated details:</p>
+<ul>
+  <li><strong>Description:</strong> <%= @task.description %></li>
+  <li><strong>Budget:</strong> <%= @task.budget %> ZMK</li>
+  <li><strong>Status:</strong> <%= @task.status.capitalize %></li>
+</ul>
+
+<p>Please review the revised work and approve its completion.</p>
+
+<p>Thank you for collaborating through Gighive!</p>
