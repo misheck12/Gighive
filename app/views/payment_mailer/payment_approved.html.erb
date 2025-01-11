@@ -1,0 +1,13 @@
+<!-- filepath: /c:/Users/mishe/Documents/just rails/Gighive/app/views/payment_mailer/payment_approved.html.erb -->
+
+<p>Dear <%= @freelancer.name %>,</p>
+
+<p>Good news! Your payment for the task "<%= @payment.task.title %>" has been approved.</p>
+
+<p><strong>Details:</strong></p>
+<ul>
+  <li>Amount: <%= @payment.amount %> ZMK</li>
+  <li>Status: <%= @payment.status.capitalize %></li>
+</ul>
+
+<p>Thank you for your hard work!</p>

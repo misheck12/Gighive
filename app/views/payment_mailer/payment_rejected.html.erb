@@ -1,0 +1,15 @@
+<!-- filepath: /c:/Users/mishe/Documents/just rails/Gighive/app/views/payment_mailer/payment_rejected.html.erb -->
+
+<p>Dear <%= @client.name %>,</p>
+
+<p>Your payment for the task "<%= @payment.task.title %>" has been rejected.</p>
+
+<p><strong>Details:</strong></p>
+<ul>
+  <li>Amount: <%= @payment.amount %> ZMK</li>
+  <li>Status: <%= @payment.status.capitalize %></li>
+</ul>
+
+<p>Please review the payment proof for more information.</p>
+
+<p>Thank you!</p>
