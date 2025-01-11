@@ -127,6 +127,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const minimumPriceField = document.getElementById('minimum_price_field');
   const revisionsField = document.getElementById('revisions_input');
   const budgetField = document.getElementById('budget_field');
+  const complexitySelect = document.getElementById('complexity_select'); // Added
+  const urgencySelect = document.getElementById('urgency_select'); // Added
   const revisionCost = 100; // Adjust based on model's revision_cost
 
   // Utility function to create option elements
@@ -257,44 +259,57 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error('Revisions or Budget field not found!');
   }
 
+  // Event listeners for Complexity and Urgency to adjust budget
+  if (complexitySelect) {
+    complexitySelect.addEventListener('change', updateBudget);
+  } else {
+    console.error('Complexity select element not found!');
+  }
+
+  if (urgencySelect) {
+    urgencySelect.addEventListener('change', updateBudget);
+  } else {
+    console.error('Urgency select element not found!');
+  }
+
   // Function to calculate and update the budget
   const updateBudget = () => {
-  const revisions = parseInt(revisionsField.value) || 1;
-  const baseBudget = parseFloat(budgetField.dataset.baseBudget) || 0;
+    const revisions = parseInt(revisionsField.value) || 1;
+    const baseBudget = parseFloat(budgetField.dataset.baseBudget) || 0;
 
-  const complexity = document.getElementById('complexity_select').value;
-  const urgency = document.getElementById('urgency_select').value;
+    const complexity = complexitySelect.value;
+    const urgency = urgencySelect.value;
 
-  const complexityMultipliers = {
-    'Low': 1.0,
-    'Medium': 1.2,
-    'High': 1.5
+    const complexityMultipliers = {
+      'Low': 1.0,
+      'Medium': 1.2,
+      'High': 1.5
+    };
+
+    const urgencyMultipliers = {
+      'Low': 1.0,
+      'Normal': 1.1,
+      'High': 1.3
+    };
+
+    const complexityMultiplier = complexityMultipliers[complexity] || 1.0;
+    const urgencyMultiplier = urgencyMultipliers[urgency] || 1.0;
+
+    const extraRevisions = revisions - 1;
+    const revisionCost = 100; // Adjust based on model's revision_cost
+
+    const totalBudget = (baseBudget * complexityMultiplier * urgencyMultiplier) + (extraRevisions * revisionCost);
+    budgetField.value = totalBudget.toFixed(2);
   };
 
-  const urgencyMultipliers = {
-    'Low': 1.0,
-    'Normal': 1.1,
-    'High': 1.3
-  };
+  // Initialize base budget
+  if (!budgetField.dataset.baseBudget) {
+    budgetField.dataset.baseBudget = parseFloat(budgetField.value) || 0;
+  }
 
-  const complexityMultiplier = complexityMultipliers[complexity] || 1.0;
-  const urgencyMultiplier = urgencyMultipliers[urgency] || 1.0;
-
-  const extraRevisions = revisions - 1;
-  const revisionCost = 100; // Adjust based on model's revision_cost
-
-  const totalBudget = (baseBudget * complexityMultiplier * urgencyMultiplier) + (extraRevisions * revisionCost);
-  budgetField.value = totalBudget.toFixed(2);
-};
-
-// Initialize base budget
-if (!budgetField.dataset.baseBudget) {
-  budgetField.dataset.baseBudget = parseFloat(budgetField.value) || 0;
-}
-
-// Pre-populate subcategories and minimum price if editing an existing task
-<% if task.persisted? && task.subcategory_id.present? %>
-  fetchSubcategories(<%= task.category_id %>, <%= task.subcategory_id %>);
-<% end %>
+  // Pre-populate subcategories and minimum price if editing an existing task
+  <% if task.persisted? && task.subcategory_id.present? %>
+    fetchSubcategories(<%= task.category_id %>, <%= task.subcategory_id %>);
+  <% end %>
 });
 </script>
