@@ -122,14 +122,14 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const categorySelect = document.getElementById('category_select');
-  const subcategorySelect = document.getElementById('subcategory_select');
-  const minimumPriceField = document.getElementById('minimum_price_field');
-  const revisionsField = document.getElementById('revisions_input');
-  const budgetField = document.getElementById('budget_field');
-  const complexitySelect = document.getElementById('complexity_select');
-  const urgencySelect = document.getElementById('urgency_select');
-  const revisionCost = 100; // Adjust based on model's revision_cost
+  const categorySelect      = document.getElementById('category_select');
+  const subcategorySelect   = document.getElementById('subcategory_select');
+  const minimumPriceField   = document.getElementById('minimum_price_field');
+  const revisionsField      = document.getElementById('revisions_input');
+  const budgetField         = document.getElementById('budget_field');
+  const complexitySelect    = document.getElementById('complexity_select');
+  const urgencySelect       = document.getElementById('urgency_select');
+  const revisionCost        = 100; // Adjust based on model's revision_cost
 
   // Utility function to create option elements
   const createOption = (value, text, isSelected = false) => {
@@ -191,11 +191,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (selectedOption) {
           const minPrice = parseFloat(selectedOption.dataset.minimumPrice);
           minimumPriceField.value = minPrice.toFixed(2);
-
-          // Autofill the budget field with the minimum price
           budgetField.dataset.baseBudget = minPrice.toFixed(2);
           budgetField.value = minPrice.toFixed(2);
-
           updateBudget();
         }
       }
@@ -216,51 +213,46 @@ document.addEventListener('DOMContentLoaded', () => {
       const categoryId = this.value;
       if (categoryId) {
         fetchSubcategories(categoryId);
-        // Reset minimum price and budget when category changes
         minimumPriceField.value = '';
-        budgetField.value = '';
+        budgetField.value       = '';
       } else {
-        // If no category is selected, reset subcategory and minimum price fields
         subcategorySelect.innerHTML = '';
         subcategorySelect.appendChild(createOption('', 'Select a subcategory', false));
         minimumPriceField.value = '';
-        budgetField.value = '';
+        budgetField.value       = '';
       }
     });
   } else {
     console.error('Category select element not found!');
   }
 
-  // Event listener for subcategory selection to update minimum price and autofill budget
+  // Event listener for subcategory selection
   if (subcategorySelect && minimumPriceField && budgetField) {
     subcategorySelect.addEventListener('change', function () {
       const selectedOption = this.options[this.selectedIndex];
       if (selectedOption && selectedOption.dataset.minimumPrice) {
         const minPrice = parseFloat(selectedOption.dataset.minimumPrice);
-        minimumPriceField.value = minPrice.toFixed(2);
-
-        // Autofill the budget field with the minimum price
+        minimumPriceField.value     = minPrice.toFixed(2);
         budgetField.dataset.baseBudget = minPrice.toFixed(2);
-        budgetField.value = minPrice.toFixed(2);
-
+        budgetField.value           = minPrice.toFixed(2);
         updateBudget();
       } else {
         minimumPriceField.value = '';
-        budgetField.value = '';
+        budgetField.value       = '';
       }
     });
   } else {
     console.error('Subcategory select, Minimum Price field, or Budget field not found!');
   }
 
-  // Event listener for revisions to adjust budget
+  // Revisions listener
   if (revisionsField && budgetField) {
     revisionsField.addEventListener('input', updateBudget);
   } else {
     console.error('Revisions or Budget field not found!');
   }
 
-  // Event listeners for Complexity and Urgency to adjust budget
+  // Complexity & Urgency listeners
   if (complexitySelect) {
     complexitySelect.addEventListener('change', updateBudget);
   } else {
@@ -273,13 +265,12 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error('Urgency select element not found!');
   }
 
-  // Function to calculate and update the budget
+  // Budget update function
   const updateBudget = () => {
     const revisions = parseInt(revisionsField.value) || 1;
     const baseBudget = parseFloat(budgetField.dataset.baseBudget) || 0;
-
     const complexity = complexitySelect.value;
-    const urgency = urgencySelect.value;
+    const urgency    = urgencySelect.value;
 
     const complexityMultipliers = {
       'Low': 1.0,
@@ -294,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const complexityMultiplier = complexityMultipliers[complexity] || 1.0;
-    const urgencyMultiplier = urgencyMultipliers[urgency] || 1.0;
+    const urgencyMultiplier    = urgencyMultipliers[urgency] || 1.0;
 
     const extraRevisions = revisions - 1;
     const totalBudget = (baseBudget * complexityMultiplier * urgencyMultiplier) + (extraRevisions * revisionCost);
@@ -307,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
     budgetField.dataset.baseBudget = initialBaseBudget.toFixed(2);
   }
 
-  // Pre-populate subcategories and minimum price if editing an existing task
+  // If editing an existing task
   <% if task.persisted? && task.subcategory_id.present? %>
     fetchSubcategories(<%= task.category_id %>, <%= task.subcategory_id %>);
   <% end %>
