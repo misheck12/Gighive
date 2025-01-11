@@ -5,6 +5,13 @@ Rails.application.routes.draw do
   # Home page routes
   get 'home/index', as: 'home'
 
+  # About Us
+  get 'about_us', to: 'pages#about_us'
+
+  # Working with Us
+  get 'working_with_us', to: 'pages#working_with_us'
+
+
   # Dashboard routes
   get 'dashboard/show'
   get 'dashboard', to: 'dashboard#show', as: 'dashboard'
