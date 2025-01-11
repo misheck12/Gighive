@@ -92,9 +92,9 @@ class TasksController < ApplicationController
   private
 
   def calculate_estimated_price(task)
-    base_price = subcategory&.minimum_price || 0
-    complexity_addition = { 'Low' => 0, 'Medium' => 100, 'High' => 200 }[complexity] || 0
-    urgency_addition = { 'Low' => 0, 'Normal' => 150, 'High' => 250 }[urgency] || 0
+    base_price = task.subcategory&.minimum_price || 0
+    complexity_addition = { 'Low' => 0, 'Medium' => 100, 'High' => 200 }[task.complexity] || 0
+    urgency_addition = { 'Low' => 0, 'Normal' => 150, 'High' => 250 }[task.urgency] || 0
     revisions_addition = (revisions.presence || 1) * 2
 
     (base_price + complexity_addition + urgency_addition + revisions_addition).round(2)
