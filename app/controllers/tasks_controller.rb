@@ -77,6 +77,7 @@ class TasksController < ApplicationController
       if params[:revised_file].present?
         @task.revised_file.attach(params[:revised_file])
         @task.update(status: 'completed') # Update the task status after submitting changes
+        @task.send_changes_submitted_notification
 
         redirect_to @task, notice: 'Your changes have been submitted successfully.'
       else
