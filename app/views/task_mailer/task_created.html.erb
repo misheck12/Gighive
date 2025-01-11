@@ -1,0 +1,15 @@
+<!-- filepath: /c:/Users/mishe/Documents/just rails/Gighive/app/views/task_mailer/task_created.html.erb -->
+
+<p>Dear <%= @client.name %>,</p>
+
+<p>Your task "<strong><%= @task.title %></strong>" has been successfully created.</p>
+
+<p>Here are the details:</p>
+<ul>
+  <li><strong>Description:</strong> <%= @task.description %></li>
+  <li><strong>Budget:</strong> <%= @task.budget %> ZMK</li>
+  <li><strong>Deadline:</strong> <%= @task.deadline.strftime("%B %d, %Y") %></li>
+  <li><strong>Status:</strong> <%= @task.status.capitalize %></li>
+</ul>
+
+<p>Thank you for using Gighive!</p>
