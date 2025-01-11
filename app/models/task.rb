@@ -200,4 +200,12 @@ class Task < ApplicationRecord
     TaskMailer.changes_submitted(self).deliver_later
   end
 
+  # Helper method to notify both client and freelancer
+  def notify_status_change(status_type)
+    # Notify Client
+    TaskMailer.send("#{status_type}_client", self).deliver_later if client.email.present?
+
+    # Notify Freelancer
+    TaskMailer.send("#{status_type}_freelancer", self).deliver_later if freelancer&.email.present?
+  end
 end
