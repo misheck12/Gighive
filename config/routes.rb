@@ -16,6 +16,13 @@ Rails.application.routes.draw do
   # Working with Us
   get 'working_with_us', to: 'pages#working_with_us'
 
+  # Privacy Policy
+  get 'privacy', to: 'pages#privacy', as: 'privacy'
+
+  # Terms of Service
+  get 'terms', to: 'pages#terms', as: 'terms'
+
+
 
   # Dashboard routes
   get 'dashboard/show'

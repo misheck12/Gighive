@@ -11,4 +11,13 @@ class PagesController < ApplicationController
   def contact_us
     
   end
+
+  def privacy
+    # Logic for Privacy Policy page (if any)
+  end
+
+  # New action for Terms of Service
+  def terms
+    # Logic for Terms of Service page (if any)
+  end
 end
