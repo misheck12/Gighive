@@ -192,4 +192,8 @@ class Task < ApplicationRecord
       TaskMailer.changes_requested(self).deliver_later
     end
   end
+
+  def send_changes_submitted_notification
+    TaskMailer.changes_submitted(self).deliver_later
+  end
 end
