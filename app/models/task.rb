@@ -173,4 +173,23 @@ class Task < ApplicationRecord
       errors.add(:budget, "must be at least #{subcategory.minimum_price} ZMK for the selected subcategory.")
     end
   end
+
+  # ---------------------------------------------------------------------------
+  # Notification Methods
+  # ---------------------------------------------------------------------------
+
+  def send_task_created_notification
+    TaskMailer.task_created(self).deliver_later
+  end
+
+  def send_task_update_notifications
+    case status
+    when 'in_progress'
+      TaskMailer.task_accepted(self).deliver_later
+    when 'completed'
+      TaskMailer.task_completed(self).deliver_later
+    when 'changes_requested'
+      TaskMailer.changes_requested(self).deliver_later
+    end
+  end
 end
