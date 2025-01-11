@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'pages/about_us'
+  get 'pages/working_with_us'
   # Define root path
   root 'home#index'
 
