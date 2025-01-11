@@ -64,7 +64,7 @@
             <%= link_to 'Working with Us', working_with_us_path, class: "nav-link btn-nav #{'active' if current_page?(working_with_us_path)}", aria: { label: 'Working with Us' } %>
           </li>
           <li class="nav-item">
-            <%= link_to 'Freelance', contact_us_path, class: "nav-link btn-nav #{'active' if current_page?(contact_us_path)}", aria: { label: 'Freelance' } %>
+            <%= link_to 'Freelance', contact_us_path, class: "nav-link btn-nav #{'active' if current_page?(contact_us_path)}", aria: { label: 'Contact Us' } %>
           </li>
 
           <% if user_signed_in? %>
