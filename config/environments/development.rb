@@ -52,14 +52,14 @@ Rails.application.configure do
  
    # SMTP settings for Gmail
    config.action_mailer.smtp_settings = {
-     address:              'smtp.gmail.com',
-     port:                 587,
-     domain:               'gmail.com',
-     user_name:            'bwangubwangu5#gmail.com',       # Replace with your email
-     password:             'bwangubwangu@com',        # Replace with your email password or app-specific password
-     authentication:       'plain',
-     enable_starttls_auto: true
-   }
+    address:              'smtp.gmail.com',
+    port:                 587,
+    domain:               'gmail.com',
+    user_name:            ENV['GMAIL_USERNAME'],      # Ensure this environment variable is set
+    password:             ENV['GMAIL_PASSWORD'],      # Use an App Password if 2FA is enabled
+    authentication:       'plain',
+    enable_starttls_auto: true
+  }
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
