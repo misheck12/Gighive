@@ -7,6 +7,8 @@ class User < ApplicationRecord
   # Enum for roles
   enum role: { client: 0, admin: 1, freelancer: 2 }
 
+  attr_accessor :terms_of_service
+
   # Associations
   has_many :tasks_as_client, class_name: 'Task', foreign_key: 'client_id'
   has_many :tasks_as_freelancer, class_name: 'Task', foreign_key: 'freelancer_id'
