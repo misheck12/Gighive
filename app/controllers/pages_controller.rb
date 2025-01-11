@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
 
-  skip_before_action :authenticate_user!, only: [:about_us, :working_with_us]
+  skip_before_action :authenticate_user!, only: [:about_us, :working_with_us, :contact_us, :privacy, :terms]
 
   def about_us
   end
