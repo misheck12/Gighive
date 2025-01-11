@@ -1,58 +1,25 @@
-class PaymentsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_task, only: [:new, :create]
-  before_action :set_payment, only: [:accept, :reject]
+class Payment < ApplicationRecord
+  belongs_to :user
+  belongs_to :task
+  has_one_attached :payment_proof
 
-  def new
-    @payment = Payment.new
-  end
+  enum status: { pending: 0, approved: 1, rejected: 2 }
 
-  def show
-    @payment = Payment.find_by(id: params[:id])
-    if @payment.nil?
-      redirect_to root_path, alert: 'Payment not found'
-    end
-  end
-
-  def create
-    @payment = @task.build_payment(payment_params)  # Use build_payment for has_one association
-    @payment.user = current_user
-    @payment.status = :pending  # Assuming the status enum includes pending
-
-    if @payment.save
-      redirect_to task_path(@task), notice: 'Payment was successfully submitted and is pending approval.'
-    else
-      render :new
-    end
-  end
-
-  def accept
-    if @payment.update(status: :approved)
-      redirect_to dashboard_path, notice: 'Payment was successfully approved.'
-    else
-      redirect_to dashboard_path, alert: 'Payment could not be approved.'
-    end
-  end
-
-  def reject
-    if @payment.update(status: :rejected)
-      redirect_to dashboard_path, notice: 'Payment was successfully rejected.'
-    else
-      redirect_to dashboard_path, alert: 'Payment could not be rejected.'
-    end
-  end
+  after_create :send_payment_created_notification
+  after_update :send_payment_status_change_notification, if: :saved_change_to_status?
 
   private
 
-  def set_task
-    @task = Task.find(params[:task_id])
+  def send_payment_created_notification
+    PaymentMailer.payment_created(self).deliver_later
   end
 
-  def set_payment
-    @payment = Payment.find(params[:id])
-  end
-
-  def payment_params
-    params.require(:payment).permit(:transaction_id, :payment_proof, :network)
+  def send_payment_status_change_notification
+    case status
+    when 'approved'
+      PaymentMailer.payment_approved(self).deliver_later
+    when 'rejected'
+      PaymentMailer.payment_rejected(self).deliver_later
+    end
   end
 end
