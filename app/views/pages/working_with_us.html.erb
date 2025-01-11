@@ -1,2 +1,28 @@
-<h1>Pages#working_with_us</h1>
-<p>Find me in app/views/pages/working_with_us.html.erb</p>
+<!-- filepath: /c:/Users/mishe/Documents/just rails/Gighive/app/views/pages/working_with_us.html.erb -->
+<div class="container my-5">
+  <h1 class="mb-4">Working with Us</h1>
+  <p>At GigHive, we believe in fostering a collaborative environment that benefits both clients and freelancers. Here's how you can work with us:</p>
+  <div class="row">
+    <div class="col-md-4">
+      <h3>For Clients</h3>
+      <ul class="list-group">
+        <li class="list-group-item">Post your project requirements.</li>
+        <li class="list-group-item">Browse and select from a pool of talented freelancers.</li>
+        <li class="list-group-item">Collaborate and manage your projects with ease.</li>
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <h3>For Freelancers</h3>
+      <ul class="list-group">
+        <li class="list-group-item">Create a compelling profile showcasing your skills.</li>
+        <li class="list-group-item">Apply to projects that match your expertise.</li>
+        <li class="list-group-item">Deliver quality work and build your reputation.</li>
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <h3>Support</h3>
+      <p>Our dedicated support team is here to assist you at every step, ensuring a smooth and productive experience.</p>
+      <%= link_to 'Contact Support', contact_path, class: 'btn btn-primary mt-3' %>
+    </div>
+  </div>
+</div>
