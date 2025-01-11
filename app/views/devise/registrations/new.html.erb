@@ -1,3 +1,4 @@
+<!-- filepath: /C:/Users/mishe/Documents/just rails/Gighive/app/views/devise/registrations/new.html.erb -->
 <div class="container">
   <!-- Responsive row -->
   <div class="row">
@@ -37,7 +38,7 @@
             <%= f.check_box :terms_of_service, class: 'form-check-input', required: true %>
             <%= f.label :terms_of_service, class: 'form-check-label' do %>
               I agree to the 
-              <a href="#" data-toggle="modal" data-target="#termsModal">Terms and Conditions</a>
+              <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and Conditions</a>
             <% end %>
           </div>
 
@@ -52,22 +53,19 @@
   </div>
 </div>
 
-<!-- Terms and Conditions Modal -->
+<!-- Terms and Conditions Modal (Bootstrap 5) -->
 <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title text-primary" id="termsModalLabel">Terms and Conditions</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <!-- Insert your Terms and Conditions content here -->
         <%= render "pages/terms" %>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -115,7 +113,7 @@
     border-color: #FF4500;
   }
 
-  .form-horizontal .checkbox {
+  .form-horizontal .form-check {
     padding-left: 20px;
   }
 
