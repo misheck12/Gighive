@@ -17,11 +17,10 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    @task.client = current_user
-    
-    # Set initial budget before saving
-    @task.budget = calculate_estimated_price(@task)
-    
+    @task.client = current_user  # Set the client to the current user
+
+    # Removed manual budget validation
+
     if @task.save
       redirect_to @task, notice: 'Task was successfully created.'
     else
@@ -90,15 +89,6 @@ class TasksController < ApplicationController
   end
 
   private
-
-  def calculate_estimated_price(task)
-    base_price = task.subcategory&.minimum_price || 0
-    complexity_addition = { 'Low' => 0, 'Medium' => 100, 'High' => 200 }[task.complexity] || 0
-    urgency_addition = { 'Low' => 0, 'Normal' => 150, 'High' => 250 }[task.urgency] || 0
-    revisions_addition = (task.revisions.presence || 1) * 2
-
-    (base_price + complexity_addition + urgency_addition + revisions_addition).round(2)
- end
 
   def set_task
     @task = Task.find(params[:id])
