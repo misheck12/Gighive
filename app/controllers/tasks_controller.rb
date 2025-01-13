@@ -73,7 +73,7 @@ class TasksController < ApplicationController
   end
 
   def submit_changes
-    if current_user == @task.freelancer
+    if current_user == @task.freelancera
       if params[:revised_file].present?
         @task.revised_file.attach(params[:revised_file])
         @task.update(status: 'completed') # Update the task status after submitting changes
