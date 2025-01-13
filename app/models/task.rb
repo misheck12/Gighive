@@ -96,12 +96,12 @@ class Task < ApplicationRecord
   def set_time_commitment
     remaining_days = (self.deadline.to_date - Date.today).to_i
     self.time_commitment = if remaining_days <= 7
-                             'Short-term'
-                           elsif remaining_days <= 30
-                             'Medium-term'
-                           else
-                             'Long-term'
-                           end
+                              'Short-term'
+                            elsif remaining_days <= 30
+                              'Medium-term'
+                            else
+                              'Long-term'
+                            end
   end
 
   # Adjusts the budget based on time commitment, complexity, and revisions
@@ -182,30 +182,25 @@ class Task < ApplicationRecord
   # ---------------------------------------------------------------------------
 
   def send_task_created_notification
-    TaskMailer.task_created(self).deliver_later
+    TaskMailer.task_created(self).deliver_later if client.email.present?
   end
 
   def send_task_update_notifications
-    case status
-    when 'in_progress'
-      TaskMailer.task_accepted(self).deliver_later
-    when 'completed'
-      TaskMailer.task_completed(self).deliver_later
-    when 'changes_requested'
-      TaskMailer.changes_requested(self).deliver_later
-    end
+      case status
+      when 'in_progress'
+        TaskMailer.task_accepted_client(self).deliver_later if client.email.present?
+        TaskMailer.task_accepted_freelancer(self).deliver_later if freelancer.email.present?
+      when 'completed'
+        TaskMailer.task_completed_client(self).deliver_later if client.email.present?
+        TaskMailer.task_completed_freelancer(self).deliver_later if freelancer.email.present?
+      when 'changes_requested'
+        TaskMailer.changes_requested_client(self).deliver_later if client.email.present?
+        TaskMailer.changes_requested_freelancer(self).deliver_later if freelancer.email.present?
+      end
   end
 
   def send_changes_submitted_notification
-    TaskMailer.changes_submitted(self).deliver_later
-  end
-
-  # Helper method to notify both client and freelancer
-  def notify_status_change(status_type)
-    # Notify Client
-    TaskMailer.send("#{status_type}_client", self).deliver_later if client.email.present?
-
-    # Notify Freelancer
-    TaskMailer.send("#{status_type}_freelancer", self).deliver_later if freelancer&.email.present?
+    TaskMailer.changes_submitted_client(self).deliver_later if client.email.present?
+    TaskMailer.changes_submitted_freelancer(self).deliver_later if freelancer.email.present?
   end
 end
