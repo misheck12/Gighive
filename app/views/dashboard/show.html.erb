@@ -401,7 +401,7 @@
             <tbody>
               <% Task.open_tasks.each do |task| %>
                 <tr>
-                  <td><%= link_to task.title, task_path(task), class: 'text-primary' %></td>
+                  <td><%= link_to task.title, task_path(task), class: 'text-primary color-black' %></td>
                   <td><%= truncate(task.description, length: 100) %></td>
                   <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
                   <td><%= task.category.name %></td>
