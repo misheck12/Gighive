@@ -1,0 +1,23 @@
+ <h1>Hello <%= @freelancer.name %>,</h1>
+
+  <p>
+    You have marked the task "<strong><%= @task.title %></strong>" as completed on Gighive.
+  </p>
+
+  <p>
+    The client has been notified to review your deliverables and finalize the task soon.
+  </p>
+
+  <p>
+    You can view the task here:
+    <%= link_to 'View Task on Gighive', task_url(@task) %>
+  </p>
+
+  <p>
+    Thank you for your dedication! If any further changes are needed, the client will request them via Gighive.
+  </p>
+
+  <p>
+    Best Regards,<br>
+    The Gighive Team
+  </p>
