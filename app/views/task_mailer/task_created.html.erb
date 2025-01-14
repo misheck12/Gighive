@@ -1,13 +1,15 @@
 <p>Dear <%= @client.name %>,</p>
 
-<p>Your task "<strong><%= @task.title %></strong>" has been successfully created.</p>
+<p>We are pleased to inform you that your task, "<strong><%= @task.title %></strong>", has been successfully created on Gighive.</p>
 
-<p>Here are the details:</p>
+<h3>Task Details</h3>
 <ul>
   <li><strong>Description:</strong> <%= @task.description %></li>
-  <li><strong>Budget:</strong> <%= @task.budget %> ZMK</li>
+  <li><strong>Budget:</strong> <%= number_to_currency(@task.budget, unit: "ZMK ") %></li>
   <li><strong>Deadline:</strong> <%= @task.deadline.strftime("%B %d, %Y") %></li>
   <li><strong>Status:</strong> <%= @task.status.capitalize %></li>
 </ul>
 
-<p>Thank you for using Gighive!</p>
+<p>If you have any questions or need assistance, feel free to contact our support team.</p>
+
+<p>Thank you for choosing Gighive!</p>
