@@ -1,15 +1,22 @@
-<!-- filepath: /c:/Users/mishe/Documents/just rails/Gighive/app/views/payment_mailer/payment_created.html.erb -->
+<h1>Payment Successfully Created</h1>
 
-<p>Dear <%= @client.name %>,</p>
+<p>Hello <%= @client.name %>,</p>
 
-<p>A new payment has been submitted for your task "<%= @payment.task.title %>".</p>
+<p>
+  We're pleased to inform you that your payment for the task titled "<strong><%= @task.title %></strong>" has been successfully created and is now pending approval.
+</p>
 
-<p><strong>Details:</strong></p>
+<p><strong>Payment Details:</strong></p>
 <ul>
-  <li>Amount: <%= @payment.amount %> ZMK</li>
-  <li>Status: <%= @payment.status.capitalize %></li>
+  <li><strong>Task:</strong> <%= @task.title %></li>
+  <li><strong>Amount:</strong> <%= number_to_currency(@payment.amount, unit: "ZMK ") %></li>
+  <li><strong>Status:</strong> <%= @payment.status.titleize %></li>
 </ul>
 
-<p>Please review the attached payment proof.</p>
+<p>
+  You will be notified once the payment is approved. If you have any questions or need assistance, feel free to reach out to our support team.
+</p>
 
-<p>Thank you!</p>
+<p>Thank you for choosing GigHive!</p>
+
+<p>Best regards,<br>The GigHive Team</p>
