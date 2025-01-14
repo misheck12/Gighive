@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
+  <h1>Hello <%= @client.name %>,</h1>
+
+  <p>
+    You've requested changes for the task "<strong><%= @task.title %></strong>" on Gighive.
+  </p>
+
+  <p>
+    The freelancer, <strong><%= @freelancer.name %></strong>, has been notified and will revise the work accordingly.
+  </p>
+
+  <p>
+    You can discuss any additional details and monitor progress here:
+    <%= link_to 'View Task on Gighive', task_url(@task) %>.
+  </p>
+
+  <p>
+    Thank you for using Gighive! 
+  </p>
+
+  <p>
+    Best Regards,<br>
+    The Gighive Team
+  </p>
+</body>
+</html>
