@@ -355,7 +355,7 @@
 
 <% elsif current_user.freelancer? %>
   <!-- Freelancer Dashboard -->
-  
+
   <!-- Total Earning Section -->
   <div class="card shadow mb-4 animated fadeIn">
     <div class="card-header bg-success text-white">
@@ -412,7 +412,7 @@
                     <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
                     <td><%= task.category.name %></td>
                     <td><%= l(task.deadline, format: :short) %></td>
-                    <td><%= task.status %></td>
+                    <td><%= task.status.humanize %></td>
                   </tr>
                 <% end %>
               </tbody>
@@ -447,7 +447,7 @@
                     <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
                     <td><%= task.category.name %></td>
                     <td><%= l(task.deadline, format: :short) %></td>
-                    <td><%= task.status %></td>
+                    <td><%= task.status.humanize %></td>
                   </tr>
                 <% end %>
               </tbody>
@@ -484,7 +484,7 @@
                       <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
                       <td><%= task.category.name %></td>
                       <td><%= l(task.deadline, format: :short) %></td>
-                      <td><span class="badge bg-warning"><%= task.status %></span></td>
+                      <td><span class="badge bg-warning"><%= task.status.humanize %></span></td>
                       <td>
                         <%= link_to 'View Task', task_path(task), class: 'btn btn-primary btn-sm' %>
                       </td>
@@ -524,7 +524,7 @@
                     <tr>
                       <td><%= link_to task.title, task_path(task) %></td>
                       <td><%= task.description %></td>
-                      <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
+                      <td><%= humanized_money_with_symbol(task.budget * 0.80, symbol: "ZMK") %></td>
                       <td><%= task.category.name %></td>
                       <td><%= l(task.deadline, format: :short) %></td>
                       <td><%= l(task.completed_at, format: :short) if task.completed_at.present? %></td>
