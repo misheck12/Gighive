@@ -8,7 +8,7 @@
     <section class="benefits mb-5">
       <h2 class="text-center font-weight-bold text-warning mb-4">Why Choose GigHive?</h2>
       <div class="row">
-        <div class="col-md-4 mb-4">
+        <div class="col-md-4 col-sm-6 col-12 mb-4">
           <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
               <i class="fas fa-users fa-2x text-warning mb-3"></i>
@@ -30,7 +30,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4 mb-4">
+        <div class="col-md-4 col-sm-6 col-12 mb-4">
           <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
               <i class="fas fa-user-tie fa-2x text-warning mb-3"></i>
@@ -46,13 +46,13 @@
                   <i class="fas fa-check-circle text-success mr-2"></i>Build your portfolio and reputation.
                 </li>
                 <li class="list-group-item border-0">
-                  <i class="fas fa-check-circle text-success mr-2"></i>Flexible work opportunities
+                  <i class="fas fa-check-circle text-success mr-2"></i>Flexible work opportunities.
                 </li>
               </ul>
             </div>
           </div>
         </div>
-        <div class="col-md-4 mb-4">
+        <div class="col-md-4 col-sm-12 mb-4">
           <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
               <i class="fas fa-headset fa-2x text-warning mb-3"></i>
@@ -70,7 +70,7 @@
     <section class="how-it-works">
       <h2 class="text-center font-weight-bold text-warning mb-4">How It Works</h2>
       <div class="row">
-        <div class="col-md-4 mb-4">
+        <div class="col-md-4 col-sm-6 col-12 mb-4">
           <div class="card border-0 shadow-sm">
             <div class="card-body">
               <span class="fa-stack fa-2x mb-3">
@@ -84,7 +84,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4 mb-4">
+        <div class="col-md-4 col-sm-6 col-12 mb-4">
           <div class="card border-0 shadow-sm">
             <div class="card-body">
               <span class="fa-stack fa-2x mb-3">
@@ -93,12 +93,12 @@
               </span>
               <h5 class="card-title font-weight-bold">Connect</h5>
               <p class="card-text">
-                Clients post projects; freelancers browse and Accept the project. Find your perfect match.
+                Clients post projects; freelancers browse and accept the project. Find your perfect match.
               </p>
             </div>
           </div>
         </div>
-        <div class="col-md-4 mb-4">
+        <div class="col-md-4 col-sm-12 mb-4">
           <div class="card border-0 shadow-sm">
             <div class="card-body">
               <span class="fa-stack fa-2x mb-3">
@@ -154,5 +154,19 @@
   .fa-user-tie,
   .fa-headset {
     font-size: 2em;
+  }
+
+  @media (max-width: 767.98px) {
+    .col-sm-6 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    .col-12 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
   }
 </style>
