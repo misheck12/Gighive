@@ -18,6 +18,8 @@ class User < ApplicationRecord
   
   # This new association will allow freelancers to access the reviews they've received
   has_many :reviews_received, through: :tasks_as_freelancer, source: :reviews
+  has_many :tasks_completed, -> { completed }, class_name: 'Task', foreign_key: 'freelancer_id'
+
 
   # Callbacks
   after_initialize :set_default_role, if: :new_record?
