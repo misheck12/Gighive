@@ -447,7 +447,7 @@
                     <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
                     <td><%= task.category.name %></td>
                     <td><%= l(task.deadline, format: :short) %></td>
-                    <td><%= task.status.humanize %></td>
+                    <td><%= task.status %></td>
                   </tr>
                 <% end %>
               </tbody>
