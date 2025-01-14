@@ -46,6 +46,8 @@ class Task < ApplicationRecord
   # ---------------------------------------------------------------------------
 
   scope :open_tasks, -> { where(status: :open) }
+  scope :completed, -> { where(status: :completed) }
+
 
   # ---------------------------------------------------------------------------
   # Callbacks
