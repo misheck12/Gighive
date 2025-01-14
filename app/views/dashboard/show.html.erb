@@ -250,18 +250,20 @@
                             <span class="countdown" data-deadline="<%= task.deadline %>"></span>
                           </td>
                           <td><span class="badge <%= badge_color_for_status(task.status) %>"><%= task.status.titleize %></span></td>
-                          <td>
-                            <% if task.completed? %>
-                              <% if task.payment.nil? %>
-                                <%= link_to 'Pay', new_task_payment_path(task), class: 'btn btn-success btn-sm' %>
-                              <% elsif task.payment.rejected? %>
-                                <span class="badge badge-danger">Rejected</span>
-                                <%= link_to 'Pay Again', new_task_payment_path(task), class: 'btn btn-success btn-sm' %>
-                              <% elsif task.payment.approved? %>
-                                <%= link_to 'View', task_path(task), class: 'btn btn-primary btn-sm' %>
-                              <% end %>
-                            <% end %>
-                          </td>
+                         <td>
+  <% if task.completed? %>
+    <% if task.payment.present? %>
+      <% if task.payment.rejected? %>
+        <span class="badge badge-danger">Rejected</span>
+        <%= link_to 'Pay Again', new_task_payment_path(task), class: 'btn btn-success btn-sm' %>
+      <% elsif task.payment.approved? %>
+        <%= link_to 'View', task_path(task), class: 'btn btn-primary btn-sm' %>
+      <% end %>
+    <% else %>
+      <%= link_to 'Pay', new_task_payment_path(task), class: 'btn btn-success btn-sm' %>
+    <% end %>
+  <% end %>
+</td>
                         </tr>
                       <% end %>
                     </tbody>
