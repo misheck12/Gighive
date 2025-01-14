@@ -5,23 +5,23 @@
     <div class="col">
       <!-- Your HTML code -->
       <div class="signup-container">
-        <h2 class="text-center text-primary">Sign Up</h2>
+        <h2 class="text-center text-dark">Sign Up</h2>
 
         <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-horizontal' }) do |f| %>
           <%= render "devise/shared/error_messages", resource: resource %>
 
           <div class="form-group">
-            <%= f.label :name, class: 'form-label' %>
+            <%= f.label :name, class: 'form-label text-dark' %>
             <%= f.text_field :name, autofocus: true, class: 'form-control' %>
           </div>
 
           <div class="form-group">
-            <%= f.label :email, class: 'form-label' %>
+            <%= f.label :email, class: 'form-label text-dark' %>
             <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
           </div>
 
           <div class="form-group">
-            <%= f.label :password, class: 'form-label' %>
+            <%= f.label :password, class: 'form-label text-dark' %>
             <% if @minimum_password_length %>
               <em class="text-muted">(<%= @minimum_password_length %> characters minimum)</em>
             <% end %>
@@ -29,20 +29,20 @@
           </div>
 
           <div class="form-group">
-            <%= f.label :password_confirmation, class: 'form-label' %>
+            <%= f.label :password_confirmation, class: 'form-label text-dark' %>
             <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
           </div>
 
           <div class="form-group form-check">
             <%= f.check_box :terms_of_service, class: 'form-check-input', required: true %>
-            <%= f.label :terms_of_service, class: 'form-check-label' do %>
+            <%= f.label :terms_of_service, class: 'form-check-label text-dark' do %>
               I agree to the 
               <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and Conditions</a>
             <% end %>
           </div>
 
           <div class="form-group">
-            <%= f.submit "Sign Up", class: 'btn btn-primary btn-block', data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Signing up..." } %>
+            <%= f.submit "Sign Up", class: 'btn btn-warning btn-block', data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Signing up..." } %>
           </div>
         <% end %>
 
@@ -57,7 +57,7 @@
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-primary" id="termsModalLabel">Terms and Conditions</h5>
+        <h5 class="modal-title text-dark" id="termsModalLabel">Terms and Conditions</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -78,17 +78,17 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(to bottom right, #FFD700, #1E90FF); /* Gradient background */
+    background: linear-gradient(to bottom right, #FFD700, #FFA500); /* Gradient background */
     padding: 1rem;
   }
 
   .form-horizontal {
     max-width: 400px;
     margin: 20px auto;
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(255, 255, 255, 0.95);
     padding: 2rem;
     border-radius: 0.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 
   .form-control {
@@ -97,7 +97,7 @@
     margin-bottom: 1rem;
   }
 
-  .btn-primary {
+  .btn-warning {
     background-color: #FFD700; /* Hive Yellow */
     border-color: #FFD700;
     color: white;
@@ -107,9 +107,9 @@
     width: 100%;
   }
 
-  .btn-primary:hover {
-    background-color: #FF4500; /* Sunset Orange */
-    border-color: #FF4500;
+  .btn-warning:hover {
+    background-color: #FFA500; /* Sunset Orange */
+    border-color: #FFA500;
   }
 
   .form-horizontal .form-check {
