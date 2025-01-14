@@ -27,71 +27,121 @@
       </div>
     <% end %>
 
-    <%= render "devise/shared/links" %>
+    <div class="devise-links">
+      <%= render "devise/shared/links" %>
+    </div>
   </div>
 </div>
 
 <style>
   .login-container {
-    width: auto;
-    height: 100vh;
+    width: 100%; /* Use full width */
+    min-height: 100vh; /* Ensure it covers at least the full viewport height */
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* This will prevent any overflow from the container */
-    padding: 1rem; /* Added padding for mobile responsiveness */
-    background: linear-gradient(to bottom right, #FFD700, #1E90FF); /* Improved background with gradient */
+    padding: 20px; 
+    background: linear-gradient(135deg, #FFD700, #FFA500); /* Adjusted gradient for a warmer feel */
   }
 
   .login-form {
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.85);
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
-    margin: auto;
-    background: rgba(250, 245, 235, 0.85); /* A light background color to give a parchment-like feel */
+    background-color: rgba(255, 255, 255, 0.9); /* Increased opacity for better readability */
+    padding: 30px; /* More padding for a spacious feel */
+    border-radius: 10px; /* Softer corners */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+    max-width: 450px; /* Slightly wider form */
+    width: 100%; /* Responsive width */
+    text-align: center; /* Center align all content within the form */
+  }
+
+  .login-form h2 {
+    font-weight: 600; /* Bolder heading */
+    color: #333; /* Darker text for contrast */
+    margin-bottom: 30px; /* More space below heading */
+  }
+
+  .form-group {
+    margin-bottom: 20px; /* More space between form groups */
   }
 
   .form-control {
-    margin-bottom: 1rem;
+    border: 1px solid #ced4da; /* Subtle border for inputs */
+    padding: 10px 15px; /* More padding inside inputs */
+    border-radius: 5px; /* Rounded input fields */
+    font-size: 16px; /* Larger font size for readability */
+  }
+
+  .form-control:focus {
+    border-color: #FFD700; /* Highlight color on focus */
+    box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.25); /* Focus glow effect */
+  }
+
+  .checkbox {
+    display: flex; /* Align checkbox and label */
+    align-items: center; /* Vertical alignment */
+    justify-content: flex-start; /* Start alignment */
+  }
+
+  .form-group .checkbox label {
+      margin-bottom: 0;
+      margin-left: 5px;
   }
 
   .btn-primary {
-    background-color: #FFD700; /* Hive Yellow */
-    border-color: #FFD700;
-  }
-  
-  .btn-primary:hover {
     background-color: #FF4500; /* Sunset Orange */
-    border-color: #FF4500;
-  }
-  
-  .form-horizontal .checkbox {
-    padding-left: 20px;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    width: 100%; /* Full-width button */
   }
 
   .btn-primary:hover {
-    background-color: #8d6e63; /* A darker, richer brown for the hover state */
-    border-color: #8d6e63;
+    background-color: #FFD700; /* Hive Yellow on hover */
   }
 
-  @media (max-width: 768px) {
-    .login-form {
-      padding: 1.5rem; /* Adjust padding for smaller screens */
-    }
+  .btn-primary:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255, 165, 0, 0.5);
+  }
 
-    .form-control {
-      font-size: 1rem; /* Adjust font size for better readability on mobile */
-    }
+  .btn-primary[data-disable-with] {
+      position: relative;
+      padding-left: 35px; /* Make room for the spinner */
+  }
 
-    .btn-primary {
-      font-size: 1rem; /* Adjust button size for mobile */
-    }
+  .btn-primary[data-disable-with] .fa-spinner {
+      position: absolute;
+      left: 15px; /* Position the spinner inside the button */
+      top: 50%;
+      transform: translateY(-50%);
+      margin-right: 0;
   }
 
   .fa-spinner {
-    margin-right: 0.5rem;
+    margin-right: 10px;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .login-form {
+      padding: 20px;
+      max-width: 90%; /* More responsive width on smaller screens */
+    }
+
+    .form-control {
+      font-size: 14px;
+    }
+  }
+
+  /* Styling for Devise links */
+  .devise-links a {
+    color: #FF4500; /* Matching link color */
+    text-decoration: none;
+  }
+
+  .devise-links a:hover {
+    text-decoration: underline;
   }
 </style>
