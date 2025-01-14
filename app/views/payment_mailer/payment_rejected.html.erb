@@ -1,15 +1,24 @@
-<!-- filepath: /c:/Users/mishe/Documents/just rails/Gighive/app/views/payment_mailer/payment_rejected.html.erb -->
+<h1>Your Payment Has Been Rejected</h1>
 
-<p>Dear <%= @client.name %>,</p>
+<p>Hello <%= @freelancer.name %>,</p>
 
-<p>Your payment for the task "<%= @payment.task.title %>" has been rejected.</p>
+<p>
+  We regret to inform you that your payment for the task titled "<strong><%= @task.title %></strong>" has been rejected.
+</p>
 
-<p><strong>Details:</strong></p>
+<p><strong>Payment Details:</strong></p>
 <ul>
-  <li>Amount: <%= @payment.amount %> ZMK</li>
-  <li>Status: <%= @payment.status.capitalize %></li>
+  <li><strong>Task:</strong> <%= @task.title %></li>
+  <li><strong>Amount:</strong> <%= number_to_currency(@payment.amount, unit: "ZMK ") %></li>
+  <li><strong>Status:</strong> <%= @payment.status.titleize %></li>
 </ul>
 
-<p>Please review the payment proof for more information.</p>
+<p>
+  We encourage you to review the task details and contact our support team if you require further clarification or assistance.
+</p>
 
-<p>Thank you!</p>
+<p>
+  Thank you for your understanding. We value your work on GigHive and are here to assist you with any questions.
+</p>
+
+<p>Best regards,<br>The GigHive Team</p>
