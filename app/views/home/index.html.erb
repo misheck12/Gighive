@@ -11,14 +11,14 @@
             height: 100%;
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background-color: #FFFDE7; /* Light Honey Yellow */
+            background-color: #FFF8E7; /* Light Honey Yellow */
         }
 
         .hero-section {
             background-image: url('https://via.placeholder.com/1920x800/FFD700/000000?text=GigHive+Landing+Page'); /* Replace with your actual image URL */
             background-size: cover;
             background-position: center;
-            color: #000;
+            color: #000; /* Black text for contrast */
             text-align: center;
             padding: 10% 0;
         }
@@ -26,43 +26,43 @@
         .hero-section h1 {
             font-weight: 700;
             font-size: 3.5rem;
-            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5); /* White text shadow */
         }
 
         .hero-section p {
             font-size: 1.5rem;
             margin-bottom: 2rem;
-            text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5);
+            text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5); /* White text shadow */
         }
 
-        .btn-warning {
+        .btn-primary-custom {
             background-color: #FFD700; /* Hive Yellow */
             border-color: #FFD700;
-            color: #212529;
+            color: #212529; /* Dark text for contrast */
             font-weight: 600;
             padding: 0.7rem 2rem;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
         }
 
-        .btn-warning:hover {
+        .btn-primary-custom:hover {
             background-color: #FFA500; /* Sunset Orange */
             border-color: #FFA500;
             transform: translateY(-2px);
             box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
         }
 
-        .btn-light {
+        .btn-secondary-custom {
             background-color: #fff; /* White */
             border-color: #fff;
-            color: #212529;
+            color: #212529; /* Dark text for contrast */
             font-weight: 600;
             padding: 0.7rem 2rem;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
         }
 
-        .btn-light:hover {
+        .btn-secondary-custom:hover {
             background-color: #f0f0f0; /* Light Grey */
             border-color: #f0f0f0;
             transform: translateY(-2px);
@@ -70,25 +70,27 @@
         }
 
         .features-section {
-            background-color: #FFFDE7;
+            background-color: #FFF8E7; /* Light Honey Yellow */
             padding: 4rem 0;
         }
 
         .features-section h2 {
             font-weight: 700;
-            color: #FFD700;
+            color: #333; /* Dark text for readability */
             margin-bottom: 3rem;
         }
 
         .features-section .card {
+            background-color: #fff; /* White background for cards */
             border: none;
             border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
             transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
 
         .features-section .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
         }
 
         .features-section .card-body {
@@ -98,15 +100,25 @@
         .features-section .card-title {
             font-weight: 600;
             color: #333;
+            margin-top: 1rem;
+        }
+
+        .features-section .card-text {
+            color: #555; /* Slightly darker text */
+        }
+
+        .features-section .fa-3x {
+            color: #FFD700; /* Hive Yellow for icons */
         }
 
         .how-it-works-section {
             padding: 4rem 0;
+            background-color: #faf5e6;
         }
 
         .how-it-works-section h2 {
             font-weight: 700;
-            color: #FFD700;
+            color: #333; /* Dark text for readability */
             margin-bottom: 3rem;
         }
 
@@ -116,7 +128,7 @@
         }
 
         .how-it-works-section .step i {
-            color: #FFD700;
+            color: #FFD700; /* Hive Yellow for icons */
             font-size: 4rem;
             margin-bottom: 1rem;
         }
@@ -126,9 +138,13 @@
             color: #333;
         }
 
+        .how-it-works-section .step p {
+            color: #555; /* Slightly darker text */
+        }
+
         .call-to-action-section {
-            background-color: #FFD700;
-            color: #212529;
+            background: linear-gradient(135deg, #FFD700, #FFA500); /* Gradient background */
+            color: #212529; /* Dark text for contrast */
             text-align: center;
             padding: 4rem 0;
         }
@@ -142,6 +158,42 @@
             font-size: 1.2rem;
             margin-bottom: 2rem;
         }
+
+        .call-to-action-section .btn-dark {
+            background-color: #343a40; /* Dark button for contrast */
+            border-color: #343a40;
+            color: #fff;
+            font-weight: 600;
+            padding: 0.7rem 2rem;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        }
+
+        .call-to-action-section .btn-dark:hover {
+            background-color: #23272b; /* Slightly darker shade on hover */
+            border-color: #23272b;
+            transform: translateY(-2px);
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+        }
+         .footer {
+            background-color: #212529;
+            color: #FFF;
+            text-align: center;
+            padding: 1rem 0;
+            position: relative; /* Ensure it stays at the bottom */
+            width: 100%;
+        }
+
+        .footer a {
+            color: #FFD700; /* Hive Yellow */
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: #FFA500; /* Sunset Orange */
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -150,8 +202,8 @@
         <div class="container">
             <h1 class="display-4">Welcome to GigHive</h1>
             <p class="lead">Connecting Talent with Opportunity</p>
-            <a href="<%= new_user_registration_path %>" class="btn btn-warning btn-lg shadow">Join Now</a>
-            <a href="<%= new_user_session_path %>" class="btn btn-light btn-lg shadow">Sign In</a>
+            <a href="<%= new_user_registration_path %>" class="btn btn-primary-custom btn-lg shadow">Join Now</a>
+            <a href="<%= new_user_session_path %>" class="btn btn-secondary-custom btn-lg shadow">Sign In</a>
         </div>
     </section>
 
@@ -162,7 +214,7 @@
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
                         <div class="card-body">
-                            <i class="fas fa-search fa-3x text-warning"></i>
+                            <i class="fas fa-search fa-3x"></i>
                             <h5 class="card-title mt-3">Browse Freelancers</h5>
                             <p class="card-text">Find talented professionals across various fields to execute your projects.</p>
                         </div>
@@ -171,7 +223,7 @@
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
                         <div class="card-body">
-                            <i class="fas fa-clipboard-list fa-3x text-warning"></i>
+                            <i class="fas fa-clipboard-list fa-3x"></i>
                             <h5 class="card-title mt-3">Post Projects</h5>
                             <p class="card-text">Describe your project needs and receive proposals from qualified freelancers.</p>
                         </div>
@@ -180,7 +232,7 @@
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
                         <div class="card-body">
-                            <i class="fas fa-shield-alt fa-3x text-warning"></i>
+                            <i class="fas fa-shield-alt fa-3x"></i>
                             <h5 class="card-title mt-3">Secure Payments</h5>
                             <p class="card-text">Manage transactions safely with our integrated payment system.</p>
                         </div>
@@ -225,6 +277,13 @@
             <a href="<%= new_user_registration_path %>" class="btn btn-dark btn-lg shadow">Get Started</a>
         </div>
     </section>
-
+    <div class="footer">
+        <div class="container">
+            <p>&copy; <%= Time.current.year %> GigHive. All rights reserved. | <a href="<%= pages_terms_path %>">Terms of Service</a> | <a href="<%= pages_privacy_path %>">Privacy Policy</a></p>
+        </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min[_{{{CITATION{{{_1{](https://github.com/EleanorEllingson/web-dev/tree/b2f2a382e77a20fd6895677c8b8f402ac4bae352/7-bank-project%2F1-template-route%2Ftranslations%2FREADME.ko.md)[_{{{CITATION{{{_2{](https://github.com/Mazagu/IconsGroup/tree/8fa2da66cd9ded12fa49aad5711d9c11dedab276/icons_example.php)[_{{{CITATION{{{_3{](https://github.com/HubsorNL/wietteweetwat-blog/tree/38cbe07c403422460336efbb5f68353ba1e035e3/footer.php)[_{{{CITATION{{{_4{](https://github.com/krakensda/library-app/tree/8d31456c6f68ba01b9fa704afec1c3e65fcceb2d/resources%2Fviews%2Fwelcome.blade.php)
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
