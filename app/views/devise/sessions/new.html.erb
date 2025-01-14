@@ -23,7 +23,7 @@
       <% end %>
 
       <div class="form-group">
-        <%= f.submit "Log in", class: 'btn btn-primary btn-block', data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Logging in..." } %>
+        <%= f.submit "Log in", class: 'btn btn-warning btn-block', data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> Logging in..." } %>
       </div>
     <% end %>
 
@@ -38,9 +38,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* This will prevent any overflow from the container */
-    padding: 1rem; /* Added padding for mobile responsiveness */
-    background: linear-gradient(to bottom right, #FFD700, #1E90FF); /* Improved background with gradient */
+    overflow: hidden;
+    padding: 1rem;
+    background: linear-gradient(to bottom right, #FFD700, #FFA500); /* Bee-themed background with gradient */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
   .login-form {
@@ -51,43 +54,38 @@
     max-width: 400px;
     width: 100%;
     margin: auto;
-    background: rgba(250, 245, 235, 0.85); /* A light background color to give a parchment-like feel */
   }
 
   .form-control {
     margin-bottom: 1rem;
   }
 
-  .btn-primary {
+  .btn-warning {
     background-color: #FFD700; /* Hive Yellow */
     border-color: #FFD700;
+    color: white;
   }
-  
-  .btn-primary:hover {
-    background-color: #FF4500; /* Sunset Orange */
-    border-color: #FF4500;
+
+  .btn-warning:hover {
+    background-color: #FFA500; /* Sunset Orange */
+    border-color: #FFA500;
   }
-  
+
   .form-horizontal .checkbox {
     padding-left: 20px;
   }
 
-  .btn-primary:hover {
-    background-color: #8d6e63; /* A darker, richer brown for the hover state */
-    border-color: #8d6e63;
-  }
-
   @media (max-width: 768px) {
     .login-form {
-      padding: 1.5rem; /* Adjust padding for smaller screens */
+      padding: 1.5rem;
     }
 
     .form-control {
-      font-size: 1rem; /* Adjust font size for better readability on mobile */
+      font-size: 1rem;
     }
 
-    .btn-primary {
-      font-size: 1rem; /* Adjust button size for mobile */
+    .btn-warning {
+      font-size: 1rem;
     }
   }
 
