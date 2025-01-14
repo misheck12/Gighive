@@ -179,6 +179,14 @@ class Task < ApplicationRecord
     end
   end
 
+    # Sets the completed_at timestamp if the task is completed
+    def set_completed_at_if_completed
+      if status_changed? && status == 'completed'
+        self.completed_at ||= Time.current
+      elsif status_changed? && status != 'completed'
+        self.completed_at = nil
+      end
+    end
   # ---------------------------------------------------------------------------
   # Notification Methods
   # ---------------------------------------------------------------------------
