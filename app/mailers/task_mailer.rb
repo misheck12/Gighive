@@ -28,9 +28,9 @@ class TaskMailer < ApplicationMailer
   end
 
   def task_completed_freelancer(task)
-      @task = task
-      @freelancer = task.freelancer
-      mail(to: @freelancer.email, subject: 'You Have Completed a Task')
+    @task = task
+    @freelancer = task.freelancer
+    mail(to: @freelancer.email, subject: 'You Have Completed a Task')
   end
 
   def changes_requested_client(task)
@@ -56,6 +56,6 @@ class TaskMailer < ApplicationMailer
   def changes_submitted_freelancer(task)
     @task = task
     @freelancer = task.freelancer
-    mail(to: @freelancer.email, subject: 'Changes Have Been Submitted for Task - #{@task.title}')
+    mail(to: @freelancer.email, subject: "Changes Have Been Submitted for Task - #{@task.title}")
   end
 end
