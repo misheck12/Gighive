@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_14_080119) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_14_091449) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,6 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_14_080119) do
     t.bigint "user_id", null: false
     t.string "network"
     t.string "reference_no"
+    t.decimal "amount", precision: 10, scale: 2, default: "0.0", null: false
     t.index ["client_id"], name: "index_payments_on_client_id"
     t.index ["reference_no"], name: "index_payments_on_reference_no", unique: true
     t.index ["task_id"], name: "index_payments_on_task_id"
