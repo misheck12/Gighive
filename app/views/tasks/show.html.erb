@@ -8,7 +8,7 @@
         <dd class="col-sm-9"><%= @task.description %></dd>
 
         <dt class="col-sm-3">Category:</dt>
-        <dd class="col-sm-9"><%= @task.category.name %></dd>
+        <dd class="col-sm-9"><%= @task.category&.name || 'Uncategorized' %></dd>
 
         <% if @task.attachment.attached? %>
           <dt class="col-sm-3">Attachment:</dt>
@@ -30,7 +30,7 @@
 
       <% if current_user == @task.client %>
         <% if @task.completed? %>
-          <% if @task.completed_file.attached? %>
+          <% if @task.payment&.approved? && @task.completed_file.attached? %>
             <dl class="row">
               <dt class="col-sm-3">Completed File:</dt>
               <dd class="col-sm-9">
@@ -40,6 +40,7 @@
               </dd>
             </dl>
           <% end %>
+
           <% unless @task.reviewed? %>
             <div class="d-flex gap-2 mt-3">
               <%= link_to 'Give a Review', new_task_review_path(@task), class: 'btn btn-primary' %>
