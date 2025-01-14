@@ -5,7 +5,5 @@ class AddConfirmableToUsers < ActiveRecord::Migration[6.0]
     add_column :users, :confirmation_sent_at, :datetime
     add_index  :users, :confirmation_token, unique: true
 
-    # Uncomment the line below to confirm existing users
-    # User.update_all confirmed_at: DateTime.now
   end
 end
