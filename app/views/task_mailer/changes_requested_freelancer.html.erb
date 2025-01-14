@@ -1,16 +1,18 @@
-<!-- filepath: /c:/Users/mishe/Documents/just rails/Gighive/app/views/task_mailer/changes_requested.html.erb -->
-
 <p>Dear <%= @freelancer.name %>,</p>
 
-<p>The client has requested changes for your task "<strong><%= @task.title %></strong>".</p>
+<p>The client has requested changes to your task titled "<strong><%= @task.title %></strong>". Please review the details below:</p>
 
-<p>Here are the details:</p>
 <ul>
-  <li><strong>Description:</strong> <%= @task.description %></li>
-  <li><strong>Budget:</strong> <%= @task.budget %> ZMK</li>
-  <li><strong>Status:</strong> <%= @task.status.capitalize %></li>
+  <li><strong>Task Description:</strong> <%= @task.description %></li>
+  <li><strong>Budget:</strong> <%= number_to_currency(@task.budget, unit: "ZMK", format: "%n %u") %></li>
+  <li><strong>Current Status:</strong> <%= @task.status.capitalize %></li>
 </ul>
 
-<p>Please review the feedback and submit the revised work.</p>
+<p><strong>Feedback:</strong> <%= @task.feedback || "No specific feedback provided." %></p>
 
-<p>Thank you for your attention to detail!</p>
+<p>We kindly request that you review the client’s feedback and submit the revised work at your earliest convenience. If you have any questions or need clarification, feel free to reach out to the project manager.</p>
+
+<p>Thank you for your dedication and attention to detail.</p>
+
+<p>Best regards,</p>
+<p>The Gighive Team</p>
