@@ -39,15 +39,34 @@
       <div class="row">
         <div class="col-lg-4 mb-4">
           <div class="card border-0 shadow">
-            <img src="https://via.placeholder.com/400x300/FFD700/000000?text=Team+Member" alt="Team Member" class="card-img-top">
+            <img src="https://via.placeholder.com/400x300/FFD700/000000?text=Team+Member+1" alt="Team Member 1" class="card-img-top">
             <div class="card-body text-center">
-              <h5 class="card-title font-weight-bold">Team Member Name</h5>
-              <p class="card-text text-muted">Title/Role</p>
+              <h5 class="card-title font-weight-bold">John Doe</h5>
+              <p class="card-text text-muted">Co-founder & CEO</p>
             </div>
           </div>
         </div>
+        <div class="col-lg-4 mb-4">
+          <div class="card border-0 shadow">
+            <img src="https://via.placeholder.com/400x300/FFD700/000000?text=Team+Member+2" alt="Team Member 2" class="card-img-top">
+            <div class="card-body text-center">
+              <h5 class="card-title font-weight-bold">Jane Smith</h5>
+              <p class="card-text text-muted">Head of Marketing</p>
+            </div>
+          </div>
         </div>
+        <div class="col-lg-4 mb-4">
+          <div class="card border-0 shadow">
+            <img src="https://via.placeholder.com/400x300/FFD700/000000?text=Team+Member+3" alt="Team Member 3" class="card-img-top">
+            <div class="card-body text-center">
+              <h5 class="card-title font-weight-bold">David Lee</h5>
+              <p class="card-text text-muted">Lead Developer</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
+    
     <section class="call-to-action text-center mt-5">
         <h2 class="font-weight-bold text-warning">Join the GigHive Community</h2>
         <p class="lead text-muted">Whether you're a freelancer looking for your next exciting project or a business seeking top-notch talent, GigHive is the place to bee!</p>
@@ -69,22 +88,31 @@
   }
 
   .font-weight-bold {
-      font-weight: 700;
+    font-weight: 700;
   }
 
   .text-warning {
-      color: #FFD700; /* Hive Yellow */
+    color: #FFD700; /* Hive Yellow */
   }
 
   .btn-warning {
-      background-color: #FFD700; /* Hive Yellow */
-      border-color: #FFD700;
-      color: #212529;
-      font-weight: 600;
+    background-color: #FFD700; /* Hive Yellow */
+    border-color: #FFD700;
+    color: #212529;
+    font-weight: 600;
   }
 
   .btn-warning:hover {
-      background-color: #FFA500; /* Sunset Orange */
-      border-color: #FFA500;
+    background-color: #FFA500; /* Sunset Orange */
+    border-color: #FFA500;
+  }
+
+  .card {
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+
+  .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
   }
 </style>
