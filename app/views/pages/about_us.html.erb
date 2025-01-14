@@ -1,15 +1,90 @@
-<!-- filepath: /c:/Users/mishe/Documents/just rails/Gighive/app/views/pages/about_us.html.erb -->
-<div class="container my-5">
-  <h1 class="mb-4">About Us</h1>
-  <p>Welcome to GigHive! We are dedicated to connecting clients with skilled freelancers to bring your projects to life.</p>
-  <div class="row">
-    <div class="col-md-6">
-      <h3>Our Mission</h3>
-      <p>To provide a seamless platform where creativity meets opportunity, fostering successful collaborations between clients and freelancers.</p>
-    </div>
-    <div class="col-md-6">
-      <h3>Our Team</h3>
-      <p>Our team comprises industry experts passionate about facilitating meaningful professional relationships and delivering outstanding results.</p>
-    </div>
+<div class="about-us-container">
+  <div class="container py-5">
+    <header class="text-center mb-5">
+      <h1 class="display-4 font-weight-bold text-warning">About GigHive</h1>
+      <p class="lead text-muted">Connecting Talent with Opportunity in the Gig Economy</p>
+    </header>
+
+    <section class="about-intro mb-5">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <h2 class="font-weight-bold text-warning">Welcome to the Hive!</h2>
+          <p class="text-muted">At GigHive, we're passionate about revolutionizing the way people work. We believe in the power of the gig economy to provide flexible, rewarding opportunities for freelancers and to empower businesses with on-demand talent.</p>
+          <p class="text-muted">Our platform is designed to be a vibrant marketplace where skilled professionals and innovative companies can connect and collaborate seamlessly.</p>
+        </div>
+        <div class="col-lg-6">
+          <img src="https://via.placeholder.com/500x350/FFD700/000000?text=GigHive+Illustration" alt="GigHive Illustration" class="img-fluid rounded shadow">
+        </div>
+      </div>
+    </section>
+
+    <section class="our-mission mb-5">
+      <div class="row align-items-center">
+        <div class="col-lg-6 order-lg-2">
+          <h2 class="font-weight-bold text-warning">Our Mission</h2>
+          <p class="text-muted">To create a thriving ecosystem where creativity flourishes, opportunities abound, and every project finds its perfect match.</p>
+          <p class="text-muted">We're committed to building a platform that's not only easy to use but also fosters trust, transparency, and mutual respect between freelancers and clients.</p>
+        </div>
+        <div class="col-lg-6 order-lg-1">
+          <img src="https://via.placeholder.com/500x350/FFA500/000000?text=Mission+Illustration" alt="Our Mission Illustration" class="img-fluid rounded shadow">
+        </div>
+      </div>
+    </section>
+
+    <section class="our-team">
+      <div class="text-center mb-5">
+        <h2 class="font-weight-bold text-warning">Meet the Hive Mind</h2>
+        <p class="text-muted">Our team is a diverse group of talented individuals, each bringing unique skills and experiences to the table. We're united by our shared passion for innovation, our commitment to excellence, and our belief in the power of collaboration.</p>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 mb-4">
+          <div class="card border-0 shadow">
+            <img src="https://via.placeholder.com/400x300/FFD700/000000?text=Team+Member" alt="Team Member" class="card-img-top">
+            <div class="card-body text-center">
+              <h5 class="card-title font-weight-bold">Team Member Name</h5>
+              <p class="card-text text-muted">Title/Role</p>
+            </div>
+          </div>
+        </div>
+        </div>
+    </section>
+    <section class="call-to-action text-center mt-5">
+        <h2 class="font-weight-bold text-warning">Join the GigHive Community</h2>
+        <p class="lead text-muted">Whether you're a freelancer looking for your next exciting project or a business seeking top-notch talent, GigHive is the place to bee!</p>
+        <a href="#" class="btn btn-warning btn-lg shadow">Sign Up Now</a>
+    </section>
   </div>
 </div>
+
+<style>
+  .about-us-container {
+    background-color: #f8f9fa;
+  }
+
+  .about-intro, .our-mission {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .font-weight-bold {
+      font-weight: 700;
+  }
+
+  .text-warning {
+      color: #FFD700; /* Hive Yellow */
+  }
+
+  .btn-warning {
+      background-color: #FFD700; /* Hive Yellow */
+      border-color: #FFD700;
+      color: #212529;
+      font-weight: 600;
+  }
+
+  .btn-warning:hover {
+      background-color: #FFA500; /* Sunset Orange */
+      border-color: #FFA500;
+  }
+</style>
