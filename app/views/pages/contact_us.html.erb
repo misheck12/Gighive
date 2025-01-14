@@ -7,7 +7,7 @@
 
     <section class="contact-info mb-5">
       <div class="row">
-        <div class="col-md-4 mb-4 text-center">
+        <div class="col-md-4 col-sm-6 col-12 mb-4 text-center">
           <i class="fas fa-map-marker-alt fa-3x text-warning"></i>
           <h4 class="font-weight-bold mt-3">Our Location</h4>
           <address class="text-muted">
@@ -17,14 +17,14 @@
             United States
           </address>
         </div>
-        <div class="col-md-4 mb-4 text-center">
+        <div class="col-md-4 col-sm-6 col-12 mb-4 text-center">
           <i class="fas fa-phone fa-3x text-warning"></i>
           <h4 class="font-weight-bold mt-3">Phone Number</h4>
           <p class="text-muted">
             <a href="tel:+15555551212" class="text-muted">+1-555-555-1212</a> (Main Office)
           </p>
         </div>
-        <div class="col-md-4 mb-4 text-center">
+        <div class="col-md-4 col-sm-12 mb-4 text-center">
           <i class="fas fa-envelope fa-3x text-warning"></i>
           <h4 class="font-weight-bold mt-3">Email Address</h4>
           <p class="text-muted">
@@ -85,5 +85,19 @@
   .btn-warning:hover {
     background-color: #FFA500; /* Sunset Orange */
     border-color: #FFA500;
+  }
+
+  @media (max-width: 767.98px) {
+    .col-sm-6 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    .col-12 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
   }
 </style>
