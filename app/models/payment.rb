@@ -9,6 +9,7 @@ class Payment < ApplicationRecord
   enum status: { pending: 0, approved: 1, rejected: 2 }
 
   validates :amount, presence: true, numericality: { greater_than: 0 }
+  validates :budget_id, presence: true
 
   after_create :send_payment_created_notification
   after_update :send_payment_status_change_notification, if: :saved_change_to_status?
