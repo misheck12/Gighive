@@ -1,16 +1,35 @@
-<!-- filepath: /c:/Users/mishe/Documents/just rails/Gighive/app/views/task_mailer/changes_submitted.html.erb -->
+<p>Hello <%= @client.name %>,</p>
 
-<p>Dear <%= @client.name %>,</p>
+<p>
+  <strong><%= @freelancer.name %></strong> has submitted the requested changes for your task, "<strong><%= @task.title %></strong>".
+</p>
 
-<p><%= @freelancer.name %> has submitted the requested changes for your task "<strong><%= @task.title %></strong>".</p>
-
-<p>Here are the updated details:</p>
+<h3>Updated Task Details</h3>
 <ul>
+  <li><strong>Task ID:</strong> <%= @task.id %></li>
+  <li><strong>Title:</strong> <%= @task.title %></li>
   <li><strong>Description:</strong> <%= @task.description %></li>
-  <li><strong>Budget:</strong> <%= @task.budget %> ZMK</li>
-  <li><strong>Status:</strong> <%= @task.status.capitalize %></li>
+  <li><strong>Budget:</strong> <%= number_to_currency(@task.budget, unit: "ZMK ", format: "%u%n") %></li>
+  <li><strong>Deadline:</strong> <%= @task.deadline ? @task.deadline.strftime("%B %d, %Y") : "Not set" %></li>
 </ul>
 
-<p>Please review the revised work and approve its completion.</p>
+<p>
+  Please take a moment to review the submitted changes and provide your feedback. If you are satisfied with the updates, you can approve the task's completion directly on Gighive. Should further changes be necessary, feel free to communicate with the freelancer through the platform.
+</p>
 
-<p>Thank you for collaborating through Gighive!</p>
+<p>
+  You can review the task and provide feedback here:
+</p>
+
+<p>
+  <%= link_to 'Review Task on Gighive', task_url(@task), style: 'color: #007BFF; text-decoration: none;' %>
+</p>
+
+<p>
+  Thank you for collaborating with Gighive. We’re here to ensure a smooth and successful experience for you!
+</p>
+
+<p>
+  Best Regards,<br>
+  <strong>The Gighive Team</strong>
+</p>
