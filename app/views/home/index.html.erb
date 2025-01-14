@@ -1,72 +1,215 @@
-<!-- filepath: /c:/Users/mishe/Documents/just rails/Gighive/app/views/home/index.html.erb -->
-<div class="container mt-5">
-  <div class="text-center">
-    <h1 class="display-4">Welcome to Gighive!</h1>
-    <p class="lead">Connecting clients with skilled freelancers to bring your projects to life.</p>
-    <hr class="my-4">
-    <a class="btn btn-primary btn-lg" href="#features" role="button">Explore Features</a>
-    <a class="btn btn-secondary btn-lg" href="#how-it-works" role="button">How It Works</a>
-  </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GigHive - Connecting Talent with Opportunity</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
 
-  <section id="features" class="mt-5">
-    <h2 class="text-center mb-4">Our Features</h2>
-    <div class="row">
-      <div class="col-md-4">
-        <div class="card mb-4 shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title">Browse Freelancers</h5>
-            <p class="card-text">Find talented professionals across various fields to execute your projects.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card mb-4 shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title">Post Projects</h5>
-            <p class="card-text">Describe your project needs and receive proposals from qualified freelancers.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card mb-4 shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title">Secure Payments</h5>
-            <p class="card-text">Manage transactions safely with our integrated payment system.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+        .hero-section {
+            background-image: url('https://via.placeholder.com/1920x800/FFD700/000000?text=GigHive+Landing+Page'); /* Replace with your actual image URL */
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            text-align: center;
+            padding: 10% 0;
+        }
 
-  <section id="how-it-works" class="mt-5">
-    <h2 class="text-center mb-4">How It Works</h2>
-    <div class="row text-center">
-      <div class="col-md-3">
-        <i class="bi bi-person-plus-fill display-4"></i>
-        <h4>Sign Up</h4>
-        <p>Create an account to get started.</p>
-      </div>
-      <div class="col-md-3">
-        <i class="bi bi-clipboard-data display-4"></i>
-        <h4>Post a Task</h4>
-        <p>Detail your project requirements.</p>
-      </div>
-      <div class="col-md-3">
-        <i class="bi bi-chat-left-text display-4"></i>
-        <h4>Collaborate</h4>
-        <p>Communicate with freelancers to refine your project.</p>
-      </div>
-      <div class="col-md-3">
-        <i class="bi bi-cash-stack display-4"></i>
-        <h4>Complete & Pay</h4>
-        <p>Finalize the project and process payments securely.</p>
-      </div>
-    </div>
-  </section>
+        .hero-section h1 {
+            font-weight: 700;
+            font-size: 3.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
 
-  <section class="text-center mt-5">
-    <h2>Join Gighive Today!</h2>
-    <p>Whether you're looking to hire or offer your skills, Gighive is the perfect platform for you.</p>
-    <a class="btn btn-primary btn-lg mt-3" href="#contact" role="button">Get Started</a>
-  </section>
-</div>
+        .hero-section p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-warning {
+            background-color: #FFD700; /* Hive Yellow */
+            border-color: #FFD700;
+            color: #212529;
+            font-weight: 600;
+            padding: 0.7rem 2rem;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .btn-warning:hover {
+            background-color: #FFA500; /* Sunset Orange */
+            border-color: #FFA500;
+            transform: translateY(-2px);
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .features-section {
+            background-color: #f8f9fa;
+            padding: 4rem 0;
+        }
+
+        .features-section h2 {
+            font-weight: 700;
+            color: #FFD700;
+            margin-bottom: 3rem;
+        }
+
+        .features-section .card {
+            border: none;
+            border-radius: 10px;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .features-section .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .features-section .card-body {
+            text-align: center;
+        }
+
+        .features-section .card-title {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .how-it-works-section {
+            padding: 4rem 0;
+        }
+
+        .how-it-works-section h2 {
+            font-weight: 700;
+            color: #FFD700;
+            margin-bottom: 3rem;
+        }
+
+        .how-it-works-section .step {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .how-it-works-section .step i {
+            color: #FFD700;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .how-it-works-section .step h4 {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .call-to-action-section {
+            background-color: #FFD700;
+            color: #212529;
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .call-to-action-section h2 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .call-to-action-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="display-4">Welcome to GigHive</h1>
+            <p class="lead">Connecting Talent with Opportunity</p>
+            <a href="<%= new_user_registration_path %>" class="btn btn-warning btn-lg shadow">Join Now</a>
+            <a href="<%= new_user_session_path %>" class="btn btn-light btn-lg shadow">Sign In</a>
+        </div>
+    </section>
+
+    <section class="features-section" id="features">
+        <div class="container">
+            <h2 class="text-center">Our Features</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <i class="fas fa-search fa-3x text-warning"></i>
+                            <h5 class="card-title mt-3">Browse Freelancers</h5>
+                            <p class="card-text">Find talented professionals across various fields to execute your projects.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <i class="fas fa-clipboard-list fa-3x text-warning"></i>
+                            <h5 class="card-title mt-3">Post Projects</h5>
+                            <p class="card-text">Describe your project needs and receive proposals from qualified freelancers.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <i class="fas fa-shield-alt fa-3x text-warning"></i>
+                            <h5 class="card-title mt-3">Secure Payments</h5>
+                            <p class="card-text">Manage transactions safely with our integrated payment system.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works-section" id="how-it-works">
+        <div class="container">
+            <h2 class="text-center">How It Works</h2>
+            <div class="row text-center">
+                <div class="col-md-3 step">
+                    <i class="fas fa-user-plus fa-4x"></i>
+                    <h4>Sign Up</h4>
+                    <p>Create an account to get started.</p>
+                </div>
+                <div class="col-md-3 step">
+                    <i class="fas fa-tasks fa-4x"></i>
+                    <h4>Post or Find a Task</h4>
+                    <p>Detail your project requirements or find tasks that match your skills.</p>
+                </div>
+                <div class="col-md-3 step">
+                    <i class="fas fa-comments fa-4x"></i>
+                    <h4>Collaborate</h4>
+                    <p>Communicate with freelancers or clients to refine the project.</p>
+                </div>
+                <div class="col-md-3 step">
+                    <i class="fas fa-money-check-alt fa-4x"></i>
+                    <h4>Complete & Pay</h4>
+                    <p>Finalize the project and process payments securely.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="call-to-action-section">
+        <div class="container">
+            <h2>Join the GigHive Community Today!</h2>
+            <p>Whether you're looking to hire top talent or offer your expert skills, GigHive is the perfect platform for you.</p>
+            <a href="<%= new_user_registration_path %>" class="btn btn-dark btn-lg shadow">Get Started</a>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
