@@ -17,7 +17,7 @@ class PaymentMailer < ApplicationMailer
 
   def payment_rejected(payment)
     @payment = payment
-    @freelancer = payment.task.freelancer
+    @client = payment.task.freelancer
     @task = payment.task
     mail(to: @freelancer.email, subject: 'Your Payment Has Been Rejected')
   end
