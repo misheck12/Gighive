@@ -1,15 +1,9 @@
 class Payment < ApplicationRecord
-  belongs_to :client, class_name: 'User', optional: true
-  belongs_to :task
   belongs_to :user
-  belongs_to :budget
-
+  belongs_to :task
   has_one_attached :payment_proof
 
   enum status: { pending: 0, approved: 1, rejected: 2 }
-
-  validates :amount, presence: true, numericality: { greater_than: 0 }
-  validates :budget_id, presence: true
 
   after_create :send_payment_created_notification
   after_update :send_payment_status_change_notification, if: :saved_change_to_status?
