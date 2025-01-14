@@ -1,8 +1,10 @@
-<!-- filepath: app/views/task_mailer/changes_submitted_freelancer.html.erb -->
 <p>Hello <%= @freelancer.name %>,</p>
 
-<p>You have submitted changes for the task "<strong><%= @task.title %></strong>".</p>
+<p>
+  You have successfully submitted changes for the task "<strong><%= @task.title %></strong>".
+</p>
 
+<h3>Task Details</h3>
 <ul>
   <li><strong>Task ID:</strong> <%= @task.id %></li>
   <li><strong>Title:</strong> <%= @task.title %></li>
@@ -10,6 +12,23 @@
   <li><strong>Status:</strong> <%= @task.status.capitalize %></li>
 </ul>
 
-<p>The client (<%= @task.client.name %>) has been notified of your submitted changes. Feel free to communicate with them directly in case further revisions are required.</p>
+<p>
+  The client (<strong><%= @task.client.name %></strong>) has been notified of your submitted changes. If any additional revisions are needed, the client will communicate with you directly via Gighive.
+</p>
 
-<p>Thank you for your professionalism!</p>
+<p>
+  You can view the task details and monitor the client's feedback here:
+</p>
+
+<p>
+  <%= link_to 'View Task on Gighive', task_url(@task), style: 'color: #007BFF; text-decoration: none;' %>
+</p>
+
+<p>
+  Thank you for your dedication and professionalism. Keep up the great work!
+</p>
+
+<p>
+  Best Regards,<br>
+  <strong>The Gighive Team</strong>
+</p>
