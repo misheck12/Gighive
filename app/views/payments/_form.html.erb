@@ -11,40 +11,23 @@
     </div>
   <% end %>
 
-  <!-- Hidden Field for User ID -->
   <%= form.hidden_field :user_id, value: current_user.id %>
 
-  <!-- Amount Field -->
-  <div class="mb-3">
-    <%= form.label :amount, class: 'form-label' %>
-    <%= form.number_field :amount, step: 0.01, class: 'form-control', placeholder: 'Enter payment amount', required: true %>
-  </div>
-
-  <!-- Budget Selection Field -->
-  <div class="mb-3">
-    <%= form.label :budget_id, "Budget", class: 'form-label' %>
-    <%= form.collection_select :budget_id, @budgets, :id, :name, { prompt: "Select Budget" }, { class: 'form-control' } %>
-  </div>
-
-  <!-- Network Field -->
   <div class="mb-3">
     <%= form.label :network, class: 'form-label' %>
     <%= form.text_field :network, class: 'form-control', placeholder: 'MTN or Airtel Mobile Money', required: true %>
   </div>
 
-  <!-- Transaction ID Field -->
   <div class="mb-3">
     <%= form.label :transaction_id, class: 'form-label' %>
     <%= form.text_field :transaction_id, class: 'form-control', placeholder: 'Enter your transaction ID', required: true %>
   </div>
 
-  <!-- Payment Proof Upload Field -->
   <div class="mb-3">
     <%= form.label :payment_proof, "Upload Payment Screenshot", class: 'form-label' %>
     <%= form.file_field :payment_proof, class: 'form-control', required: true %>
   </div>
 
-  <!-- Submit Button -->
   <div class="d-grid">
     <%= form.submit "Submit Payment", class: 'btn btn-primary' %>
   </div>
