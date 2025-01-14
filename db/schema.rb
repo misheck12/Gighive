@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_14_123457) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_14_130041) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -123,8 +123,15 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_14_123457) do
     t.datetime "confirmed_at", precision: nil
     t.datetime "confirmation_sent_at", precision: nil
     t.string "unconfirmed_email"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["current_sign_in_ip"], name: "index_users_on_current_sign_in_ip"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["last_sign_in_ip"], name: "index_users_on_last_sign_in_ip"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
