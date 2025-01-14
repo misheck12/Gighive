@@ -344,3 +344,290 @@
                   <% current_user.given_reviews.each do |review| %>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Review for <%= link_to review.task.
+                      <li class="list-group-item d-flex justify-content-between align-items-center">
+                      Review for <%= link_to review.task.title, task_path(review.task), class: 'text-primary' %>
+                      <span class="badge <%= badge_color_for_rating(review.rating) %> badge-pill"><%= review.rating %> stars</span> - <%= review.comment %>
+                    </li>
+                  <% end %>
+                <% else %>
+                  <li class="list-group-item">No reviews available.</li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <% elsif current_user.freelancer? %>
+      <div class="card shadow mb-4 animated fadeIn">
+        <div class="card-header bg-warning text-white font-weight-bold">
+          <i class="fas fa-hand-holding-usd mr-2"></i>Total Earning
+        </div>
+        <div class="card-body">
+          <p>Your total earning: <span class="font-weight-bold"><%= current_user.email %></span></p>
+          <h2 class="text-warning"><%= humanized_money_with_symbol(Task.total_earning_for_freelancer(current_user.id).pluck(:budget).sum.to_f * 0.8, symbol: "ZMK", position: :before) %></h2>
+        </div>
+      </div>
+
+      <ul class="nav nav-tabs nav-fill mb-4 shadow-sm bg-white rounded-top" id="freelancerDashboardTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active font-weight-bold" id="available-tasks-tab" data-bs-toggle="tab" href="#available-tasks" role="tab" aria-controls="available-tasks" aria-selected="true">
+            <i class="fas fa-list-alt mr-2"></i>Available Tasks
+          </a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link font-weight-bold" id="working-tasks-tab" data-bs-toggle="tab" href="#working-tasks" role="tab" aria-controls="working-tasks" aria-selected="false">
+            <i class="fas fa-briefcase mr-2"></i>Your Tasks
+          </a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link font-weight-bold" id="tasks-changes-tab" data-bs-toggle="tab" href="#tasks-changes" role="tab" aria-controls="tasks-changes" aria-selected="false">
+            <i class="fas fa-exclamation-triangle mr-2"></i>Tasks Requiring Changes
+          </a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link font-weight-bold" id="reviews-received-tab" data-bs-toggle="tab" href="#reviews-received" role="tab" aria-controls="reviews-received" aria-selected="false">
+            <i class="fas fa-star mr-2"></i>Reviews Received
+          </a>
+        </li>
+      </ul>
+
+      <div class="tab-content shadow-sm bg-white rounded-bottom" id="freelancerDashboardContent">
+        <div class="tab-pane fade show active" id="available-tasks" role="tabpanel" aria-labelledby="available-tasks-tab">
+          <div class="card mt-3">
+            <div class="card-body">
+              <h4 class="text-secondary"><i class="fas fa-list-alt mr-2"></i>Available Tasks</h4>
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Title</th>
+                      <th>Description</th>
+                      <th>Earning</th>
+                      <th>Category</th>
+                      <th>Deadline</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% Task.open_tasks.each do |task| %>
+                      <tr>
+                        <td><%= link_to task.title, task_path(task), class: 'text-primary color-black' %></td>
+                        <td><%= truncate(task.description, length: 100) %></td>
+                        <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
+                        <td><%= task.category.name %></td>
+                        <td><%= l(task.deadline, format: :short) %></td>
+                        <td>
+                          <span class="badge bg-success"><%= task.status.titleize %></span>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="working-tasks" role="tabpanel" aria-labelledby="working-tasks-tab">
+          <div class="card mt-3">
+            <div class="card-body">
+              <h4 class="text-secondary"><i class="fas fa-briefcase mr-2"></i>Tasks You're Working On</h4>
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Title</th>
+                      <th>Description</th>
+                      <th>Budget</th>
+                      <th>Category</th>
+                      <th>Deadline</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% current_user.tasks_as_freelancer.each do |task| %>
+                      <tr>
+                        <td><%= link_to task.title, task_path(task), class: 'text-primary' %></td>
+                        <td><%= truncate(task.description, length: 100) %></td>
+                        <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
+                        <td><%= task.category.name %></td>
+                        <td><%= l(task.deadline, format: :short) %></td>
+                        <td>
+                          <span class="badge <%= badge_color_for_status(task.status) %>"><%= task.status.titleize %></span>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="tasks-changes" role="tabpanel" aria-labelledby="tasks-changes-tab">
+          <div class="card mt-3">
+            <div class="card-body">
+              <% if current_user.tasks_requiring_changes.any? %>
+                <h4 class="text-secondary"><i class="fas fa-exclamation-triangle mr-2"></i>Tasks Requiring Changes</h4>
+                <div class="table-responsive">
+                  <table class="table table-bordered table-hover">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Budget</th>
+                        <th>Category</th>
+                        <th>Deadline</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% current_user.tasks_requiring_changes.each do |task| %>
+                        <tr>
+                          <td><%= link_to task.title, task_path(task), class: 'text-primary' %></td>
+                          <td><%= truncate(task.description, length: 100) %></td>
+                          <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
+                          <td><%= task.category.name %></td>
+                          <td><%= l(task.deadline, format: :short) %></td>
+                          <td>
+                            <span class="badge <%= badge_color_for_status(task.status) %>"><%= task.status.titleize %></span>
+                          </td>
+                          <td>
+                            <%= link_to 'View Task', task_path(task), class: 'btn btn-primary btn-sm' %>
+                          </td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              <% else %>
+                <p class="text-muted">No tasks requiring changes at the moment.</p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="reviews-received" role="tabpanel" aria-labelledby="reviews-received-tab">
+          <div class="card mt-3">
+            <div class="card-body">
+              <% if current_user.reviews_received.any? %>
+                <h4 class="text-secondary"><i class="fas fa-star mr-2"></i>Reviews Received</h4>
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Task Title</th>
+                        <th>Rating</th>
+                        <th>Comment</th>
+                        <th>Reviewed By</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% current_user.reviews_received.each do |review| %>
+                        <tr>
+                          <td><%= link_to review.task.title, task_path(review.task) %></td>
+                          <td><%= review.rating %> stars</td>
+                          <td><%= review.comment %></td>
+                          <td><%= review.reviewer.email %></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              <% else %>
+                <p class="text-muted">No reviews received yet.</p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <% end %>
+
+    <style>
+      .animated {
+        animation-duration: 1s;
+        animation-fill-mode: both;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      .fadeIn {
+        animation-name: fadeIn;
+      }
+
+      .nav-tabs .nav-link {
+        color: #495057; /* Default tab color */
+      }
+
+      .nav-tabs .nav-link:hover {
+        color: #FFD700; /* Hover tab color */
+      }
+
+      .nav-tabs .nav-link.active {
+        color: #FFD700; /* Active tab color */
+        border-color: #FFD700; /* Active tab border color */
+      }
+
+      /* Custom styling for badges based on task status */
+      .badge {
+        font-size: 0.9rem;
+        padding: 0.3rem 0.6rem;
+        border-radius: 10rem;
+        margin-bottom: 5px;
+        font-weight: 500;
+      }
+
+      .badge-primary {
+          background-color: #007bff;
+      }
+
+      .badge-secondary {
+          background-color: #6c757d;
+      }
+
+      .badge-success {
+          background-color: #28a745;
+      }
+
+      .badge-danger {
+          background-color: #dc3545;
+      }
+
+      .badge-warning {
+          background-color: #ffc107;
+      }
+
+      .badge-info {
+          background-color: #17a2b8;
+      }
+
+      .badge-light {
+          background-color: #f8f9fa;
+          color: #343a40;
+      }
+
+      .badge-dark {
+          background-color: #343a40;
+      }
+
+      .text-warning {
+        color: #FFD700; /* Your specific color for welcome message */
+      }
+
+      .font-weight-bold {
+        font-weight: bold;
+      }
+    </style>
+  </div>
+</div>
