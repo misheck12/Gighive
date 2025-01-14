@@ -9,7 +9,7 @@
 <p><strong>Payment Details:</strong></p>
 <ul>
   <li><strong>Task:</strong> <%= @task.title %></li>
-  <li><strong>Amount:</strong> <%= number_to_currency(@payment.amount, unit: "ZMK ") %></li>
+  <li><strong>Amount:</strong> <%= number_to_currency(@task.budget, unit: "ZMK ") %></li>
   <li><strong>Status:</strong> <%= @payment.status.titleize %></li>
 </ul>
 
