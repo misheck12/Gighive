@@ -1,24 +1,23 @@
+<h1>Hello <%= @client.name %>,</h1>
 
-  <h1>Hello <%= @client.name %>,</h1>
+<p>
+  You've requested changes for the task titled "<strong><%= @task.title %></strong>" on Gighive. The freelancer, <strong><%= @freelancer.name %></strong>, has been notified and will be revising the work accordingly.
+</p>
 
-  <p>
-    You've requested changes for the task "<strong><%= @task.title %></strong>" on Gighive.
-  </p>
+<p>
+  You can discuss any additional details or monitor the progress of the task by visiting the link below:
+  <%= link_to 'View Task on Gighive', task_url(@task) %>.
+</p>
 
-  <p>
-    The freelancer, <strong><%= @freelancer.name %></strong>, has been notified and will revise the work accordingly.
-  </p>
+<p>
+  If you have any further requests or need assistance, feel free to reach out.
+</p>
 
-  <p>
-    You can discuss any additional details and monitor progress here:
-    <%= link_to 'View Task on Gighive', task_url(@task) %>.
-  </p>
+<p>
+  Thank you for choosing Gighive!
+</p>
 
-  <p>
-    Thank you for using Gighive! 
-  </p>
-
-  <p>
-    Best Regards,<br>
-    The Gighive Team
-  </p>
+<p>
+  Best Regards,<br>
+  The Gighive Team
+</p>
