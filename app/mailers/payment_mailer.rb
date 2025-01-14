@@ -22,11 +22,11 @@ class PaymentMailer < ApplicationMailer
     mail(to: @client.email, subject: 'Your Payment Has Been Rejected')
   end
 
-  def payment_created(payment)
+  def admin_payment_created(payment)
     @payment = payment
     @admin = payment.task.admin
     @task = payment.task
     mail(to: @admin.email, subject: 'Payment Created for Task')
-    end
+  end
 
 end
