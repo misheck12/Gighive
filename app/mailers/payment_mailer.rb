@@ -1,5 +1,5 @@
 class PaymentMailer < ApplicationMailer
-  default from: 'no-reply@gighive.com'
+  default from: 'bwangubwangu5@gmail.com'
 
   def payment_created(payment)
     @payment = payment
@@ -10,15 +10,23 @@ class PaymentMailer < ApplicationMailer
 
   def payment_approved(payment)
     @payment = payment
-    @freelancer = payment.task.freelancer
+    @client = payment.task.client
     @task = payment.task
-    mail(to: @freelancer.email, subject: 'Your Payment Has Been Approved')
+    mail(to: @client.email, subject: 'Your Payment Has Been Approved')
   end
 
   def payment_rejected(payment)
     @payment = payment
-    @client = payment.task.freelancer
+    @client = payment.task.client
     @task = payment.task
-    mail(to: @freelancer.email, subject: 'Your Payment Has Been Rejected')
+    mail(to: @client.email, subject: 'Your Payment Has Been Rejected')
   end
+
+  def payment_created(payment)
+    @payment = payment
+    @admin = payment.task.admin
+    @task = payment.task
+    mail(to: @admin.email, subject: 'Payment Created for Task')
+    end
+
 end
