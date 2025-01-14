@@ -1,0 +1,29 @@
+<h1>Hello <%= @freelancer.name %>,</h1>
+
+  <p>
+    You have successfully accepted the task "<strong><%= @task.title %></strong>" on Gighive.
+  </p>
+
+  <p>
+    Here are the task details:
+  </p>
+
+  <ul>
+    <li><strong>Title:</strong> <%= @task.title %></li>
+    <li><strong>Description:</strong> <%= @task.description %></li>
+    <li><strong>Budget:</strong> <%= number_to_currency(@task.budget, unit: "ZMK", format: "%u%n") %></li>
+    <li><strong>Deadline:</strong> <%= @task.deadline.strftime("%B %d, %Y") %></li>
+  </ul>
+
+  <p>
+    Please coordinate with the client and aim to complete the task on or before the deadline.
+  </p>
+
+  <p>
+    You can view details here:
+    <%= link_to 'View Task on Gighive', task_url(@task) %>
+  </p>
+
+  <p>
+    We wish you a successful collaboration!
+  </p>
