@@ -76,9 +76,9 @@
 </div>
 
 <style>
-
   .about-us-container {
-    background-color: #FFF8E7; /* Light Honey Yellow */
+    background-color: #f8f9fa;
+    padding: 20px;
   }
 
   .about-intro, .our-mission {
@@ -123,5 +123,33 @@
 
   .lead {
     font-size: 1.25rem;
+  }
+
+  @media (max-width: 768px) {
+    .about-intro, .our-mission {
+      padding: 20px;
+    }
+
+    .lead {
+      font-size: 1rem;
+    }
+
+    .btn-warning {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .about-intro, .our-mission {
+      padding: 15px;
+    }
+
+    .lead {
+      font-size: 0.9rem;
+    }
+
+    .btn-warning {
+      font-size: 0.9rem;
+    }
   }
 </style>
