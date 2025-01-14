@@ -1,9 +1,9 @@
 class PaymentMailer < ApplicationMailer
-  default from: 'bwangubwangu5@gmail.com'
+  default from: 'no-reply@gighive.com'
 
   def payment_created(payment)
     @payment = payment
-    @client = payment.client
+    @client = payment.task.client
     @task = payment.task
     mail(to: @client.email, subject: 'Payment Created for Your Task')
   end
