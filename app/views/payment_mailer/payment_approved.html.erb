@@ -1,13 +1,25 @@
-<!-- filepath: /c:/Users/mishe/Documents/just rails/Gighive/app/views/payment_mailer/payment_approved.html.erb -->
+<h1>Your Payment Has Been Approved</h1>
 
-<p>Dear <%= @freelancer.name %>,</p>
+<p>Hello <%= @freelancer.name %>,</p>
 
-<p>Good news! Your payment for the task "<%= @payment.task.title %>" has been approved.</p>
+<p>
+  We are pleased to inform you that your payment for the task titled "<strong><%= @task.title %></strong>" has been successfully approved.
+</p>
 
-<p><strong>Details:</strong></p>
+<p><strong>Payment Details:</strong></p>
 <ul>
-  <li>Amount: <%= @payment.amount %> ZMK</li>
-  <li>Status: <%= @payment.status.capitalize %></li>
+  <li><strong>Task:</strong> <%= @task.title %></li>
+  <li><strong>Amount:</strong> <%= number_to_currency(@payment.amount, unit: "ZMK ") %></li>
+  <li><strong>Status:</strong> <%= @payment.status.titleize %></li>
 </ul>
 
-<p>Thank you for your hard work!</p>
+<p>
+  You can now download your completed file by following the link below:
+  <%= link_to 'Download Completed File', download_url(@task) %>
+</p>
+
+<p>
+  Thank you for your excellent work on GigHive! We look forward to more successful collaborations.
+</p>
+
+<p>Best regards,<br>The GigHive Team</p>
