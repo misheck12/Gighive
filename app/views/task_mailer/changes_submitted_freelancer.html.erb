@@ -1,0 +1,15 @@
+<!-- filepath: app/views/task_mailer/changes_submitted_freelancer.html.erb -->
+<p>Hello <%= @freelancer.name %>,</p>
+
+<p>You have submitted changes for the task "<strong><%= @task.title %></strong>".</p>
+
+<ul>
+  <li><strong>Task ID:</strong> <%= @task.id %></li>
+  <li><strong>Title:</strong> <%= @task.title %></li>
+  <li><strong>Deadline:</strong> <%= @task.deadline ? @task.deadline.strftime("%B %d, %Y") : "Not set" %></li>
+  <li><strong>Status:</strong> <%= @task.status.capitalize %></li>
+</ul>
+
+<p>The client (<%= @task.client.name %>) has been notified of your submitted changes. Feel free to communicate with them directly in case further revisions are required.</p>
+
+<p>Thank you for your professionalism!</p>
