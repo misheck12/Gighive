@@ -29,17 +29,17 @@
       </dl>
 
       <% if current_user == @task.client %>
-        <% if @task.completed? %>
-          <% if @task.payment&.approved? && @task.completed_file.attached? %>
-            <dl class="row">
-              <dt class="col-sm-3">Completed File:</dt>
-              <dd class="col-sm-9">
-                <%= link_to rails_blob_path(@task.completed_file, disposition: "attachment"), class: 'btn btn-link btn-download' do %>
-                  <i class="bi bi-file-earmark-arrow-down"></i> Download <%= @task.completed_file.filename %>
-                <% end %>
-              </dd>
-            </dl>
+  <% if @task.completed? %>
+    <% if @task.payment&.approved? && @task.completed_file.attached? %>
+      <dl class="row">
+        <dt class="col-sm-3">Completed File:</dt>
+        <dd class="col-sm-9">
+          <%= link_to rails_blob_path(@task.completed_file, disposition: "attachment"), class: 'btn btn-primary btn-download' do %>
+            <i class="bi bi-file-earmark-arrow-down"></i> Download <%= @task.completed_file.filename %>
           <% end %>
+        </dd>
+      </dl>
+    <% end %>
 
           <% unless @task.reviewed? %>
             <div class="d-flex gap-2 mt-3">
