@@ -1,35 +1,41 @@
 <div class="contact-us-container py-5">
   <div class="container">
     <header class="text-center mb-5">
-      <h1 class="display-4 font-weight-bold text-warning">Contact GigHive</h1>
+      <h1 class="display-4 font-weight-bold text-teal">Contact GigHive</h1>
       <p class="lead text-muted">We'd love to hear from you!</p>
     </header>
 
     <section class="contact-info mb-5">
       <div class="row">
         <div class="col-md-4 col-sm-6 col-12 mb-4 text-center">
-          <i class="fas fa-map-marker-alt fa-3x text-warning"></i>
-          <h4 class="font-weight-bold mt-3">Our Location</h4>
-          <address class="text-muted">
-            123 Hive Street<br>
-            Suite 456<br>
-            Bee City, CA 90210<br>
-            United States
-          </address>
+          <div class="contact-card">
+            <i class="fas fa-map-marker-alt fa-3x text-teal"></i>
+            <h4 class="font-weight-bold mt-3">Our Location</h4>
+            <address class="text-muted">
+              123 Hive Street<br>
+              Suite 456<br>
+              Bee City, CA 90210<br>
+              United States
+            </address>
+          </div>
         </div>
         <div class="col-md-4 col-sm-6 col-12 mb-4 text-center">
-          <i class="fas fa-phone fa-3x text-warning"></i>
-          <h4 class="font-weight-bold mt-3">Phone Number</h4>
-          <p class="text-muted">
-            <a href="tel:+15555551212" class="text-muted">+1-555-555-1212</a> (Main Office)
-          </p>
+          <div class="contact-card">
+            <i class="fas fa-phone fa-3x text-teal"></i>
+            <h4 class="font-weight-bold mt-3">Phone Number</h4>
+            <p class="text-muted">
+              <a href="tel:+15555551212" class="text-muted">+1-555-555-1212</a> (Main Office)
+            </p>
+          </div>
         </div>
         <div class="col-md-4 col-sm-12 mb-4 text-center">
-          <i class="fas fa-envelope fa-3x text-warning"></i>
-          <h4 class="font-weight-bold mt-3">Email Address</h4>
-          <p class="text-muted">
-            <a href="mailto:support@gighive.com" class="text-muted">support@gighive.com</a> (Support)
-          </p>
+          <div class="contact-card">
+            <i class="fas fa-envelope fa-3x text-teal"></i>
+            <h4 class="font-weight-bold mt-3">Email Address</h4>
+            <p class="text-muted">
+              <a href="mailto:support@gighive.com" class="text-muted">support@gighive.com</a> (Support)
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -37,33 +43,33 @@
     <section class="contact-form">
       <div class="row">
         <div class="col-lg-8 mx-auto">
-          <h2 class="text-center font-weight-bold text-warning mb-4">Send Us a Message</h2>
+          <h2 class="text-center font-weight-bold text-teal mb-4">Send Us a Message</h2>
           <form id="contact-form" method="post" action="#" role="form">
             <div class="form-group">
               <label for="name" class="font-weight-bold">
-                <i class="fas fa-user text-warning"></i> Name
+                <i class="fas fa-user text-teal"></i> Name
               </label>
-              <input id="name" type="text" name="name" class="form-control" placeholder="Enter your name" required>
+              <input id="name" type="text" name="name" class="form-control form-control-lg" placeholder="Enter your name" required>
             </div>
             <div class="form-group">
               <label for="email" class="font-weight-bold">
-                <i class="fas fa-envelope text-warning"></i> Email
+                <i class="fas fa-envelope text-teal"></i> Email
               </label>
-              <input id="email" type="email" name="email" class="form-control" placeholder="Enter your email" required>
+              <input id="email" type="email" name="email" class="form-control form-control-lg" placeholder="Enter your email" required>
             </div>
             <div class="form-group">
               <label for="subject" class="font-weight-bold">
-                <i class="fas fa-tag text-warning"></i> Subject
+                <i class="fas fa-tag text-teal"></i> Subject
               </label>
-              <input id="subject" type="text" name="subject" class="form-control" placeholder="Enter the subject" required>
+              <input id="subject" type="text" name="subject" class="form-control form-control-lg" placeholder="Enter the subject" required>
             </div>
             <div class="form-group">
               <label for="message" class="font-weight-bold">
-                <i class="fas fa-comment text-warning"></i> Message
+                <i class="fas fa-comment text-teal"></i> Message
               </label>
-              <textarea id="message" name="message" class="form-control" rows="5" placeholder="Enter your message" required></textarea>
+              <textarea id="message" name="message" class="form-control form-control-lg" rows="5" placeholder="Enter your message" required></textarea>
             </div>
-            <button type="submit" class="btn btn-warning btn-block font-weight-bold shadow-sm">Send Message</button>
+            <button type="submit" class="btn btn-teal btn-block font-weight-bold shadow-sm btn-lg">Send Message</button>
           </form>
         </div>
       </div>
@@ -73,32 +79,69 @@
 
 <style>
   .contact-us-container {
-    background-color: #FFF8E7; /* Light Honey Yellow */
+    background-color: #F5F5F5; /* Light Gray */
   }
 
   .font-weight-bold {
     font-weight: 700;
   }
 
-  .text-warning {
-    color: #FFD700; /* Hive Yellow */
+  .text-teal {
+    color: #008080; /* Teal */
   }
 
-  .btn-warning {
-    background-color: #FFD700; /* Hive Yellow */
-    border-color: #FFD700;
-    color: #212529;
+  .text-muted a { /* Targeting anchor tags within text-muted class */
+    color: #6c757d; /* Muted Gray color for links */
+    text-decoration: none; /* Removes the default underline */
   }
 
-  .btn-warning:hover {
-    background-color: #FFA500; /* Sunset Orange */
-    border-color: #FFA500;
+  .text-muted a:hover {
+      text-decoration: underline; /* Adds underline on hover */
+      color: #006969;
+  }
+
+  .btn-teal {
+    background-color: #008080; /* Teal */
+    border-color: #008080;
+    color: #FFF;
+  }
+
+  .btn-teal:hover {
+    background-color: #006969; /* Darker Teal */
+    border-color: #006969;
+    color: #FFF;
+  }
+
+  .contact-info .col-md-4 {
+      margin-bottom: 2rem; /* Adds spacing between contact info blocks */
+  }
+
+  .contact-card {
+      background-color: #FFFFFF;
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Form styling */
+  .form-control-lg {
+    border-radius: 0.5rem;
+    padding: 1rem;
   }
 
   @media (max-width: 767.98px) {
     .col-sm-6 {
       flex: 0 0 100%;
       max-width: 100%;
+    }
+    .contact-info .col-md-4 {
+        margin-bottom: 1rem; /* Reduced spacing for smaller screens */
     }
   }
 
