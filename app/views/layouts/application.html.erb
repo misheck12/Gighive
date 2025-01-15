@@ -18,50 +18,161 @@
   <%= favicon_link_tag 'GigHive_logo.png', rel: 'icon', type: 'image/png', sizes: '32x32' %>
 
   <style>
-    /* ... (other styles from the previous response) ... */
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background-color: #F5F5F5; /* Light Gray */
+    }
+
+    /* --- Navigation Bar --- */
+    .navbar {
+        background-color: #212529; /* Dark Gray */
+    }
+
+    .navbar-brand {
+        color: #FFD700; /* Hive Yellow */
+        font-weight: bold;
+        font-size: 1.5rem; /* Increased font size */
+        padding: 0.5rem 1rem; /* Added padding */
+    }
+
+    .navbar-brand:hover {
+        color: #FFA500; /* Sunset Orange */
+    }
+    .navbar-toggler {
+        border: none; /* Remove border */
+    }
+
+    .navbar-toggler:focus {
+        outline: none; /* Remove focus outline */
+        box-shadow: none; /* Remove focus shadow */
+    }
+
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); /* White icon */
+    }
+
+    .nav-link.btn-nav {
+        color: #FFF;
+        margin-left: 10px;
+        margin-right: 10px;
+        transition: background-color 0.3s, transform 0.3s, color 0.3s;
+        border: 1px solid transparent; /* Initially transparent border */
+        font-size: 1rem; /* Responsive font size */
+        padding: 0.5rem 1rem; /* Responsive padding */
+    }
+
+    .nav-link.btn-nav:hover {
+        background-color: #006969; /* Darker Teal */
+        transform: scale(1.05);
+        border-radius: 5px;
+        color: #FFF;
+        border-color: #008080; /* Teal border on hover */
+    }
+
+    .nav-link.btn-nav.active {
+        background-color: #008080; /* Teal */
+        border-radius: 5px;
+        border-color: #008080;
+    }
+
+    /* Dropdown Menu */
+    .dropdown-menu {
+        background-color: #212529; /* Dark Gray */
+        border: 1px solid #008080;
+    }
+
+    .dropdown-item {
+        color: #FFF;
+        transition: background-color 0.3s;
+        font-size: 1rem; /* Responsive font size */
+        padding: 0.5rem 1rem; /* Responsive padding */
+    }
+
+    .dropdown-item:hover {
+        background-color: #006969; /* Darker Teal */
+        color: #FFF;
+    }
+
+    .dropdown-divider {
+        border-top: 1px solid #008080;
+    }
 
     /* --- Footer --- */
     footer {
-      background-color: #212529; /* Dark Gray */
-      color: #FFF;
-      padding: 2rem 0; /* Increased padding */
+        background-color: #212529; /* Dark Gray */
+        color: #FFF;
+        padding: 2rem 5%; /* Responsive padding */
     }
 
     footer a {
-      color: #008080; /* Teal */
-      text-decoration: none;
-      transition: color 0.3s;
+        color: #008080; /* Teal */
+        text-decoration: none;
+        transition: color 0.3s;
     }
 
     footer a:hover {
-      color: #006969; /* Darker Teal */
-      text-decoration: underline;
+        color: #006969; /* Darker Teal */
+        text-decoration: underline;
     }
 
     /* Social Icons */
     .social-icons {
-      margin-top: 1rem; /* Add some space above the icons */
+        margin-top: 1rem; /* Add some space above the icons */
     }
 
     .social-icons a {
-      display: inline-block;
-      margin: 0 0.5rem; /* Add horizontal spacing between icons */
-      color: #008080; /* Teal */
-      transition: color 0.3s;
+        display: inline-block;
+        margin: 0 0.5rem; /* Add horizontal spacing between icons */
+        color: #008080; /* Teal */
+        transition: color 0.3s;
+        font-size: 1.8rem; /* Increased icon size */
     }
 
     .social-icons a:hover {
-      color: #006969; /* Darker Teal */
+        color: #006969; /* Darker Teal */
     }
 
     .social-icons i {
-      font-size: 1.8rem; /* Increased icon size */
+        
+    }
+    /* Overall responsiveness */
+    @media (max-width: 768px) {
+        .navbar-brand {
+            font-size: 1.2rem; /* Smaller font size on smaller screens */
+            padding: 0.5rem; /* Less padding on smaller screens */
+        }
+
+        .nav-link.btn-nav {
+            font-size: 0.9rem; /* Smaller font size on smaller screens */
+            padding: 0.4rem 0.8rem; /* Less padding on smaller screens */
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        .dropdown-item {
+            font-size: 0.9rem; /* Smaller font size on smaller screens */
+            padding: 0.4rem 0.8rem; /* Less padding on smaller screens */
+        }
+        .navbar-collapse {
+            background-color: #212529; /* Match navbar background */
+            padding: 10px; /* Add padding to the collapsed menu */
+        }
+
+        .navbar-nav {
+            margin-top: 10px; /* Add margin to separate from brand */
+        }
+        .social-icons a {
+            font-size: 1.5rem; /* Slightly smaller icons on small screens */
+            margin: 0 0.3rem; /* Adjust spacing */
+        }
     }
   </style>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-   <nav class="navbar navbar-expand-lg navbar-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
       <%= link_to 'GigHive', root_path, class: 'navbar-brand' %>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
