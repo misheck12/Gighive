@@ -11,14 +11,14 @@
             height: 100%;
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background-color: #FFF8E7; /* Light Honey Yellow */
+            background-color: #F5F5F5; /* Light Gray */
         }
 
         .hero-section {
             background-image: url('https://via.placeholder.com/1920x800/FFD700/000000?text=GigHive+Landing+Page'); /* Replace with your actual image URL */
             background-size: cover;
             background-position: center;
-            color: #000; /* Black text for contrast */
+            color: #006969; /* Deep Teal for text */
             text-align: center;
             padding: 10% 0;
         }
@@ -26,13 +26,13 @@
         .hero-section h1 {
             font-weight: 700;
             font-size: 3.5rem;
-            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5); /* White text shadow */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .hero-section p {
             font-size: 1.5rem;
             margin-bottom: 2rem;
-            text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5); /* White text shadow */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
 
         .btn-primary-custom {
@@ -46,16 +46,16 @@
         }
 
         .btn-primary-custom:hover {
-            background-color: #FFA500; /* Sunset Orange */
-            border-color: #FFA500;
+            background-color: #FF8C00; /* Darker Orange */
+            border-color: #FF8C00;
             transform: translateY(-2px);
             box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
         }
 
         .btn-secondary-custom {
-            background-color: #fff; /* White */
-            border-color: #fff;
-            color: #212529; /* Dark text for contrast */
+            background-color: #008080; /* Deep Teal */
+            border-color: #008080;
+            color: #FFF;
             font-weight: 600;
             padding: 0.7rem 2rem;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
@@ -63,14 +63,14 @@
         }
 
         .btn-secondary-custom:hover {
-            background-color: #f0f0f0; /* Light Grey */
-            border-color: #f0f0f0;
+            background-color: #006969; /* Darker Teal */
+            border-color: #006969;
             transform: translateY(-2px);
             box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
         }
 
         .features-section {
-            background-color: #FFF8E7; /* Light Honey Yellow */
+            background-color: #F5F5F5; /* Light Gray */
             padding: 4rem 0;
         }
 
@@ -81,10 +81,10 @@
         }
 
         .features-section .card {
-            background-color: #fff; /* White background for cards */
-            border: none;
+            background: linear-gradient(to bottom, #FFFFFF, #F8F8F8);
+            border: 1px solid #f0f0f0;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
 
@@ -104,7 +104,7 @@
         }
 
         .features-section .card-text {
-            color: #555; /* Slightly darker text */
+            color: #555;
         }
 
         .features-section .fa-3x {
@@ -113,12 +113,12 @@
 
         .how-it-works-section {
             padding: 4rem 0;
-            background-color: #faf5e6;
+            background-color: #f0f0f0; /* Different shade of light gray */
         }
 
         .how-it-works-section h2 {
             font-weight: 700;
-            color: #333; /* Dark text for readability */
+            color: #333;
             margin-bottom: 3rem;
         }
 
@@ -128,7 +128,7 @@
         }
 
         .how-it-works-section .step i {
-            color: #FFD700; /* Hive Yellow for icons */
+            color: #FFD700;
             font-size: 4rem;
             margin-bottom: 1rem;
         }
@@ -139,12 +139,12 @@
         }
 
         .how-it-works-section .step p {
-            color: #555; /* Slightly darker text */
+            color: #555;
         }
 
         .call-to-action-section {
-            background: linear-gradient(135deg, #FFD700, #FFA500); /* Gradient background */
-            color: #212529; /* Dark text for contrast */
+            background: linear-gradient(135deg, #008080, #006969); /* Teal gradient */
+            color: #FFF; /* White text */
             text-align: center;
             padding: 4rem 0;
         }
@@ -160,9 +160,9 @@
         }
 
         .call-to-action-section .btn-dark {
-            background-color: #343a40; /* Dark button for contrast */
-            border-color: #343a40;
-            color: #fff;
+            background-color: #FFF;
+            border-color: #FFF;
+            color: #006969; /* Teal text */
             font-weight: 600;
             padding: 0.7rem 2rem;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
@@ -170,29 +170,83 @@
         }
 
         .call-to-action-section .btn-dark:hover {
-            background-color: #23272b; /* Slightly darker shade on hover */
-            border-color: #23272b;
+            background-color: #f0f0f0;
+            border-color: #f0f0f0;
             transform: translateY(-2px);
             box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
         }
-         .footer {
+
+        .footer {
             background-color: #212529;
             color: #FFF;
             text-align: center;
-            padding: 1rem 0;
-            position: relative; /* Ensure it stays at the bottom */
+            padding: 2rem 0;
+            position: relative;
             width: 100%;
         }
 
         .footer a {
-            color: #FFD700; /* Hive Yellow */
+            color: #008080; /* Teal links */
             text-decoration: none;
             transition: color 0.3s;
         }
 
         .footer a:hover {
-            color: #FFA500; /* Sunset Orange */
+            color: #006969; /* Darker Teal */
             text-decoration: underline;
+        }
+
+        /* Footer Content Styling */
+        .footer-content {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-section {
+            margin-bottom: 20px;
+        }
+
+        .footer-section h4 {
+            color: #FFA500;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #FFA500;
+        }
+
+        /* Social Icons */
+        .social-icons a {
+            margin: 0 10px;
+            display: inline-block;
+        }
+
+        .social-icons i {
+            color: #008080;
+            transition: color 0.3s;
+        }
+
+        .social-icons i:hover {
+            color: #006969;
         }
     </style>
 </head>
@@ -277,6 +331,48 @@
             <a href="<%= new_user_registration_path %>" class="btn btn-dark btn-lg shadow">Get Started</a>
         </div>
     </section>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About Us</h4>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">Mission & Vision</a></li>
+                    <li><a href="#">Team</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#">For Freelancers</a></li>
+                    <li><a href="#">For Employers</a></li>
+                    <li><a href="#">Pricing</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Help Center</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f fa-2x"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter fa-2x"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram fa-2x"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in fa-2x"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
