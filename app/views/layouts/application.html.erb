@@ -1,4 +1,3 @@
-<!-- filepath: /c:/Users/mishe/Documents/just rails/Gighive/app/views/layouts/application.html.erb -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,137 +5,91 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <!-- Bootstrap 5 CSS -->
   <% if Rails.env.production? %>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-VALID_HASH_HERE" crossorigin="anonymous">
   <% else %>
     <%= stylesheet_link_tag 'bootstrap', media: 'all' %>
   <% end %>
 
-  <!-- FontAwesome -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.3/css/all.min.css">
 
-  <!-- Application Stylesheet -->
   <%= stylesheet_link_tag 'application.bootstrap', media: 'all', 'data-turbo-track': 'reload' %>
 
-  <!-- Favicon -->
   <%= favicon_link_tag 'GigHive_logo.png', rel: 'icon', type: 'image/png', sizes: '32x32' %>
 
   <style>
-     body, html {
-            height: 100%;
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            background-color: #FFF8E7; /* Light Honey Yellow */
-        }
-    /* Custom Navigation Button Styles */
-    .nav-link.btn-nav {
-      color: #fff;
-      margin-left: 10px;
-      margin-right: 10px;
-      transition: background-color 0.3s, transform 0.3s;
+    /* ... (other styles from the previous response) ... */
+
+    /* --- Footer --- */
+    footer {
+      background-color: #212529; /* Dark Gray */
+      color: #FFF;
+      padding: 2rem 0; /* Increased padding */
     }
 
-    .nav-link.btn-nav:hover {
-      background-color: #5a6268;
-      transform: scale(1.05);
-      border-radius: 5px;
-    }
-
-    .nav-link.btn-nav.active {
-      background-color: #343a40;
-      border-radius: 5px;
-    }
-
-        /* Custom Footer Link Styles */
     footer a {
-      color: #343a40; /* Desired color */
+      color: #008080; /* Teal */
       text-decoration: none;
       transition: color 0.3s;
     }
 
     footer a:hover {
-      color: #5a6268; /* Hover color */
+      color: #006969; /* Darker Teal */
       text-decoration: underline;
     }
-    
+
+    /* Social Icons */
+    .social-icons {
+      margin-top: 1rem; /* Add some space above the icons */
+    }
+
+    .social-icons a {
+      display: inline-block;
+      margin: 0 0.5rem; /* Add horizontal spacing between icons */
+      color: #008080; /* Teal */
+      transition: color 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: #006969; /* Darker Teal */
+    }
+
+    .social-icons i {
+      font-size: 1.8rem; /* Increased icon size */
+    }
   </style>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <%= link_to 'GigHive', root_path, class: 'navbar-brand' %>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <% unless user_signed_in? %>
-            <!-- Public Navigation Links with Enhanced Styles -->
-            <li class="nav-item">
-              <%= link_to 'Home', root_path, class: "nav-link btn-nav #{'active' if current_page?(root_path)}", aria: { label: 'Home' } %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'About Us', about_us_path, class: "nav-link btn-nav #{'active' if current_page?(about_us_path)}", aria: { label: 'About Us' } %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'Working with Us', working_with_us_path, class: "nav-link btn-nav #{'active' if current_page?(working_with_us_path)}", aria: { label: 'Working with Us' } %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'Contact Us', contact_us_path, class: "nav-link btn-nav #{'active' if current_page?(contact_us_path)}", aria: { label: 'Contact Us' } %>
-            </li>
-          <% end %>
-
-          <% if user_signed_in? %>
-            <!-- User Dropdown Menu -->
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle btn-nav" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-user-circle"></i> <%= current_user&.name || "User" %>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <%= link_to 'Edit Profile', edit_user_registration_path, class: 'dropdown-item', aria: { label: 'Edit Profile' } %>
-                <%= link_to 'Dashboard', dashboard_path, class: 'dropdown-item', aria: { label: 'Dashboard' } %>
-                <li><hr class="dropdown-divider"></li>
-                <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'dropdown-item', aria: { label: 'Sign out' } %>
-              </ul>
-            </li>
-          <% else %>
-            <!-- Authentication Links with Enhanced Styles -->
-            <li class="nav-item">
-              <%= link_to 'Sign in', new_user_session_path, class: 'nav-link btn-nav', aria: { label: 'Sign in' } %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'Sign up', new_user_registration_path, class: 'nav-link btn-nav', aria: { label: 'Sign up' } %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    </nav>
 
   <main class="container my-5 flex-grow-1">
     <%= yield %>
   </main>
 
-  <footer class="bg-light text-center py-3">
+  <footer class="text-center">
     <div class="container">
       <p>GigHive &copy; <%= Time.now.year %></p>
       <p>
         <%= link_to 'Privacy Policy', privacy_path %> |
         <%= link_to 'Terms of Service', terms_path %>
       </p>
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
     </div>
   </footer>
 
-  <!-- Bootstrap 5 JS Bundle -->
   <% if Rails.env.production? %>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-VALID_HASH_HERE" crossorigin="anonymous" defer></script>
   <% else %>
     <%= javascript_include_tag "bootstrap.bundle", defer: true %>
   <% end %>
 
-  <!-- Application JavaScript -->
   <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
 </body>
 </html>
