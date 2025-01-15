@@ -9,32 +9,44 @@
       <div class="row">
         <div class="col-md-4 col-sm-6 col-12 mb-4 text-center">
           <div class="contact-card">
-            <i class="fas fa-map-marker-alt fa-3x text-teal"></i>
-            <h4 class="font-weight-bold mt-3">Our Location</h4>
-            <address class="text-muted">
-              123 Hive Street<br>
-              Suite 456<br>
-              Bee City, CA 90210<br>
-              United States
-            </address>
+            <div class="icon-container">
+              <i class="fas fa-map-marker-alt fa-3x text-teal"></i>
+            </div>
+            <div class="info-container">
+              <h4 class="font-weight-bold mt-3">Our Location</h4>
+              <address class="text-muted">
+                123 Hive Street<br>
+                Suite 456<br>
+                Bee City, CA 90210<br>
+                United States
+              </address>
+            </div>
           </div>
         </div>
         <div class="col-md-4 col-sm-6 col-12 mb-4 text-center">
           <div class="contact-card">
-            <i class="fas fa-phone fa-3x text-teal"></i>
-            <h4 class="font-weight-bold mt-3">Phone Number</h4>
-            <p class="text-muted">
-              <a href="tel:+15555551212" class="text-muted">+1-555-555-1212</a> (Main Office)
-            </p>
+            <div class="icon-container">
+              <i class="fas fa-phone fa-3x text-teal"></i>
+            </div>
+            <div class="info-container">
+              <h4 class="font-weight-bold mt-3">Phone Number</h4>
+              <p class="text-muted">
+                <a href="tel:+15555551212" class="text-muted">+1-555-555-1212</a> (Main Office)
+              </p>
+            </div>
           </div>
         </div>
         <div class="col-md-4 col-sm-12 mb-4 text-center">
           <div class="contact-card">
-            <i class="fas fa-envelope fa-3x text-teal"></i>
-            <h4 class="font-weight-bold mt-3">Email Address</h4>
-            <p class="text-muted">
-              <a href="mailto:support@gighive.com" class="text-muted">support@gighive.com</a> (Support)
-            </p>
+            <div class="icon-container">
+              <i class="fas fa-envelope fa-3x text-teal"></i>
+            </div>
+            <div class="info-container">
+              <h4 class="font-weight-bold mt-3">Email Address</h4>
+              <p class="text-muted">
+                <a href="mailto:support@gighive.com" class="text-muted">support@gighive.com</a> (Support)
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -90,30 +102,26 @@
     color: #008080; /* Teal */
   }
 
-  .text-muted a { /* Targeting anchor tags within text-muted class */
-    color: #6c757d; /* Muted Gray color for links */
-    text-decoration: none; /* Removes the default underline */
+  .text-muted a {
+    color: #6c757d;
+    text-decoration: none;
   }
 
   .text-muted a:hover {
-      text-decoration: underline; /* Adds underline on hover */
-      color: #006969;
+    text-decoration: underline;
+    color: #006969;
   }
 
   .btn-teal {
-    background-color: #008080; /* Teal */
+    background-color: #008080;
     border-color: #008080;
     color: #FFF;
   }
 
   .btn-teal:hover {
-    background-color: #006969; /* Darker Teal */
+    background-color: #006969;
     border-color: #006969;
     color: #FFF;
-  }
-
-  .contact-info .col-md-4 {
-      margin-bottom: 2rem; /* Adds spacing between contact info blocks */
   }
 
   .contact-card {
@@ -122,11 +130,27 @@
       padding: 2rem;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex; /* Use flexbox */
+      flex-direction: column; /* Align items vertically */
+      align-items: center; /* Center items horizontally */
+      height: 100%; /* Make cards equal height */
   }
 
   .contact-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .icon-container {
+    margin-bottom: 1rem; /* Space between icon and text */
+  }
+
+  .info-container {
+    flex-grow: 1; /* Allow text container to fill available space */
+  }
+
+  .contact-card .fa-3x {
+      font-size: 3rem; /* Adjust icon size as needed */
   }
 
   /* Form styling */
@@ -136,13 +160,12 @@
   }
 
   @media (max-width: 767.98px) {
-    .col-sm-6 {
-      flex: 0 0 100%;
-      max-width: 100%;
-    }
-    .contact-info .col-md-4 {
+    .contact-card {
         margin-bottom: 1rem; /* Reduced spacing for smaller screens */
     }
+      .contact-info .col-md-4 {
+          margin-bottom: 1rem; /* Reduced spacing for smaller screens */
+      }
   }
 
   @media (max-width: 575.98px) {
