@@ -14,14 +14,31 @@
             background-color: #F5F5F5; /* Light Gray */
         }
 
-        .hero-section {
-    background-image: url('<%= asset_path "researcher.jpg" %>'); /* Replace with your actual image URL */
-    background-size: cover;
-    background-position: center;
-    color: #006969; /* Deep Teal for text */
-    text-align: center;
-    padding: 10% 0;
-}
+    .hero-section {
+            position: relative;
+            background-size: cover;
+            background-image: url('<%= asset_path "researcher.jpg" %>'); /* Replace with your actual image URL */
+            background-position: center;
+            color: #006969; /* Deep Teal for text */
+            text-align: center;
+            padding: 10% 0;
+        }
+
+        .hero-section .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+            backdrop-filter: brightness(70%); /* Additional filter */
+            z-index: 1;
+        }
+
+        .hero-section .container {
+            position: relative;
+            z-index: 2;
+        }
 
         .hero-section h1 {
             font-weight: 700;
@@ -253,6 +270,7 @@
 <body>
 
     <section class="hero-section">
+        <div class="overlay"></div>
         <div class="container">
             <h1 class="display-4">Welcome to GigHive</h1>
             <p class="lead">Connecting Talent with Opportunity</p>
