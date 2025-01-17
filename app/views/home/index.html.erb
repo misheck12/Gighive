@@ -15,12 +15,29 @@
         }
 
         .hero-section {
+            position: relative;
             background-image: url('https://via.placeholder.com/1920x800/FFD700/000000?text=GigHive+Landing+Page'); /* Replace with your actual image URL */
             background-size: cover;
             background-position: center;
             color: #006969; /* Deep Teal for text */
             text-align: center;
             padding: 10% 0;
+        }
+
+        .hero-section .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+            backdrop-filter: brightness(70%); /* Additional filter */
+            z-index: 1;
+        }
+
+        .hero-section .container {
+            position: relative;
+            z-index: 2;
         }
 
         .hero-section h1 {
