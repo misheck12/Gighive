@@ -1,23 +1,25 @@
-<h1>Hello <%= @client.name %>,</h1>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">Dear <%= @client.name %>,</p>
 
-<p>
-  You've requested changes for the task titled "<strong><%= @task.title %></strong>" on Gighive. The freelancer, <strong><%= @freelancer.name %></strong>, has been notified and will be revising the work accordingly.
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  This message confirms that you have requested changes for the task titled "<strong><%= @task.title %></strong>" on GigHive. The freelancer, <strong><%= @freelancer.name %></strong>, has been notified and will be revising the work accordingly.
 </p>
 
-<p>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
   You can discuss any additional details or monitor the progress of the task by visiting the link below:
-  <%= link_to 'View Task on Gighive', task_url(@task) %>.
+</p>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  <%= link_to 'View Task on GigHive', task_url(@task), style: 'color: #007BFF; text-decoration: none; display: inline-block; padding: 10px 20px; background-color: #007BFF; color: #fff; border-radius: 5px;' %>
 </p>
 
-<p>
-  If you have any further requests or need assistance, feel free to reach out.
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  Should you have any further requests or require assistance, please do not hesitate to contact us.
 </p>
 
-<p>
-  Thank you for choosing Gighive!
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  Thank you for choosing GigHive!
 </p>
 
-<p>
-  Best Regards,<br>
-  The Gighive Team
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  Sincerely,<br>
+  The GigHive Team
 </p>
