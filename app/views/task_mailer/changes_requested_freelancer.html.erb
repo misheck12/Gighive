@@ -1,18 +1,38 @@
-<p>Dear <%= @freelancer.name %>,</p>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">Dear <%= @freelancer.name %>,</p>
 
-<p>The client has requested changes to your task titled "<strong><%= @task.title %></strong>". Please review the details below:</p>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  The client has requested changes to your task titled "<strong><%= @task.title %></strong>." Please review the details below:
+</p>
 
-<ul>
-  <li><strong>Task Description:</strong> <%= @task.description %></li>
-  <li><strong>Budget:</strong> <%= number_to_currency(@task.budget, unit: "ZMK", format: "%n %u") %></li>
-  <li><strong>Current Status:</strong> <%= @task.status.capitalize %></li>
-</ul>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;"><strong>Task Details:</strong></p>
+<table style="width: 100%; border-collapse: collapse;">
+  <tr style="border-bottom: 1px solid #ddd;">
+    <th style="text-align: left; padding: 8px; font-family: Arial, sans-serif;">Task Description:</th>
+    <td style="padding: 8px; font-family: Arial, sans-serif;"><%= @task.description %></td>
+  </tr>
+  <tr style="border-bottom: 1px solid #ddd;">
+    <th style="text-align: left; padding: 8px; font-family: Arial, sans-serif;">Budget:</th>
+    <td style="padding: 8px; font-family: Arial, sans-serif;"><%= number_to_currency(@task.budget, unit: "ZMK", format: "%n %u") %></td>
+  </tr>
+  <tr style="border-bottom: 1px solid #ddd;">
+    <th style="text-align: left; padding: 8px; font-family: Arial, sans-serif;">Current Status:</th>
+    <td style="padding: 8px; font-family: Arial, sans-serif;"><%= @task.status.capitalize %></td>
+  </tr>
+</table>
 
-<p><strong>Feedback:</strong> <%= @task.feedback || "No specific feedback provided." %></p>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  <strong>Feedback:</strong> <%= @task.feedback || "No specific feedback provided." %>
+</p>
 
-<p>We kindly request that you review the client’s feedback and submit the revised work at your earliest convenience. If you have any questions or need clarification, feel free to reach out to the project manager.</p>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  We kindly request that you review the client's feedback and submit the revised work at your earliest convenience. If you have any questions or require clarification, please do not hesitate to contact the project manager.
+</p>
 
-<p>Thank you for your dedication and attention to detail.</p>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  Thank you for your dedication and attention to detail.
+</p>
 
-<p>Best regards,</p>
-<p>The Gighive Team</p>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  Sincerely,<br>
+  The GigHive Team
+</p>
