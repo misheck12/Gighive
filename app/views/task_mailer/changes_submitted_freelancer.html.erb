@@ -1,34 +1,46 @@
-<p>Hello <%= @freelancer.name %>,</p>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">Dear <%= @freelancer.name %>,</p>
 
-<p>
-  You have successfully submitted changes for the task "<strong><%= @task.title %></strong>".
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  You have successfully submitted changes for the task "<strong><%= @task.title %></strong>."
 </p>
 
-<h3>Task Details</h3>
-<ul>
-  <li><strong>Task ID:</strong> <%= @task.id %></li>
-  <li><strong>Title:</strong> <%= @task.title %></li>
-  <li><strong>Deadline:</strong> <%= @task.deadline ? @task.deadline.strftime("%B %d, %Y") : "Not set" %></li>
-  <li><strong>Status:</strong> <%= @task.status.capitalize %></li>
-</ul>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;"><strong>Task Details:</strong></p>
+<table style="width: 100%; border-collapse: collapse;">
+  <tr style="border-bottom: 1px solid #ddd;">
+    <th style="text-align: left; padding: 8px; font-family: Arial, sans-serif;">Task ID:</th>
+    <td style="padding: 8px; font-family: Arial, sans-serif;"><%= @task.id %></td>
+  </tr>
+  <tr style="border-bottom: 1px solid #ddd;">
+    <th style="text-align: left; padding: 8px; font-family: Arial, sans-serif;">Title:</th>
+    <td style="padding: 8px; font-family: Arial, sans-serif;"><%= @task.title %></td>
+  </tr>
+  <tr style="border-bottom: 1px solid #ddd;">
+    <th style="text-align: left; padding: 8px; font-family: Arial, sans-serif;">Deadline:</th>
+    <td style="padding: 8px; font-family: Arial, sans-serif;"><%= @task.deadline ? @task.deadline.strftime("%B %d, %Y") : "Not set" %></td>
+  </tr>
+  <tr style="border-bottom: 1px solid #ddd;">
+    <th style="text-align: left; padding: 8px; font-family: Arial, sans-serif;">Status:</th>
+    <td style="padding: 8px; font-family: Arial, sans-serif;"><%= @task.status.capitalize %></td>
+  </tr>
+</table>
 
-<p>
-  The client (<strong><%= @task.client.name %></strong>) has been notified of your submitted changes. If any additional revisions are needed, the client will communicate with you directly via Gighive.
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  The client (<strong><%= @task.client.name %></strong>) has been notified of your submitted changes. Should any additional revisions be required, the client will communicate with you directly via GigHive.
 </p>
 
-<p>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
   You can view the task details and monitor the client's feedback here:
 </p>
 
-<p>
-  <%= link_to 'View Task on Gighive', task_url(@task), style: 'color: #007BFF; text-decoration: none;' %>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  <%= link_to 'View Task on GigHive', task_url(@task), style: 'color: #007BFF; text-decoration: none; display: inline-block; padding: 10px 20px; background-color: #007BFF; color: #fff; border-radius: 5px;' %>
 </p>
 
-<p>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
   Thank you for your dedication and professionalism. Keep up the great work!
 </p>
 
-<p>
-  Best Regards,<br>
-  <strong>The Gighive Team</strong>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  Sincerely,<br>
+  The GigHive Team
 </p>
