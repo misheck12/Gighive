@@ -1,24 +1,33 @@
-<h1>Your Payment Has Been Rejected</h1>
+<h1>Payment Rejection Notification</h1>
 
-<p>Hello <%= @client.name %>,</p>
+<p>Dear <%= @client.name %>,</p>
 
 <p>
   We regret to inform you that your payment for the task titled "<strong><%= @task.title %></strong>" has been rejected.
 </p>
 
 <p><strong>Payment Details:</strong></p>
-<ul>
-  <li><strong>Task:</strong> <%= @task.title %></li>
-  <li><strong>Amount:</strong> <%= number_to_currency(@task.budget, unit: "ZMK ") %></li>
-  <li><strong>Status:</strong> <%= @payment.status.titleize %></li>
-</ul>
+<table style="width:100%; border-collapse: collapse;">
+  <tr style="border-bottom: 1px solid #ddd;">
+    <th style="text-align:left; padding: 8px;">Task:</th>
+    <td style="padding: 8px;"><%= @task.title %></td>
+  </tr>
+  <tr style="border-bottom: 1px solid #ddd;">
+    <th style="text-align:left; padding: 8px;">Amount:</th>
+    <td style="padding: 8px;"><%= number_to_currency(@task.budget, unit: "ZMK ") %></td>
+  </tr>
+  <tr style="border-bottom: 1px solid #ddd;">
+    <th style="text-align:left; padding: 8px;">Status:</th>
+    <td style="padding: 8px;"><%= @payment.status.titleize %></td>
+  </tr>
+</table>
 
 <p>
-  We encourage you to review the task details and contact our support team if you require further clarification or assistance.
+  We recommend reviewing the task details and contacting our support team should you require further clarification or assistance.
 </p>
 
 <p>
-  Thank you for your understanding. We value your work on GigHive and are here to assist you with any questions.
+  We appreciate your understanding in this matter. We value your contributions to GigHive and are available to address any concerns you may have.
 </p>
 
-<p>Best regards,<br>The GigHive Team</p>
+<p>Sincerely,<br>The GigHive Team</p>

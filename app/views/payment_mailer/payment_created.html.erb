@@ -1,22 +1,31 @@
-<h1>Payment Successfully Created</h1>
+<h1>Payment Successfully Initiated</h1>
 
-<p>Hello <%= @client.name %>,</p>
-
-<p>
-  We're pleased to inform you that your payment for the task titled "<strong><%= @task.title %></strong>" has been successfully created and is now pending approval.
-</p>
-
-<p><strong>Payment Details:</strong></p>
-<ul>
-  <li><strong>Task:</strong> <%= @task.title %></li>
-  <li><strong>Amount:</strong> <%= number_to_currency(@task.budget, unit: "ZMK ") %></li>
-  <li><strong>Status:</strong> <%= @payment.status.titleize %></li>
-</ul>
+<p>Dear <%= @client.name %>,</p>
 
 <p>
-  You will be notified once the payment is approved. If you have any questions or need assistance, feel free to reach out to our support team.
+  We are pleased to inform you that your payment for the task titled "<strong><%= @task.title %></strong>" has been successfully initiated and is currently pending approval.
 </p>
 
-<p>Thank you for choosing GigHive!</p>
+<p><strong>Payment Summary:</strong></p>
+<table style="width:100%; border-collapse: collapse;">
+  <tr style="border-bottom: 1px solid #ddd;">
+    <th style="text-align:left; padding: 8px;">Task:</th>
+    <td style="padding: 8px;"><%= @task.title %></td>
+  </tr>
+  <tr style="border-bottom: 1px solid #ddd;">
+    <th style="text-align:left; padding: 8px;">Amount:</th>
+    <td style="padding: 8px;"><%= number_to_currency(@task.budget, unit: "ZMK ") %></td>
+  </tr>
+  <tr style="border-bottom: 1px solid #ddd;">
+    <th style="text-align:left; padding: 8px;">Status:</th>
+    <td style="padding: 8px;"><%= @payment.status.titleize %></td>
+  </tr>
+</table>
 
-<p>Best regards,<br>The GigHive Team</p>
+<p>
+  You will receive a notification once the payment has been approved. Should you have any inquiries or require further assistance, please do not hesitate to contact our support team.
+</p>
+
+<p>Thank you for utilizing GigHive.</p>
+
+<p>Sincerely,<br>The GigHive Team</p>
