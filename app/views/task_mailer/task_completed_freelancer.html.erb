@@ -1,23 +1,22 @@
-<h1>Hello <%= @freelancer.name %>,</h1>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">Dear <%= @freelancer.name %>,</p>
 
-<p>
-  Congratulations! You have successfully marked the task, "<strong><%= @task.title %></strong>", as completed on Gighive.
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  Congratulations! You have successfully marked the task, "<strong><%= @task.title %></strong>," as complete on GigHive.
 </p>
 
-<p>
-  The client has been notified to review your deliverables and finalize the task shortly. We will keep you updated on any feedback or required changes.
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  The client has been notified to review your deliverables and will finalize the task shortly. We will keep you informed of any feedback or required changes.
 </p>
 
-<h3>Quick Access:</h3>
-<p>
-  <%= link_to 'View Task on Gighive', task_url(@task), style: 'color: #007BFF; text-decoration: none;' %>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  <strong style="font-family: Arial, sans-serif;">Task Link:</strong> <%= link_to 'View Task on GigHive', task_url(@task), style: 'color: #007BFF; text-decoration: none;' %>
 </p>
 
-<p>
-  Thank you for your hard work and dedication to delivering quality results. If further updates are required, the client will reach out via Gighive.
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  We commend you for your hard work and dedication to delivering quality results. Should further updates be required, the client will reach out via the GigHive platform.
 </p>
 
-<p>
-  Best Regards,<br>
-  <strong>The Gighive Team</strong>
+<p style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
+  Sincerely,<br>
+  The GigHive Team
 </p>
