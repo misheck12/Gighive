@@ -13,13 +13,12 @@ class TasksController < ApplicationController
     @task = Task.new
   end
 
-  # Removed the get_subcategories action as it is handled by CategoriesController
-
   def create
     @task = Task.new(task_params)
     @task.client = current_user  # Set the client to the current user
 
-    # Removed manual budget validation
+    # Calculate the budget before saving
+    @task.budget = calculate_budget(task_params)
 
     if @task.save
       redirect_to @task, notice: 'Task was successfully created.'
@@ -32,9 +31,10 @@ class TasksController < ApplicationController
   end
 
   def update
-    # Removed manual budget validation
+    # Calculate the budget before updating
+    updated_params = task_params.merge(budget: calculate_budget(task_params))
 
-    if @task.update(task_params)
+    if @task.update(updated_params)
       redirect_to @task, notice: 'Task was successfully updated.'
     else
       render :edit
@@ -73,7 +73,7 @@ class TasksController < ApplicationController
   end
 
   def submit_changes
-    if current_user == @task.freelancera
+    if current_user == @task.freelancer # Corrected: Use @task.freelancer instead of @task.freelancera
       if params[:revised_file].present?
         @task.revised_file.attach(params[:revised_file])
         @task.update(status: 'completed') # Update the task status after submitting changes
@@ -115,5 +115,17 @@ class TasksController < ApplicationController
       :urgency,
       :revisions
     )
+  end
+  
+  def calculate_budget(params)
+    revisions = params[:revisions].to_i > 0 ? params[:revisions].to_i : 1
+    base_budget = Subcategory.find_by(id: params[:subcategory_id])&.minimum_price || 0
+    complexity_multiplier = { 'Low' => 1.0, 'Medium' => 1.2, 'High' => 1.5 }[params[:complexity]] || 1.0
+    urgency_multiplier = { 'Low' => 1.0, 'Normal' => 1.1, 'High' => 1.3 }[params[:urgency]] || 1.0
+    revision_cost = 100 # You might want to make this a constant or configurable
+    extra_revisions = [revisions - 1, 0].max # Ensure it's not negative
+
+    total_budget = (base_budget * complexity_multiplier * urgency_multiplier) + (extra_revisions * revision_cost)
+    total_budget.to_f
   end
 end
