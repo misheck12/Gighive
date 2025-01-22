@@ -4,7 +4,7 @@
 admin_email = 'misheck@bwangubwangu.net'
 admin = User.find_or_initialize_by(email: admin_email)
 if admin.new_record?
-  admin.name = 'misheck Livingi'
+  admin.name = 'Misheck Livingi'
   admin.password = 'securepassword' # In production, ensure to use environment variables or secure methods
   admin.password_confirmation = 'securepassword'
   admin.role = 'admin' # Adjust based on your User model's role implementation
