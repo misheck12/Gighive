@@ -14,7 +14,7 @@
         </div>
         <div class="col-lg-6">
           <div class="image-container">
-            <%= image_tag 'researcher.jpg', alt: 'Team Member 3', class: 'card-img-top' %>
+            <%= image_tag 'researcher.jpg', alt: 'A diverse group of professionals collaborating on a project, representing the GigHive community', class: 'img-fluid' %>
           </div>
         </div>
       </div>
@@ -29,7 +29,7 @@
         </div>
         <div class="col-lg-6 order-lg-1">
           <div class="image-container">
-            <%= image_tag 'presenting.jpg', alt: 'Team Member 2', class: 'card-img-top' %>
+            <%= image_tag 'presenting.jpg', alt: 'A person presenting ideas on a whiteboard, symbolizing innovation and collaboration', class: 'img-fluid' %>
           </div>
         </div>
       </div>
@@ -45,8 +45,8 @@
                 <div class="card border-0 shadow h-100">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold text-teal">
-                          <i class="fas fa-users mr-2"></i>
-                           Community
+                            <i class="fas fa-users mr-2"></i>
+                            Community
                         </h5>
                         <p class="card-text text-muted">Building a strong, supportive community where freelancers and clients can thrive together.</p>
                     </div>
@@ -56,8 +56,8 @@
                 <div class="card border-0 shadow h-100">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold text-teal">
-                          <i class="fas fa-lightbulb mr-2"></i>
-                           Innovation
+                            <i class="fas fa-lightbulb mr-2"></i>
+                            Innovation
                         </h5>
                         <p class="card-text text-muted">Continuously improving our platform and embracing new technologies to enhance the user experience.</p>
                     </div>
@@ -67,8 +67,8 @@
                 <div class="card border-0 shadow h-100">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold text-teal">
-                          <i class="fas fa-handshake mr-2"></i>
-                           Trust
+                            <i class="fas fa-handshake mr-2"></i>
+                            Trust
                         </h5>
                         <p class="card-text text-muted">Fostering a transparent and reliable environment where users can confidently engage in transactions.</p>
                     </div>
@@ -78,8 +78,8 @@
                 <div class="card border-0 shadow h-100">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold text-teal">
-                          <i class="fas fa-star mr-2"></i>
-                           Excellence
+                            <i class="fas fa-star mr-2"></i>
+                            Excellence
                         </h5>
                         <p class="card-text text-muted">Striving for the highest standards of quality in everything we do, from platform development to customer support.</p>
                     </div>
@@ -89,8 +89,8 @@
                 <div class="card border-0 shadow h-100">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold text-teal">
-                          <i class="fas fa-heart mr-2"></i>
-                           Empowerment
+                            <i class="fas fa-heart mr-2"></i>
+                            Empowerment
                         </h5>
                         <p class="card-text text-muted">Providing freelancers with the tools and resources they need to succeed and businesses with access to top talent.</p>
                     </div>
@@ -100,8 +100,8 @@
                 <div class="card border-0 shadow h-100">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold text-teal">
-                          <i class="fas fa-balance-scale mr-2"></i>
-                           Fairness
+                            <i class="fas fa-balance-scale mr-2"></i>
+                            Fairness
                         </h5>
                         <p class="card-text text-muted">Ensuring equitable opportunities and fair practices for all members of our community.</p>
                     </div>
@@ -109,7 +109,7 @@
             </div>
         </div>
     </section>
-    
+
     <section class="call-to-action text-center mt-5">
       <h2 class="font-weight-bold text-teal">Join the GigHive Community</h2>
       <p class="lead text-muted">Whether you're a freelancer looking for your next exciting project or a business seeking top-notch talent, GigHive is the place to bee!</p>
@@ -148,12 +148,15 @@
     border-color: #008080;
     color: #FFF;
     font-weight: 600;
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
   }
 
   .btn-teal:hover {
     background-color: #006969; /* Darker Teal */
     border-color: #006969;
     color: #FFF;
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   }
 
   .image-container {
