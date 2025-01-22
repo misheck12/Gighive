@@ -15,7 +15,6 @@
       <div class="col-md-6">
         <h1 class="text-center mb-4"><%= task.new_record? ? 'Create a New Task' : 'Edit Task' %></h1>
 
-        <!-- Title Field -->
         <div class="form-group mb-3">
           <%= form.label :title, 'Title', class: 'form-label' %>
           <%= form.text_field :title, class: 'form-control', placeholder: 'Enter task title', required: true, id: 'task_title' %>
@@ -24,7 +23,6 @@
           </div>
         </div>
 
-        <!-- Description Field -->
         <div class="form-group mb-3">
           <%= form.label :description, 'Description', class: 'form-label' %>
           <%= form.text_area :description, class: 'form-control', placeholder: 'Enter task description', required: true, rows: 4, id: 'task_description' %>
@@ -33,7 +31,6 @@
           </div>
         </div>
 
-        <!-- Category Field -->
         <div class="mb-3">
           <%= form.label :category_id, 'Category', class: 'form-label' %>
           <%= form.select :category_id, options_from_collection_for_select(@categories, :id, :name, task.category_id), { prompt: 'Select a category' }, class: 'form-select', id: 'category_select', required: true %>
@@ -42,7 +39,6 @@
           </div>
         </div>
 
-        <!-- Subcategory Field -->
         <div class="form-group mb-3">
           <%= form.label :subcategory_id, 'Subcategory', class: 'form-label' %>
           <%= form.select :subcategory_id, options_for_select([], selected: task.subcategory_id), { prompt: 'Select a subcategory' }, { id: 'subcategory_select', class: 'form-select', required: true } %>
@@ -51,13 +47,11 @@
           </div>
         </div>
 
-        <!-- Minimum Price Display (Non-Task Attribute) -->
         <div class="form-group mb-3">
           <%= label_tag 'minimum_price_field', 'Minimum Price (ZMK)', class: 'form-label' %>
           <input type="number" class="form-control" id="minimum_price_field" readonly placeholder="Minimum price will appear here">
         </div>
 
-        <!-- Complexity Field -->
         <div class="form-group mb-3">
           <%= form.label :complexity, 'Complexity', class: 'form-label' %>
           <%= form.select :complexity, ['Low', 'Medium', 'High'], { prompt: 'Select complexity' }, class: 'form-select', id: 'complexity_select', required: true %>
@@ -66,7 +60,6 @@
           </div>
         </div>
 
-        <!-- Urgency Field -->
         <div class="form-group mb-3">
           <%= form.label :urgency, 'Urgency', class: 'form-label' %>
           <%= form.select :urgency, ['Low', 'Normal', 'High'], { prompt: 'Select urgency' }, class: 'form-select', id: 'urgency_select', required: true %>
@@ -75,7 +68,6 @@
           </div>
         </div>
 
-        <!-- Revisions Field -->
         <div class="form-group mb-3">
           <%= form.label :revisions, 'Revisions', class: 'form-label' %>
           <%= form.number_field :revisions, class: 'form-control', placeholder: 'Number of revisions', required: true, min: 1, value: task.revisions || 1, id: 'revisions_input' %>
@@ -84,7 +76,6 @@
           </div>
         </div>
 
-        <!-- Budget Field -->
         <div class="form-group mb-3">
           <%= form.label :budget, 'Budget (ZMK)', class: 'form-label' %>
           <%= form.number_field :budget, class: 'form-control', placeholder: 'Budget will be calculated automatically', readonly: true, id: 'budget_field' %>
@@ -93,7 +84,6 @@
           </div>
         </div>
 
-        <!-- Deadline Field -->
         <div class="form-group mb-3">
           <%= form.label :deadline, 'Deadline', class: 'form-label' %>
           <%= form.datetime_select :deadline, class: 'form-control', required: true, id: 'deadline_select' %>
@@ -102,16 +92,14 @@
           </div>
         </div>
 
-        <!-- Attachment Field -->
         <div class="form-group mb-3">
           <%= form.label :attachment, 'Attachment', class: 'form-label' %>
-          <%= form.file_field :attachment, class: 'form-control-file', required: true, id: 'attachment_field' %>
+          <%= form.file_field :attachment, class: 'form-control', id: 'attachment_field' %>
           <div class="invalid-feedback">
             Please attach a file.
           </div>
         </div>
 
-        <!-- Submit Button -->
         <div class="actions text-center">
           <%= form.submit task.new_record? ? 'Create Task' : 'Update Task', class: 'btn btn-primary btn-block' %>
         </div>
@@ -122,14 +110,14 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const categorySelect      = document.getElementById('category_select');
-  const subcategorySelect   = document.getElementById('subcategory_select');
-  const minimumPriceField   = document.getElementById('minimum_price_field');
-  const revisionsField      = document.getElementById('revisions_input');
-  const budgetField         = document.getElementById('budget_field');
-  const complexitySelect    = document.getElementById('complexity_select');
-  const urgencySelect       = document.getElementById('urgency_select');
-  const revisionCost        = 100; // Adjust based on model's revision_cost
+  const categorySelect      = document.getElementById('category_select');
+  const subcategorySelect   = document.getElementById('subcategory_select');
+  const minimumPriceField   = document.getElementById('minimum_price_field');
+  const revisionsField      = document.getElementById('revisions_input');
+  const budgetField         = document.getElementById('budget_field');
+  const complexitySelect    = document.getElementById('complexity_select');
+  const urgencySelect       = document.getElementById('urgency_select');
+  const revisionCost        = 100; // Adjust based on model's revision_cost
 
   // Utility function to create option elements
   const createOption = (value, text, isSelected = false) => {
@@ -214,12 +202,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (categoryId) {
         fetchSubcategories(categoryId);
         minimumPriceField.value = '';
-        budgetField.value       = '';
+        budgetField.value       = '';
       } else {
         subcategorySelect.innerHTML = '';
         subcategorySelect.appendChild(createOption('', 'Select a subcategory', false));
         minimumPriceField.value = '';
-        budgetField.value       = '';
+        budgetField.value       = '';
       }
     });
   } else {
@@ -232,13 +220,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const selectedOption = this.options[this.selectedIndex];
       if (selectedOption && selectedOption.dataset.minimumPrice) {
         const minPrice = parseFloat(selectedOption.dataset.minimumPrice);
-        minimumPriceField.value     = minPrice.toFixed(2);
+        minimumPriceField.value     = minPrice.toFixed(2);
         budgetField.dataset.baseBudget = minPrice.toFixed(2);
-        budgetField.value           = minPrice.toFixed(2);
+        budgetField.value           = minPrice.toFixed(2);
         updateBudget();
       } else {
         minimumPriceField.value = '';
-        budgetField.value       = '';
+        budgetField.value       = '';
       }
     });
   } else {
@@ -270,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const revisions = parseInt(revisionsField.value) || 1;
     const baseBudget = parseFloat(budgetField.dataset.baseBudget) || 0;
     const complexity = complexitySelect.value;
-    const urgency    = urgencySelect.value;
+    const urgency    = urgencySelect.value;
 
     const complexityMultipliers = {
       'Low': 1.0,
@@ -285,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const complexityMultiplier = complexityMultipliers[complexity] || 1.0;
-    const urgencyMultiplier    = urgencyMultipliers[urgency] || 1.0;
+    const urgencyMultiplier    = urgencyMultipliers[urgency] || 1.0;
 
     const extraRevisions = revisions - 1;
     const totalBudget = (baseBudget * complexityMultiplier * urgencyMultiplier) + (extraRevisions * revisionCost);
