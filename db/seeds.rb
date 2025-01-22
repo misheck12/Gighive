@@ -117,8 +117,50 @@ CATEGORY_SUBCATEGORIES_WITH_PRICES = {
     'Interactive Content Design' => 1_500,
     'Learning Management System Setup' => 4_000,
     'Online Tutoring' => 1_500
+  },
+
+  'Science' => {
+    'Lab Report Writing' => 800,
+    'Data Analysis for Experiments' => 1_200,
+    'Scientific Research Assistance' => 2_500,
+    'Experimental Design Consultation' => 3_000,
+    'Statistical Analysis for Research' => 2_000,
+    'Scientific Presentation Design' => 1_500
+  },
+
+  'Mathematics' => {
+    'Mathematical Modeling' => 2_000,
+    'Statistical Analysis' => 1_500,
+    'Algebra Tutoring' => 800,
+    'Calculus Tutoring' => 1_000,
+    'Geometry Problem Solving' => 700
+  },
+
+  'Chemistry' => {
+    'Chemical Analysis' => 2_000,
+    'Lab Experiment Assistance' => 1_800,
+    'Organic Chemistry Tutoring' => 1_200,
+    'Inorganic Chemistry Tutoring' => 1_000,
+    'Analytical Chemistry Services' => 2_500
+  },
+
+  'Physics' => {
+    'Physics Problem Solving' => 1_500,
+    'Experiment Design in Physics' => 2_500,
+    'Mechanics Tutoring' => 1_000,
+    'Thermodynamics Tutoring' => 1_200,
+    'Optics Tutoring' => 1_200
+  },
+
+  'Biology' => {
+    'Biological Data Analysis' => 2_000,
+    'Molecular Biology Tutoring' => 1_500,
+    'Ecology and Environmental Biology Services' => 1_200,
+    'Genetics' => 1_500,
+    'Botany and Zoology Support' => 1_000
   }
 }
+
 
 
 # Seed categories and subcategories with minimum prices
