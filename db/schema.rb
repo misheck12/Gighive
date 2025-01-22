@@ -57,10 +57,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_14_130041) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.string "network"
-    t.string "reference_no"
     t.decimal "amount", precision: 10, scale: 2, default: "0.0", null: false
     t.index ["client_id"], name: "index_payments_on_client_id"
-    t.index ["reference_no"], name: "index_payments_on_reference_no", unique: true
     t.index ["task_id"], name: "index_payments_on_task_id"
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
@@ -135,19 +133,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_14_130041) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "withdrawals", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.decimal "amount", precision: 10, scale: 2, null: false
-    t.string "receiver_id", null: false
-    t.string "transaction_id"
-    t.string "reference_no", null: false
-    t.integer "status", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["reference_no"], name: "index_withdrawals_on_reference_no", unique: true
-    t.index ["user_id"], name: "index_withdrawals_on_user_id"
-  end
-
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "payments", "tasks"
@@ -160,5 +145,4 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_14_130041) do
   add_foreign_key "tasks", "subcategories"
   add_foreign_key "tasks", "users", column: "client_id"
   add_foreign_key "tasks", "users", column: "freelancer_id"
-  add_foreign_key "withdrawals", "users"
 end
