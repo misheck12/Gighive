@@ -6,14 +6,14 @@
   <%= csp_meta_tag %>
 
   <% if Rails.env.production? %>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-VALID_HASH_HERE" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <% else %>
     <%= stylesheet_link_tag 'bootstrap', media: 'all' %>
   <% end %>
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
-  <%= stylesheet_link_tag 'application.bootstrap', media: 'all', 'data-turbo-track': 'reload' %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
 
   <%= favicon_link_tag 'GigHive_logo.png', rel: 'icon', type: 'image/png', sizes: '32x32' %>
 
@@ -28,6 +28,7 @@
     /* --- Navigation Bar --- */
     .navbar {
         background-color: #212529; /* Dark Gray */
+        box-shadow: 0 2px 4px rgba(0,0,0,.2);
     }
 
     .navbar-brand {
@@ -35,11 +36,13 @@
         font-weight: bold;
         font-size: 1.5rem; /* Increased font size */
         padding: 0.5rem 1rem; /* Added padding */
+        transition: color 0.3s ease-in-out;
     }
 
     .navbar-brand:hover {
         color: #FFA500; /* Sunset Orange */
     }
+
     .navbar-toggler {
         border: none; /* Remove border */
     }
@@ -57,7 +60,7 @@
         color: #FFF;
         margin-left: 10px;
         margin-right: 10px;
-        transition: background-color 0.3s, transform 0.3s, color 0.3s;
+        transition: background-color 0.3s, transform 0.3s, color 0.3s, border-color 0.3s;
         border: 1px solid transparent; /* Initially transparent border */
         font-size: 1rem; /* Responsive font size */
         padding: 0.5rem 1rem; /* Responsive padding */
@@ -66,14 +69,12 @@
     .nav-link.btn-nav:hover {
         background-color: #006969; /* Darker Teal */
         transform: scale(1.05);
-        border-radius: 5px;
         color: #FFF;
         border-color: #008080; /* Teal border on hover */
     }
 
     .nav-link.btn-nav.active {
         background-color: #008080; /* Teal */
-        border-radius: 5px;
         border-color: #008080;
     }
 
@@ -85,7 +86,7 @@
 
     .dropdown-item {
         color: #FFF;
-        transition: background-color 0.3s;
+        transition: background-color 0.3s ease-in-out;
         font-size: 1rem; /* Responsive font size */
         padding: 0.5rem 1rem; /* Responsive padding */
     }
@@ -99,20 +100,26 @@
         border-top: 1px solid #008080;
     }
 
+    /* --- Main Content --- */
+    main {
+        padding: 20px; /* Add some padding to the main content area */
+    }
+
     /* --- Footer --- */
-    footer {
+    .footer {
         background-color: #212529; /* Dark Gray */
         color: #FFF;
         padding: 2rem 5%; /* Responsive padding */
+        margin-top: auto; /* Push footer to the bottom */
     }
 
-    footer a {
+    .footer a {
         color: #008080; /* Teal */
         text-decoration: none;
-        transition: color 0.3s;
+        transition: color 0.3s ease-in-out;
     }
 
-    footer a:hover {
+    .footer a:hover {
         color: #006969; /* Darker Teal */
         text-decoration: underline;
     }
@@ -126,7 +133,7 @@
         display: inline-block;
         margin: 0 0.5rem; /* Add horizontal spacing between icons */
         color: #008080; /* Teal */
-        transition: color 0.3s;
+        transition: color 0.3s ease-in-out;
         font-size: 1.8rem; /* Increased icon size */
     }
 
@@ -134,9 +141,6 @@
         color: #006969; /* Darker Teal */
     }
 
-    .social-icons i {
-        
-    }
     /* Overall responsiveness */
     @media (max-width: 768px) {
         .navbar-brand {
@@ -155,6 +159,7 @@
             font-size: 0.9rem; /* Smaller font size on smaller screens */
             padding: 0.4rem 0.8rem; /* Less padding on smaller screens */
         }
+
         .navbar-collapse {
             background-color: #212529; /* Match navbar background */
             padding: 10px; /* Add padding to the collapsed menu */
@@ -163,6 +168,7 @@
         .navbar-nav {
             margin-top: 10px; /* Add margin to separate from brand */
         }
+
         .social-icons a {
             font-size: 1.5rem; /* Slightly smaller icons on small screens */
             margin: 0 0.3rem; /* Adjust spacing */
@@ -198,13 +204,13 @@
           <% if user_signed_in? %>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle btn-nav" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-user-circle"></i> <%= current_user&.name || "User" %>
+                <i class="fas fa-user-circle"></i> <%= current_user&.name || "User" %>
               </a>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <%= link_to 'Edit Profile', edit_user_registration_path, class: 'dropdown-item', aria: { label: 'Edit Profile' } %>
                 <%= link_to 'Dashboard', dashboard_path, class: 'dropdown-item', aria: { label: 'Dashboard' } %>
                 <li><hr class="dropdown-divider"></li>
-                <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'dropdown-item', aria: { label: 'Sign out' } %>
+                <%= link_to 'Sign out', destroy_user_session_path, method: :delete, data: { "turbo-method": :delete }, class: 'dropdown-item', aria: { label: 'Sign out' } %>
               </ul>
             </li>
           <% else %>
@@ -224,7 +230,7 @@
     <%= yield %>
   </main>
 
-  <footer class="text-center">
+  <footer class="footer">
     <div class="container">
       <p>GigHive &copy; <%= Time.now.year %></p>
       <p>
@@ -241,7 +247,7 @@
   </footer>
 
   <% if Rails.env.production? %>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-VALID_HASH_HERE" crossorigin="anonymous" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <% else %>
     <%= javascript_include_tag "bootstrap.bundle", defer: true %>
   <% end %>
