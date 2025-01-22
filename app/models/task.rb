@@ -34,7 +34,6 @@ class Task < ApplicationRecord
   validates :category_id, presence: true
   validates :subcategory_id, presence: true
   validates :complexity, presence: true
-  validates :time_commitment, presence: true
   validates :urgency, presence: true
   validates :revisions, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
 
@@ -48,18 +47,17 @@ class Task < ApplicationRecord
   scope :open_tasks, -> { where(status: :open) }
   scope :completed, -> { where(status: :completed) }
 
-
   # ---------------------------------------------------------------------------
   # Callbacks
   # ---------------------------------------------------------------------------
 
   before_validation :set_default_status, on: :create
-  before_validation :set_time_commitment
-  before_save :adjust_budget_based_on_factors
+  before_save :calculate_and_set_budget
 
   # ---------------------------------------------------------------------------
   # Class Methods
   # ---------------------------------------------------------------------------
+  REVISION_COST = 100.freeze # Define revision cost as a constant
 
   # Fetches subcategory options for a given category name
   def self.subcategory_options_for_category(category_name)
@@ -94,99 +92,36 @@ class Task < ApplicationRecord
     self.status ||= :open
   end
 
-  # Sets the time commitment based on the deadline
-  def set_time_commitment
-    remaining_days = (self.deadline.to_date - Date.today).to_i
-    self.time_commitment = if remaining_days <= 7
-                              'Short-term'
-                            elsif remaining_days <= 30
-                              'Medium-term'
-                            else
-                              'Long-term'
-                            end
-  end
+  # Calculates and sets the budget based on subcategory, complexity, urgency, and revisions
+  def calculate_and_set_budget
+    return unless subcategory_id.present? && complexity.present? && urgency.present? && revisions.present?
 
-  # Adjusts the budget based on time commitment, complexity, and revisions
-  def adjust_budget_based_on_factors
-    return unless budget.present? && time_commitment.present? && complexity.present?
+    base_budget = subcategory.minimum_price
+    complexity_multiplier = { 'low' => 1.0, 'medium' => 1.2, 'high' => 1.5 }[complexity.downcase] || 1.0
+    urgency_multiplier = { 'low' => 1.0, 'normal' => 1.1, 'high' => 1.3 }[urgency.downcase] || 1.0
+    extra_revisions = [revisions - 1, 0].max
 
-    # Reset budget to base value before applying multipliers
-    self.budget = base_budget || budget
-
-    # Apply multipliers
-    self.budget = (budget * time_commitment_multiplier * complexity_multiplier).round(2)
-
-    # Adjust budget based on revisions (assuming base revisions = 1)
-    if revisions.present? && revisions > 1
-      self.budget += (revisions - 1) * revision_cost
-    end
-  end
-
-  # Retrieves the base budget before any adjustments
-  def base_budget
-    # Assuming 'base_budget' is a virtual attribute or attribute not persisted to DB
-    # If not available, consider storing the original budget or recalculating it
-    # For simplicity, we'll assume the entered budget is the base budget
-    # If you have a separate field, replace 'budget' with 'base_budget_field'
-    budget
-  end
-
-  # Defines the multiplier based on time commitment
-  def time_commitment_multiplier
-    case time_commitment
-    when 'Short-term'
-      1.2
-    when 'Medium-term'
-      1.0
-    when 'Long-term'
-      0.8
-    else
-      1.0
-    end
-  end
-
-  # Defines the multiplier based on complexity
-  def complexity_multiplier
-    case complexity.downcase
-    when 'low'
-      1.0
-    when 'medium'
-      1.2
-    when 'high'
-      1.5
-    else
-      1.0
-    end
-  end
-
-  # Adjusts the budget based on the number of revisions
-  def adjust_budget_based_on_revisions
-    return unless revisions.present? && revisions > 1
-    self.budget += (revisions - 1) * revision_cost
-  end
-
-  # Defines the additional cost per extra revision
-  def revision_cost
-    100.0 # Adjust this value as needed
+    self.budget = (base_budget * complexity_multiplier * urgency_multiplier) + (extra_revisions * REVISION_COST)
   end
 
   # Validates that the budget is above the minimum price for the selected subcategory
   def budget_above_minimum_price
     return unless subcategory.present? && subcategory.minimum_price.present?
 
-    if budget < subcategory.minimum_price
+    if budget.to_f < subcategory.minimum_price
       errors.add(:budget, "must be at least #{subcategory.minimum_price} ZMK for the selected subcategory.")
     end
   end
 
-    # Sets the completed_at timestamp if the task is completed
-    def set_completed_at_if_completed
-      if status_changed? && status == 'completed'
-        self.completed_at ||= Time.current
-      elsif status_changed? && status != 'completed'
-        self.completed_at = nil
-      end
+  # Sets the completed_at timestamp if the task is completed
+  def set_completed_at_if_completed
+    if status_changed? && status == 'completed'
+      self.completed_at ||= Time.current
+    elsif status_changed? && status != 'completed'
+      self.completed_at = nil
     end
+  end
+
   # ---------------------------------------------------------------------------
   # Notification Methods
   # ---------------------------------------------------------------------------
@@ -196,17 +131,17 @@ class Task < ApplicationRecord
   end
 
   def send_task_update_notifications
-      case status
-      when 'in_progress'
-        TaskMailer.task_accepted_client(self).deliver_later if client.email.present?
-        TaskMailer.task_accepted_freelancer(self).deliver_later if freelancer.email.present?
-      when 'completed'
-        TaskMailer.task_completed_client(self).deliver_later if client.email.present?
-        TaskMailer.task_completed_freelancer(self).deliver_later if freelancer.email.present?
-      when 'changes_requested'
-        TaskMailer.changes_requested_client(self).deliver_later if client.email.present?
-        TaskMailer.changes_requested_freelancer(self).deliver_later if freelancer.email.present?
-      end
+    case status
+    when 'in_progress'
+      TaskMailer.task_accepted_client(self).deliver_later if client.email.present?
+      TaskMailer.task_accepted_freelancer(self).deliver_later if freelancer.email.present?
+    when 'completed'
+      TaskMailer.task_completed_client(self).deliver_later if client.email.present?
+      TaskMailer.task_completed_freelancer(self).deliver_later if freelancer.email.present?
+    when 'changes_requested'
+      TaskMailer.changes_requested_client(self).deliver_later if client.email.present?
+      TaskMailer.changes_requested_freelancer(self).deliver_later if freelancer.email.present?
+    end
   end
 
   def send_changes_submitted_notification
