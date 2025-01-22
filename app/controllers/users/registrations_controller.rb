@@ -19,33 +19,47 @@ class Users::RegistrationsController < Devise::RegistrationsController
     respond_with self.resource
   end
 
+  # POST /users/create_freelancer
   def create_freelancer
-    build_resource(sign_up_params.merge(role: :freelancer))
-    resource.save
-    yield resource if block_given?
-    if resource.persisted?
-      # Removed auto sign-in
-      flash[:notice] = 'Freelancer created successfully.'
-      respond_with resource, location: dashboard_path
-    else
+    if User.exists?(email: sign_up_params[:email])
+      flash.now[:alert] = "Email has already been taken."
+      build_resource(sign_up_params)
       clean_up_passwords resource
       set_minimum_password_length
       respond_with resource
+    else
+      build_resource(sign_up_params.merge(role: :freelancer))
+      resource.save
+      yield resource if block_given?
+      if resource.persisted?
+        # Removed auto sign-in
+        flash[:notice] = 'Freelancer created successfully.'
+        respond_with resource, location: dashboard_path
+      else
+        clean_up_passwords resource
+        set_minimum_password_length
+        respond_with resource
+      end
     end
   end
 
   protected
 
+  # Permit additional parameters for sign up
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :photo, :email, :password, :password_confirmation, :terms_of_service])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [
+      :name, :photo, :email, :password, :password_confirmation, :terms_of_service
+    ])
   end
 
+  # Permit additional parameters for account update
   def configure_account_update_params
     devise_parameter_sanitizer.permit(:account_update, keys: [:name, :photo])
   end
 
   private
 
+  # Ensure that only admin users can access certain actions
   def ensure_admin
     redirect_to root_path, alert: 'You are not authorized to perform this action.' unless current_user&.admin?
   end
