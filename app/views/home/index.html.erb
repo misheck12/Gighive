@@ -1,362 +1,304 @@
 <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            background-color: #F5F5F5; /* Light Gray */
-        }
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background-color: #F5F5F5; /* Light Gray */
+    }
 
-        .navbar-custom {
-            background-color: #008080; /* Deep Teal */
-            box-shadow: 0 2px 4px rgba(0,0,0,.2);
-        }
+    .navbar-custom {
+        background-color: #008080; /* Deep Teal */
+        box-shadow: 0 2px 4px rgba(0,0,0,.2);
+    }
 
-        .navbar-custom .navbar-brand,
-        .navbar-custom .navbar-nav .nav-link {
-            color: #fff;
-            font-weight: 600;
-        }
+    .navbar-custom .navbar-brand,
+    .navbar-custom .navbar-nav .nav-link {
+        color: #fff;
+        font-weight: 600;
+    }
 
-        .navbar-custom .navbar-toggler {
-            border-color: #fff;
-        }
+    .navbar-custom .navbar-toggler {
+        border-color: #fff;
+    }
 
-        .navbar-custom .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-        }
+    .navbar-custom .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    }
 
-        .hero-section {
-            position: relative;
-            background-size: cover;
-            background-image: url('<%= asset_path "researcher.jpg" %>'); /* Replace with your actual image URL */
-            background-position: center;
-            color: #FFF; /* Deep Teal for text */
-            text-align: center;
-            padding: 10% 0;
-        }
+    .hero-section {
+        position: relative;
+        background-size: cover;
+        background-image: url('<%= asset_path "researcher.jpg" %>'); /* Replace with your actual image URL */
+        background-position: center;
+        color: #FFF; /* Deep Teal for text */
+        text-align: center;
+        padding: 10% 0;
+    }
 
-        .hero-section .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
-            backdrop-filter: brightness(70%); /* Additional filter */
-            z-index: 1;
-        }
+    .hero-section .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+        backdrop-filter: brightness(70%); /* Additional filter */
+        z-index: 1;
+    }
 
-        .hero-section .container {
-            position: relative;
-            z-index: 2;
-        }
+    .hero-section .container {
+        position: relative;
+        z-index: 2;
+    }
 
-        .hero-section h1 {
-            font-weight: 700;
-            font-size: 3.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
+    .hero-section h1 {
+        font-weight: 700;
+        font-size: 3.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
 
-        .hero-section p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-        }
+    .hero-section p {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    }
 
-        .btn-primary-custom {
-            background-color: #FFD700; /* Hive Yellow */
-            border-color: #FFD700;
-            color: #212529; /* Dark text for contrast */
-            font-weight: 600;
-            padding: 0.7rem 2rem;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
-        }
+    .btn-primary-custom {
+        background-color: #FFD700; /* Hive Yellow */
+        border-color: #FFD700;
+        color: #212529; /* Dark text for contrast */
+        font-weight: 600;
+        padding: 0.7rem 2rem;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    }
 
-        .btn-primary-custom:hover {
-            background-color: #FF8C00; /* Darker Orange */
-            border-color: #FF8C00;
-            transform: translateY(-2px);
-            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
-        }
+    .btn-primary-custom:hover {
+        background-color: #FF8C00; /* Darker Orange */
+        border-color: #FF8C00;
+        transform: translateY(-2px);
+        box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+    }
 
-        .btn-secondary-custom {
-            background-color: #008080; /* Deep Teal */
-            border-color: #008080;
-            color: #FFF;
-            font-weight: 600;
-            padding: 0.7rem 2rem;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
-        }
+    .btn-secondary-custom {
+        background-color: #008080; /* Deep Teal */
+        border-color: #008080;
+        color: #FFF;
+        font-weight: 600;
+        padding: 0.7rem 2rem;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    }
 
-        .btn-secondary-custom:hover {
-            background-color: #006969; /* Darker Teal */
-            border-color: #006969;
-            transform: translateY(-2px);
-            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
-        }
+    .btn-secondary-custom:hover {
+        background-color: #006969; /* Darker Teal */
+        border-color: #006969;
+        transform: translateY(-2px);
+        box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+    }
 
-        .features-section {
-            background-color: #F5F5F5; /* Light Gray */
-            padding: 4rem 0;
-        }
+    .features-section {
+        background-color: #F5F5F5; /* Light Gray */
+        padding: 4rem 0;
+    }
 
-        .features-section h2 {
-            font-weight: 700;
-            color: #333; /* Dark text for readability */
-            margin-bottom: 3rem;
-        }
+    .features-section h2 {
+        font-weight: 700;
+        color: #333; /* Dark text for readability */
+        margin-bottom: 3rem;
+    }
 
-        .features-section .card {
-            background: linear-gradient(to bottom, #FFFFFF, #F8F8F8);
-            border: 1px solid #f0f0f0;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        }
+    .features-section .card {
+        background: linear-gradient(to bottom, #FFFFFF, #F8F8F8);
+        border: 1px solid #f0f0f0;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
 
-        .features-section .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
-        }
+    .features-section .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+    }
 
-        .features-section .card-body {
-            text-align: center;
-        }
+    .features-section .card-body {
+        text-align: center;
+    }
 
-        .features-section .card-title {
-            font-weight: 600;
-            color: #333;
-            margin-top: 1rem;
-        }
+    .features-section .card-title {
+        font-weight: 600;
+        color: #333;
+        margin-top: 1rem;
+    }
 
-        .features-section .card-text {
-            color: #555;
-        }
+    .features-section .card-text {
+        color: #555;
+    }
 
-        .features-section .fa-3x {
-            color: #FFD700; /* Hive Yellow for icons */
-        }
+    .features-section .fa-3x {
+        color: #FFD700; /* Hive Yellow for icons */
+    }
 
-        .how-it-works-section {
-            padding: 4rem 0;
-            background-color: #f0f0f0; /* Different shade of light gray */
-        }
+    .how-it-works-section {
+        padding: 4rem 0;
+        background-color: #f0f0f0; /* Different shade of light gray */
+    }
 
-        .how-it-works-section h2 {
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 3rem;
-        }
+    .how-it-works-section h2 {
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 3rem;
+    }
 
-        .how-it-works-section .step {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
+    .how-it-works-section .step {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
 
-        .how-it-works-section .step i {
-            color: #FFD700;
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
+    .how-it-works-section .step i {
+        color: #FFD700;
+        font-size: 4rem;
+        margin-bottom: 1rem;
+    }
 
-        .how-it-works-section .step h4 {
-            font-weight: 600;
-            color: #333;
-        }
+    .how-it-works-section .step h4 {
+        font-weight: 600;
+        color: #333;
+    }
 
-        .how-it-works-section .step p {
-            color: #555;
-        }
+    .how-it-works-section .step p {
+        color: #555;
+    }
 
-        .call-to-action-section {
-            background: linear-gradient(135deg, #008080, #006969); /* Teal gradient */
-            color: #FFF; /* White text */
-            text-align: center;
-            padding: 4rem 0;
-        }
+    .call-to-action-section {
+        background: linear-gradient(135deg, #008080, #006969); /* Teal gradient */
+        color: #FFF; /* White text */
+        text-align: center;
+        padding: 4rem 0;
+    }
 
-        .call-to-action-section h2 {
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
+    .call-to-action-section h2 {
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
 
-        .call-to-action-section p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-        }
+    .call-to-action-section p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+    }
 
-        .call-to-action-section .btn-dark {
-            background-color: #FFF;
-            border-color: #FFF;
-            color: #006969; /* Teal text */
-            font-weight: 600;
-            padding: 0.7rem 2rem;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
-        }
+    .call-to-action-section .btn-dark {
+        background-color: #FFF;
+        border-color: #FFF;
+        color: #006969; /* Teal text */
+        font-weight: 600;
+        padding: 0.7rem 2rem;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    }
 
-        .call-to-action-section .btn-dark:hover {
-            background-color: #f0f0f0;
-            border-color: #f0f0f0;
-            transform: translateY(-2px);
-            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
-        }
+    .call-to-action-section .btn-dark:hover {
+        background-color: #f0f0f0;
+        border-color: #f0f0f0;
+        transform: translateY(-2px);
+        box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+    }
 
-        .footer {
-            background-color: #212529;
-            color: #FFF;
-            text-align: center;
-            padding: 2rem 0;
-            position: relative;
-            width: 100%;
-        }
+    /* Social Icons */
+    .social-icons a {
+        margin: 0 10px;
+        display: inline-block;
+    }
 
-        .footer a {
-            color: #008080; /* Teal links */
-            text-decoration: none;
-            transition: color 0.3s;
-        }
+    .social-icons i {
+        color: #008080;
+        transition: color 0.3s;
+    }
 
-        .footer a:hover {
-            color: #006969; /* Darker Teal */
-            text-decoration: underline;
-        }
+    .social-icons i:hover {
+        color: #006969;
+    }
+</style>
 
-        /* Footer Content Styling */
-        .footer-content {
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .footer-section {
-            margin-bottom: 20px;
-        }
-
-        .footer-section h4 {
-            color: #FFA500;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .footer-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-section ul li a {
-            transition: color 0.3s;
-        }
-
-        .footer-section ul li a:hover {
-            color: #FFA500;
-        }
-
-        /* Social Icons */
-        .social-icons a {
-            margin: 0 10px;
-            display: inline-block;
-        }
-
-        .social-icons i {
-            color: #008080;
-            transition: color 0.3s;
-        }
-
-        .social-icons i:hover {
-            color: #006969;
-        }
-    </style>
-
-    <section class="hero-section">
-        <div class="overlay"></div>
-        <div class="container">
-            <h1 class="display-4">Welcome to GigHive</h1>
-            <p class="lead">Connecting Talent with Opportunity</p>
-            <a href="<%= new_user_registration_path %>" class="btn btn-primary-custom btn-lg shadow">Join Now</a>
-            <a href="<%= new_user_session_path %>" class="btn btn-secondary-custom btn-lg shadow">Sign In</a>
-        </div>
-    </section>
-
-    <section class="features-section" id="features">
-        <div class="container">
-            <h2 class="text-center">Our Features</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-body">
-                            <i class="fas fa-search fa-3x"></i>
-                            <h5 class="card-title mt-3">Browse Freelancers</h5>
-                            <p class="card-text">Find talented professionals across various fields to execute your projects.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-body">
-                            <i class="fas fa-clipboard-list fa-3x"></i>
-                            <h5 class="card-title mt-3">Post Projects</h5>
-                            <p class="card-text">Describe your project needs and receive proposals from qualified freelancers.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-body">
-                            <i class="fas fa-shield-alt fa-3x"></i>
-                            <h5 class="card-title mt-3">Secure Payments</h5>
-                            <p class="card-text">Manage transactions safely with our integrated payment system.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="how-it-works-section" id="how-it-works">
-        <div class="container">
-            <h2 class="text-center">How It Works</h2>
-            <div class="row text-center">
-                <div class="col-md-3 step">
-                    <i class="fas fa-user-plus fa-4x"></i>
-                    <h4>Sign Up</h4>
-                    <p>Create an account to get started.</p>
-                </div>
-                <div class="col-md-3 step">
-                    <i class="fas fa-tasks fa-4x"></i>
-                    <h4>Post or Find a Task</h4>
-                    <p>Detail your project requirements or find tasks that match your skills.</p>
-                </div>
-                <div class="col-md-3 step">
-                    <i class="fas fa-comments fa-4x"></i>
-                    <h4>Collaborate</h4>
-                    <p>Communicate with freelancers or clients to refine the project.</p>
-                </div>
-                <div class="col-md-3 step">
-                    <i class="fas fa-money-check-alt fa-4x"></i>
-                    <h4>Complete & Pay</h4>
-                    <p>Finalize the project and process payments securely.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="call-to-action-section">
-        <div class="container">
-            <h2>Join the GigHive Community Today!</h2>
-            <p>Whether you're looking to hire top talent or offer your expert skills, GigHive is the perfect platform for you.</p>
-            <a href="<%= new_user_registration_path %>" class="btn btn-dark btn-lg shadow">Get Started</a>
-        </div>
-    </section>
-    
+<section class="hero-section">
+    <div class="overlay"></div>
+    <div class="container">
+        <h1 class="display-4">Welcome to GigHive</h1>
+        <p class="lead">Connecting Talent with Opportunity</p>
+        <a href="<%= new_user_registration_path %>" class="btn btn-primary-custom btn-lg shadow">Join Now</a>
+        <a href="<%= new_user_session_path %>" class="btn btn-secondary-custom btn-lg shadow">Sign In</a>
     </div>
+</section>
+
+<section class="features-section" id="features">
+    <div class="container">
+        <h2 class="text-center">Our Features</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <i class="fas fa-search fa-3x"></i>
+                        <h5 class="card-title mt-3">Browse Freelancers</h5>
+                        <p class="card-text">Find talented professionals across various fields to execute your projects.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <i class="fas fa-clipboard-list fa-3x"></i>
+                        <h5 class="card-title mt-3">Post Projects</h5>
+                        <p class="card-text">Describe your project needs and receive proposals from qualified freelancers.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <i class="fas fa-shield-alt fa-3x"></i>
+                        <h5 class="card-title mt-3">Secure Payments</h5>
+                        <p class="card-text">Manage transactions safely with our integrated payment system.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="how-it-works-section" id="how-it-works">
+    <div class="container">
+        <h2 class="text-center">How It Works</h2>
+        <div class="row text-center">
+            <div class="col-md-3 step">
+                <i class="fas fa-user-plus fa-4x"></i>
+                <h4>Sign Up</h4>
+                <p>Create an account to get started.</p>
+            </div>
+            <div class="col-md-3 step">
+                <i class="fas fa-tasks fa-4x"></i>
+                <h4>Post or Find a Task</h4>
+                <p>Detail your project requirements or find tasks that match your skills.</p>
+            </div>
+            <div class="col-md-3 step">
+                <i class="fas fa-comments fa-4x"></i>
+                <h4>Collaborate</h4>
+                <p>Communicate with freelancers or clients to refine the project.</p>
+            </div>
+            <div class="col-md-3 step">
+                <i class="fas fa-money-check-alt fa-4x"></i>
+                <h4>Complete & Pay</h4>
+                <p>Finalize the project and process payments securely.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="call-to-action-section">
+    <div class="container">
+        <h2>Join the GigHive Community Today!</h2>
+        <p>Whether you're looking to hire top talent or offer your expert skills, GigHive is the perfect platform for you.</p>
+        <a href="<%= new_user_registration_path %>" class="btn btn-dark btn-lg shadow">Get Started</a>
+    </div>
+</section>
+
+</div>
