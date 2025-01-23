@@ -1,499 +1,628 @@
-<div class="container py-5 animated">
+<div class="container py-5">
   <h3 class="mb-4 text-secondary">Welcome, <%= current_user.name %>!</h3>
 
-  <% if current_user.admin? %>
-    <div class="row">
-      <%
-          # Calculate Earnings (Monthly)
-          monthly_earnings = Payment.where(status: 'approved', created_at: Time.now.beginning_of_month..Time.now.end_of_month).sum(:amount)
-          
-          # Calculate Earnings (Annual)
-          annual_earnings = Payment.where(status: 'approved', created_at: Time.now.beginning_of_year..Time.now.end_of_year).sum(:amount)
-          
-          # Calculate Task Completion Rate
-          total_tasks = Task.count
-          completed_tasks = Task.where(status: 'completed').count
-          task_completion_rate = total_tasks > 0 ? (completed_tasks.to_f / total_tasks) * 100 : 0
-          
-          # Get Pending Payments Count
-          pending_payments_count = @pending_payments.count
-          %>
+<% if current_user.admin? %>
+  <div class="row">
+    <%
+       # Calculate Earnings (Monthly)
+       monthly_earnings = Payment.where(status: 'approved', created_at: Time.now.beginning_of_month..Time.now.end_of_month).sum(:amount)
+       
+       # Calculate Earnings (Annual)
+       annual_earnings = Payment.where(status: 'approved', created_at: Time.now.beginning_of_year..Time.now.end_of_year).sum(:amount)
+       
+       # Calculate Task Completion Rate
+       total_tasks = Task.count
+       completed_tasks = Task.where(status: 'completed').count
+       task_completion_rate = total_tasks > 0 ? (completed_tasks.to_f / total_tasks) * 100 : 0
+       
+       # Get Pending Payments Count
+       pending_payments_count = @pending_payments.count
+       %>
 
-      <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                  Earnings (Monthly)
-                </div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800"><%= humanized_money_with_symbol(monthly_earnings) %></div>
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                Earnings (Monthly)
               </div>
-              <div class="col-auto">
-                <i class="fas fa-calendar fa-2x text-gray-300"></i>
-              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><%= humanized_money_with_symbol(monthly_earnings) %></div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                  Earnings (Annual)
-                </div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800"><%= humanized_money_with_symbol(annual_earnings) %></div>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks Completion Rate
-                </div>
-                <div class="row no-gutters align-items-center">
-                  <div class="col-auto">
-                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><%= task_completion_rate.round(1) %>%</div>
-                  </div>
-                  <div class="col">
-                    <div class="progress progress-sm mr-2">
-                      <div class="progress-bar bg-info" role="progressbar"
-                            style="width: <%= task_completion_rate %>%" aria-valuenow="<%= task_completion_rate %>" aria-valuemin="0"
-                            aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                  Pending Payments
-                </div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800"><%= pending_payments_count %></div>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-comments fa-2x text-gray-300"></i>
-              </div>
+            <div class="col-auto">
+              <i class="fas fa-calendar fa-2x text-gray-300"></i>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <ul class="nav nav-tabs nav-fill mb-3" id="adminDashboardTabs" role="tablist">
-      <li class="nav-item" role="presentation">
-        <a class="nav-link active" id="pending-payments-tab" data-bs-toggle="tab" href="#pending-payments" role="tab" aria-controls="pending-payments" aria-selected="true">Pending Payments</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="accepted-payments-tab" data-bs-toggle="tab" href="#accepted-payments" role="tab" aria-controls="accepted-payments" aria-selected="false">Accepted Payments</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="rejected-payments-tab" data-bs-toggle="tab" href="#rejected-payments" role="tab" aria-controls="rejected-payments" aria-selected="false">Rejected Payments</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="all-tasks-tab" data-bs-toggle="tab" href="#all-tasks" role="tab" aria-controls="all-tasks" aria-selected="false">All Tasks</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="all-reviews-tab" data-bs-toggle="tab" href="#all-reviews" role="tab" aria-controls="all-reviews" aria-selected="false">All Reviews</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="manage-users-tab" data-bs-toggle="tab" href="#manage-users" role="tab" aria-controls="manage-users" aria-selected="false">Manage Users</a>
-      </li>
-    </ul>
-
-    <div class="tab-content" id="adminDashboardContent">
-      <div class="tab-pane fade show active" id="pending-payments" role="tabpanel" aria-labelledby="pending-payments-tab">
-        <div class="card shadow-sm">
-          <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">Pending Payments</h5>
-          </div>
-          <div class="card-body">
-            <% if @pending_payments.present? %>
-              <div class="table-responsive" data-controller="refresh" data-refresh-interval-value="5000">
-                <table class="table table-striped" id="pending-payments-table" data-refresh-target="table">
-                  <thead class="table-dark">
-                    <tr>
-                      <th>#</th>
-                      <th>Task Title</th>
-                      <th>Amount</th>
-                      <th>Transaction ID</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <%= render partial: 'pending_payments_table', locals: { pending_payments: @pending_payments } %>
-                  </tbody>
-                </table>
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                Earnings (Annual)
               </div>
-            <% else %>
-              <p class="text-muted">No pending payments at this time.</p>
-            <% end %>
-          </div>
-        </div>
-      </div>
-
-      <div class="tab-pane fade" id="accepted-payments" role="tabpanel" aria-labelledby="accepted-payments-tab">
-        <div class="card shadow-sm">
-          <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">Accepted Payments</h5>
-          </div>
-          <div class="card-body">
-            <% accepted_payments = Payment.where(status: 'approved') %>
-            <% if accepted_payments.present? %>
-              <div class="table-responsive" data-controller="refresh" data-refresh-interval-value="5000">
-                <table class="table table-striped" id="accepted-payments-table" data-refresh-target="table">
-                  <thead class="table-dark">
-                    <tr>
-                      <th>#</th>
-                      <th>Task Title</th>
-                      <th>Amount</th>
-                      <th>Transaction ID</th>
-                      <th>Freelancer</th>
-                      <th>User</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                     <%= render partial: 'accepted_payments_table', locals: { accepted_payments: accepted_payments } %>
-                  </tbody>
-                </table>
-              </div>
-            <% else %>
-              <p class="text-muted">No accepted payments at this time.</p>
-            <% end %>
-          </div>
-        </div>
-      </div>
-
-      <div class="tab-pane fade" id="rejected-payments" role="tabpanel" aria-labelledby="rejected-payments-tab">
-        <div class="card shadow-sm">
-          <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">Rejected Payments</h5>
-          </div>
-          <div class="card-body">
-            <% rejected_payments = Payment.where(status: 'rejected') %>
-            <% if rejected_payments.present? %>
-              <div class="table-responsive" data-controller="refresh" data-refresh-interval-value="5000">
-                <table class="table table-striped" id="rejected-payments-table" data-refresh-target="table">
-                  <thead class="table-dark">
-                    <tr>
-                      <th>#</th>
-                      <th>Task Title</th>
-                      <th>Amount</th>
-                      <th>Transaction ID</th>
-                      <th>Freelancer</th>
-                      <th>User</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <%= render partial: 'rejected_payments_table', locals: { rejected_payments: rejected_payments } %>
-                  </tbody>
-                </table>
-              </div>
-            <% else %>
-              <p class="text-muted">No rejected payments at this time.</p>
-            <% end %>
-          </div>
-        </div>
-      </div>
-
-      <div class="tab-pane fade" id="all-tasks" role="tabpanel" aria-labelledby="all-tasks-tab">
-        <div class="card shadow-sm">
-          <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">All Tasks</h5>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive" data-controller="refresh" data-refresh-interval-value="5000">
-              <table class="table table-striped" id="all-tasks-table" data-refresh-target="table">
-                <thead class="table-dark">
-                  <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Budget</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <%= render partial: 'all_tasks_table', locals: { tasks: Task.all } %>
-                </tbody>
-              </table>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><%= humanized_money_with_symbol(annual_earnings) %></div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="tab-pane fade" id="all-reviews" role="tabpanel" aria-labelledby="all-reviews-tab">
-        <div class="card shadow-sm">
-          <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">All Reviews</h5>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive" data-controller="refresh" data-refresh-interval-value="5000">
-              <table class="table table-striped" id="all-reviews-table" data-refresh-target="table">
-                <thead class="table-dark">
-                  <tr>
-                    <th>Task</th>
-                    <th>Rating</th>
-                    <th>Comment</th>
-                    <th>Reviewer</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <%= render partial: 'all_reviews_table', locals: { reviews: Review.all } %>
-                </tbody>
-              </table>
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-info shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks Completion Rate
+              </div>
+              <div class="row no-gutters align-items-center">
+                <div class="col-auto">
+                  <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><%= task_completion_rate.round(1) %>%</div>
+                </div>
+                <div class="col">
+                  <div class="progress progress-sm mr-2">
+                    <div class="progress-bar bg-info" role="progressbar"
+                         style="width: <%= task_completion_rate %>%" aria-valuenow="<%= task_completion_rate %>" aria-valuemin="0"
+                         aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="tab-pane fade" id="manage-users" role="tabpanel" aria-labelledby="manage-users-tab">
-        <div class="card shadow-sm">
-          <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">Manage Users</h5>
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-warning shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                Pending Payments
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><%= pending_payments_count %></div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-comments fa-2x text-gray-300"></i>
+            </div>
           </div>
-          <div class="card-body">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ul class="nav nav-tabs nav-fill mb-3" id="adminDashboardTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="pending-payments-tab" data-bs-toggle="tab" href="#pending-payments" role="tab" aria-controls="pending-payments" aria-selected="true">Pending Payments</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="accepted-payments-tab" data-bs-toggle="tab" href="#accepted-payments" role="tab" aria-controls="accepted-payments" aria-selected="false">Accepted Payments</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="rejected-payments-tab" data-bs-toggle="tab" href="#rejected-payments" role="tab" aria-controls="rejected-payments" aria-selected="false">Rejected Payments</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="all-tasks-tab" data-bs-toggle="tab" href="#all-tasks" role="tab" aria-controls="all-tasks" aria-selected="false">All Tasks</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="all-reviews-tab" data-bs-toggle="tab" href="#all-reviews" role="tab" aria-controls="all-reviews" aria-selected="false">All Reviews</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="manage-users-tab" data-bs-toggle="tab" href="#manage-users" role="tab" aria-controls="manage-users" aria-selected="false">Manage Users</a>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="adminDashboardContent">
+    <div class="tab-pane fade show active" id="pending-payments" role="tabpanel" aria-labelledby="pending-payments-tab">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">Pending Payments</h5>
+        </div>
+        <div class="card-body">
+          <% if @pending_payments.present? %>
             <div class="table-responsive">
               <table class="table table-striped">
                 <thead class="table-dark">
                   <tr>
-                    <th>Email</th>
-                    <th>Role</th>
+                    <th>#</th>
+                    <th>Task Title</th>
+                    <th>Amount</th>
+                    <th>Transaction ID</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <% User.all.each do |user| %>
+                  <% @pending_payments.each do |payment| %>
                     <tr>
-                      <td><%= user.email %></td>
-                      <td><%= user.role.titleize %></td>
+                      <td><%= payment.id %></td>
+                      <td><%= payment.task.title %></td>
+                      <td><%= humanized_money_with_symbol(payment.task.budget) %></td>
+                      <td><%= payment.transaction_id %></td>
                       <td>
-                        <%= link_to 'Delete', admin_destroy_user_path(user), data: { "turbo-method": :delete, confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+                        <%= link_to 'View', task_payment_path(payment.task_id, payment.id), class: 'btn btn-primary btn-sm' %>
                       </td>
                     </tr>
                   <% end %>
                 </tbody>
               </table>
             </div>
-            <%= link_to 'Create New User', new_freelancer_registration_path, class: 'btn btn-success mt-3' %>
+          <% else %>
+            <p class="text-muted">No pending payments at this time.</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="accepted-payments" role="tabpanel" aria-labelledby="accepted-payments-tab">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">Accepted Payments</h5>
+        </div>
+        <div class="card-body">
+          <% accepted_payments = Payment.where(status: 'approved') %>
+          <% if accepted_payments.present? %>
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead class="table-dark">
+                  <tr>
+                    <th>#</th>
+                    <th>Task Title</th>
+                    <th>Amount</th>
+                    <th>Transaction ID</th>
+                    <th>Freelancer</th>
+                    <th>User</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% accepted_payments.each do |payment| %>
+                    <tr>
+                      <td><%= payment.id %></td>
+                      <td><%= payment.task.title %></td>
+                      <td><%= humanized_money_with_symbol(payment.task.budget) %></td>
+                      <td><%= payment.transaction_id %></td>
+                      <td><%= payment.task.freelancer.name %></td>
+                      <td><%= payment.task.client.email %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% else %>
+            <p class="text-muted">No accepted payments at this time.</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="rejected-payments" role="tabpanel" aria-labelledby="rejected-payments-tab">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">Rejected Payments</h5>
+        </div>
+        <div class="card-body">
+          <% rejected_payments = Payment.where(status: 'rejected') %>
+          <% if rejected_payments.present? %>
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead class="table-dark">
+                  <tr>
+                    <th>#</th>
+                    <th>Task Title</th>
+                    <th>Amount</th>
+                    <th>Transaction ID</th>
+                    <th>Freelancer</th>
+                    <th>User</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% rejected_payments.each do |payment| %>
+                    <tr>
+                      <td><%= payment.id %></td>
+                      <td><%= payment.task.title %></td>
+                      <td><%= humanized_money_with_symbol(payment.task.budget) %></td>
+                      <td><%= payment.transaction_id %></td>
+                      <td><%= payment.task.freelancer.name %></td>
+                      <td><%= payment.task.client.email %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% else %>
+            <p class="text-muted">No rejected payments at this time.</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="all-tasks" role="tabpanel" aria-labelledby="all-tasks-tab">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">All Tasks</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead class="table-dark">
+                <tr>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Budget</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% Task.all.each do |task| %>
+                  <tr>
+                    <td><%= link_to task.title, task_path(task), class: 'text-primary' %></td>
+                    <td><%= truncate(task.description, length: 50) %></td>
+                    <td><%= humanized_money_with_symbol(task.budget) %></td>
+                    <td><span class="badge rounded-pill <%= badge_color_for_status(task.status) %>"><%= task.status.titleize %></span></td>
+                    <td>
+                      <%= link_to 'View', task_path(task), class: 'btn btn-primary btn-sm' %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
 
-  <% elsif current_user.client? %>
-    <ul class="nav nav-tabs nav-fill mb-3" id="clientDashboardTabs" role="tablist">
-      <li class="nav-item" role="presentation">
-        <a class="nav-link active" id="client-tasks-tab" data-bs-toggle="tab" href="#client-tasks" role="tab" aria-controls="client-tasks" aria-selected="true">My Tasks</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="client-payments-tab" data-bs-toggle="tab" href="#client-payments" role="tab" aria-controls="client-payments" aria-selected="false">Payments</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="client-reviews-tab" data-bs-toggle="tab" href="#client-reviews" role="tab" aria-controls="client-reviews" aria-selected="false">Reviews</a>
-      </li>
-    </ul>
-
-    <div class="tab-content" id="clientDashboardContent">
-      <div class="tab-pane fade show active" id="client-tasks" role="tabpanel" aria-labelledby="client-tasks-tab">
-        <div class="card shadow-sm">
-          <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">Your Tasks</h5>
-          </div>
-          <div class="card-body">
-            <%= link_to 'Create New Task', new_task_path, class: "btn btn-success mb-3" %>
-
-            <% Task.statuses.keys.each do |status| %>
-              <div class="mt-4">
-                <h5 class="mb-3 text-secondary"><%= status.titleize %> Tasks</h5>
-                <div class="table-responsive" data-controller="refresh" data-refresh-interval-value="5000">
-                  <table class="table table-striped table-hover" id="client-tasks-table" data-refresh-target="table">
-                    <thead class="table-dark">
-                      <tr>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Budget</th>
-                        <th>Category</th>
-                        <th>Deadline</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <%= render partial: 'client_tasks_table', locals: { tasks: current_user.tasks_as_client.where(status: status) } %>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            <% end %>
+    <div class="tab-pane fade" id="all-reviews" role="tabpanel" aria-labelledby="all-reviews-tab">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">All Reviews</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead class="table-dark">
+                <tr>
+                  <th>Task</th>
+                  <th>Rating</th>
+                  <th>Comment</th>
+                  <th>Reviewer</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% Review.all.each do |review| %>
+                  <tr>
+                    <td><%= link_to review.task.title, task_path(review.task), class: 'text-primary' %></td>
+                    <td><span class="badge rounded-pill <%= badge_color_for_rating(review.rating) %>"><%= review.rating %> stars</span></td>
+                    <td><%= review.comment %></td>
+                    <td><%= review.reviewer.email %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="tab-pane fade" id="client-payments" role="tabpanel" aria-labelledby="client-payments-tab">
-        <div class="card shadow-sm">
-          <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">Payments</h5>
+    <div class="tab-pane fade" id="manage-users" role="tabpanel" aria-labelledby="manage-users-tab">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">Manage Users</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead class="table-dark">
+                <tr>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% User.all.each do |user| %>
+                  <tr>
+                    <td><%= user.email %></td>
+                    <td><%= user.role.titleize %></td>
+                    <td>
+                      <%= link_to 'Delete', admin_destroy_user_path(user), data: { "turbo-method": :delete, confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
           </div>
-          <div class="card-body">
-            <div class="payments-info mb-4 p-3 border rounded bg-light">
-              <h5 class="text-primary">Payment Methods</h5>
-              <p>For payments, you can transfer funds to the following mobile numbers:</p>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">MTN: <span class="fw-bold">+260960231978</span></li>
-                <li class="list-group-item">Airtel: <span class="fw-bold">+260777945779</span></li>
-              </ul>
-            </div>
+          <%= link_to 'Create New User', new_freelancer_registration_path, class: 'btn btn-success mt-3' %>
+        </div>
+      </div>
+    </div>
+  </div>
 
-            <% accepted_payments = Payment.where(status: 'approved', task: current_user.tasks_as_client) %>
-            <% if accepted_payments.present? %>
-              <h5 class="text-primary mb-3">Accepted Payments</h5>
-              <div class="table-responsive" data-controller="refresh" data-refresh-interval-value="5000">
-                <table class="table table-striped" id="client-payments-table" data-refresh-target="table">
+  <% elsif current_user.client? %>
+  <ul class="nav nav-tabs nav-fill mb-3" id="clientDashboardTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="client-tasks-tab" data-bs-toggle="tab" href="#client-tasks" role="tab" aria-controls="client-tasks" aria-selected="true">My Tasks</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="client-payments-tab" data-bs-toggle="tab" href="#client-payments" role="tab" aria-controls="client-payments" aria-selected="false">Payments</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="client-reviews-tab" data-bs-toggle="tab" href="#client-reviews" role="tab" aria-controls="client-reviews" aria-selected="false">Reviews</a>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="clientDashboardContent">
+    <div class="tab-pane fade show active" id="client-tasks" role="tabpanel" aria-labelledby="client-tasks-tab">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">Your Tasks</h5>
+        </div>
+        <div class="card-body">
+          <%= link_to 'Create New Task', new_task_path, class: "btn btn-success mb-3" %>
+
+          <% Task.statuses.keys.each do |status| %>
+            <div class="mt-4">
+              <h5 class="mb-3 text-secondary"><%= status.titleize %> Tasks</h5>
+              <div class="table-responsive">
+                <table class="table table-striped table-hover">
                   <thead class="table-dark">
                     <tr>
-                      <th>#</th>
-                      <th>Task Title</th>
-                      <th>Amount</th>
-                      <th>Transaction ID</th>
-                      <th>Freelancer</th>
-                      <th>User</th>
+                      <th>Title</th>
+                      <th>Description</th>
+                      <th>Budget</th>
+                      <th>Category</th>
+                      <th>Deadline</th>
+                      <th>Status</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <%= render partial: 'client_payments_table', locals: { accepted_payments: accepted_payments } %>
+                    <% current_user.tasks_as_client.where(status: status).each do |task| %>
+                      <tr>
+                        <td><%= task.title %></td>
+                        <td><%= truncate(task.description, length: 50) %></td>
+                        <td><%= humanized_money_with_symbol(task.budget) %></td>
+                        <td><%= task.category.name %></td>
+                        <td>
+                          <span class="countdown" data-deadline="<%= task.deadline %>"></span>
+                        </td>
+                        <td><span class="badge rounded-pill <%= badge_color_for_status(task.status) %>"><%= task.status.titleize %></span></td>
+                        <td>
+                          <% if task.completed? %>
+                            <% if task.payment.nil? %>
+                              <%= link_to 'Pay', new_task_payment_path(task), class: 'btn btn-success btn-sm' %>
+                            <% elsif task.payment.rejected? %>
+                              <span class="badge bg-danger">Rejected</span>
+                              <%= link_to 'Pay Again', new_task_payment_path(task), class: 'btn btn-warning btn-sm' %>
+                            <% elsif task.payment.approved? %>
+                              <%= link_to 'View', task_path(task), class: 'btn btn-primary btn-sm' %>
+                            <% end %>
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
                   </tbody>
                 </table>
               </div>
-            <% else %>
-              <p class="text-muted">No accepted payments at this time.</p>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         </div>
       </div>
+    </div>
 
-      <div class="tab-pane fade" id="client-reviews" role="tabpanel" aria-labelledby="client-reviews-tab">
-        <div class="card shadow-sm">
-          <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">Reviews</h5>
-          </div>
-          <div class="card-body">
+    <div class="tab-pane fade" id="client-payments" role="tabpanel" aria-labelledby="client-payments-tab">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">Payments</h5>
+        </div>
+        <div class="card-body">
+          <div class="payments-info mb-4 p-3 border rounded bg-light">
+            <h5 class="text-primary">Payment Methods</h5>
+            <p>For payments, you can transfer funds to the following mobile numbers:</p>
             <ul class="list-group list-group-flush">
-              <% if current_user&.given_reviews&.any? %>
-                <% current_user.given_reviews.each do |review| %>
-                  <li class="list-group-item">
-                    <span class="fw-bold">Review for <%= link_to review.task.title, task_path(review.task), class: 'text-primary' %></span>
-                    <p class="mb-0 mt-2">
-                      <span class="badge rounded-pill <%= badge_color_for_rating(review.rating) %>"><%= review.rating %> stars</span>
-                      <%= review.comment %>
-                    </p>
-                  </li>
-                <% end %>
-              <% else %>
-                <li class="list-group-item">No reviews available.</li>
-              <% end %>
+              <li class="list-group-item">MTN: <span class="fw-bold">+260960231978</span></li>
+              <li class="list-group-item">Airtel: <span class="fw-bold">+260777945779</span></li>
             </ul>
           </div>
+
+          <% accepted_payments = Payment.where(status: 'approved', task: current_user.tasks_as_client) %>
+          <% if accepted_payments.present? %>
+            <h5 class="text-primary mb-3">Accepted Payments</h5>
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead class="table-dark">
+                  <tr>
+                    <th>#</th>
+                    <th>Task Title</th>
+                    <th>Amount</th>
+                    <th>Transaction ID</th>
+                    <th>Freelancer</th>
+                    <th>User</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% accepted_payments.each do |payment| %>
+                    <tr>
+                      <td><%= payment.id %></td>
+                      <td><%= payment.task.title %></td>
+                      <td><%= humanized_money_with_symbol(payment.task.budget) %></td>
+                      <td><%= payment.transaction_id %></td>
+                      <td><%= payment.task.freelancer.name %></td>
+                      <td><%= payment.task.client.email %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% else %>
+            <p class="text-muted">No accepted payments at this time.</p>
+          <% end %>
         </div>
       </div>
     </div>
+
+    <div class="tab-pane fade" id="client-reviews" role="tabpanel" aria-labelledby="client-reviews-tab">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">Reviews</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <% if current_user&.given_reviews&.any? %>
+              <% current_user.given_reviews.each do |review| %>
+                <li class="list-group-item">
+                  <span class="fw-bold">Review for <%= link_to review.task.title, task_path(review.task), class: 'text-primary' %></span>
+                  <p class="mb-0 mt-2">
+                    <span class="badge rounded-pill <%= badge_color_for_rating(review.rating) %>"><%= review.rating %> stars</span>
+                    <%= review.comment %>
+                  </p>
+                </li>
+              <% end %>
+            <% else %>
+              <li class="list-group-item">No reviews available.</li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <% elsif current_user.freelancer? %>
-    <div class="row">
-      <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                  Total Earnings
-                </div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                  <%= humanized_money_with_symbol(Task.total_earning_for_freelancer(current_user.id).pluck(:budget).sum.to_f * 0.8, symbol: "ZMK", position: :before) %>
-                </div>
+  <div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                Total Earnings
               </div>
-              <div class="col-auto">
-                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                <%= humanized_money_with_symbol(Task.total_earning_for_freelancer(current_user.id).pluck(:budget).sum.to_f * 0.8, symbol: "ZMK", position: :before) %>
               </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <ul class="nav nav-tabs nav-fill mb-3" id="freelancerDashboardTabs" role="tablist">
-      <li class="nav-item" role="presentation">
-        <a class="nav-link active" id="available-tasks-tab" data-bs-toggle="tab" href="#available-tasks" role="tab" aria-controls="available-tasks" aria-selected="true">Available Tasks</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="working-tasks-tab" data-bs-toggle="tab" href="#working-tasks" role="tab" aria-controls="working-tasks" aria-selected="false">Your Tasks</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="tasks-changes-tab" data-bs-toggle="tab" href="#tasks-changes" role="tab" aria-controls="tasks-changes" aria-selected="false">Tasks Requiring Changes</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="reviews-received-tab" data-bs-toggle="tab" href="#reviews-received" role="tab" aria-controls="reviews-received" aria-selected="false">Reviews Received</a>
-      </li>
-    </ul>
+  <ul class="nav nav-tabs nav-fill mb-3" id="freelancerDashboardTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="available-tasks-tab" data-bs-toggle="tab" href="#available-tasks" role="tab" aria-controls="available-tasks" aria-selected="true">Available Tasks</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="working-tasks-tab" data-bs-toggle="tab" href="#working-tasks" role="tab" aria-controls="working-tasks" aria-selected="false">Your Tasks</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="tasks-changes-tab" data-bs-toggle="tab" href="#tasks-changes" role="tab" aria-controls="tasks-changes" aria-selected="false">Tasks Requiring Changes</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="reviews-received-tab" data-bs-toggle="tab" href="#reviews-received" role="tab" aria-controls="reviews-received" aria-selected="false">Reviews Received</a>
+    </li>
+  </ul>
 
-    <div class="tab-content" id="freelancerDashboardContent">
-      <div class="tab-pane fade show active" id="available-tasks" role="tabpanel" aria-labelledby="available-tasks-tab">
-        <div class="card shadow-sm">
-          <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">Available Tasks</h5>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive" data-controller="refresh" data-refresh-interval-value="5000">
-              <table class="table table-striped" id="available-tasks-table" data-refresh-target="table">
-                <thead class="table-dark">
+  <div class="tab-content" id="freelancerDashboardContent">
+    <div class="tab-pane fade show active" id="available-tasks" role="tabpanel" aria-labelledby="available-tasks-tab">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">Available Tasks</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead class="table-dark">
+                <tr>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Earning</th>
+                  <th>Category</th>
+                  <th>Deadline</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% Task.open_tasks.each do |task| %>
                   <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Earning</th>
-                    <th>Category</th>
-                    <th>Deadline</th>
-                    <th>Actions</th>
+                    <td><%= link_to task.title, task_path(task), class: 'text-primary' %></td>
+                    <td><%= truncate(task.description, length: 50) %></td>
+                    <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
+                    <td><%= task.category.name %></td>
+                    <td><%= l(task.deadline, format: :short) %></td>
+                    <td>
+                      <%= link_to 'View', task_path(task), class: 'btn btn-primary btn-sm' %>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  <%= render partial: 'available_tasks_table', locals: { tasks: Task.open_tasks } %>
-                </tbody>
-              </table>
-            </div>
+                <% end %>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="tab-pane fade" id="working-tasks" role="tabpanel" aria-labelledby="working-tasks-tab">
-        <div class="card shadow-sm">
-          <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">Tasks You're Working On</h5>
+    <div class="tab-pane fade" id="working-tasks" role="tabpanel" aria-labelledby="working-tasks-tab">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">Tasks You're Working On</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead class="table-dark">
+                <tr>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Budget</th>
+                  <th>Category</th>
+                  <th>Deadline</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% current_user.tasks_as_freelancer.each do |task| %>
+                  <tr>
+                    <td><%= link_to task.title, task_path(task), class: 'text-primary' %></td>
+                    <td><%= truncate(task.description, length: 50) %></td>
+                    <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
+                    <td><%= task.category.name %></td>
+                    <td><%= l(task.deadline, format: :short) %></td>
+                    <td><span class="badge rounded-pill <%= badge_color_for_status(task.status) %>"><%= task.status.titleize %></span></td>
+                    <td>
+                      <%= link_to 'View', task_path(task), class: 'btn btn-primary btn-sm' %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
           </div>
-          <div class="card-body">
-            <div class="table-responsive" data-controller="refresh" data-refresh-interval-value="5000">
-              <table class="table table-striped" id="working-tasks-table" data-refresh-target="table">
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="tasks-changes" role="tabpanel" aria-labelledby="tasks-changes-tab">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">Tasks Requiring Changes</h5>
+        </div>
+        <div class="card-body">
+          <% if current_user.tasks_requiring_changes.any? %>
+            <div class="table-responsive">
+              <table class="table table-striped">
                 <thead class="table-dark">
                   <tr>
                     <th>Title</th>
@@ -506,50 +635,38 @@
                   </tr>
                 </thead>
                 <tbody>
-                   <%= render partial: 'working_tasks_table', locals: { tasks: current_user.tasks_as_freelancer } %>
+                  <% current_user.tasks_requiring_changes.each do |task| %>
+                    <tr>
+                      <td><%= link_to task.title, task_path(task), class: 'text-primary' %></td>
+                      <td><%= truncate(task.description, length: 50) %></td>
+                      <td><%= humanized_money_with_symbol(task.budget * 0.80) %></td>
+                      <td><%= task.category.name %></td>
+                      <td><%= l(task.deadline, format: :short) %></td>
+                      <td><span class="badge rounded-pill <%= badge_color_for_status(task.status) %>"><%= task.status.titleize %></span></td>
+                      <td>
+                        <%= link_to 'View', task_path(task), class: 'btn btn-primary btn-sm' %>
+                      </td>
+                    </tr>
+                  <% end %>
                 </tbody>
               </table>
             </div>
-          </div>
+          <% else %>
+            <p class="text-muted">No tasks requiring changes at the moment.</p>
+          <% end %>
         </div>
       </div>
+    </div>
 
-      <div class="tab-pane fade" id="tasks-changes" role="tabpanel" aria-labelledby="tasks-changes-tab">
-        <div class="card shadow-sm">
-          <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">Tasks Requiring Changes</h5>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive" data-controller="refresh" data-refresh-interval-value="5000">
-              <table class="table table-striped" id="tasks-changes-table" data-refresh-target="table">
-                <thead class="table-dark">
-                  <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Budget</th>
-                    <th>Category</th>
-                    <th>Deadline</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <%= render partial: 'tasks_changes_table', locals: { tasks: current_user.tasks_requiring_changes } %>
-                </tbody>
-              </table>
-            </div>
-          </div>
+    <div class="tab-pane fade" id="reviews-received" role="tabpanel" aria-labelledby="reviews-received-tab">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">Reviews Received</h5>
         </div>
-      </div>
-
-      <div class="tab-pane fade" id="reviews-received" role="tabpanel" aria-labelledby="reviews-received-tab">
-        <div class="card shadow-sm">
-          <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">Reviews Received</h5>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive" data-controller="refresh" data-refresh-interval-value="5000">
-              <table class="table table-striped" id="reviews-received-table" data-refresh-target="table">
+        <div class="card-body">
+          <% if current_user.reviews_received.any? %>
+            <div class="table-responsive">
+              <table class="table table-striped">
                 <thead class="table-dark">
                   <tr>
                     <th>Task Title</th>
@@ -559,14 +676,24 @@
                   </tr>
                 </thead>
                 <tbody>
-                   <%= render partial: 'reviews_received_table', locals: { reviews: current_user.reviews_received } %>
+                  <% current_user.reviews_received.each do |review| %>
+                    <tr>
+                      <td><%= link_to review.task.title, task_path(review.task), class: 'text-primary' %></td>
+                      <td><span class="badge rounded-pill <%= badge_color_for_rating(review.rating) %>"><%= review.rating %> stars</span></td>
+                      <td><%= review.comment %></td>
+                      <td><%= review.reviewer.email %></td>
+                    </tr>
+                  <% end %>
                 </tbody>
               </table>
             </div>
-          </div>
+          <% else %>
+            <p class="text-muted">No reviews received yet.</p>
+          <% end %>
         </div>
       </div>
     </div>
+  </div>
 
   <% end %>
 
