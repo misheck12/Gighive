@@ -106,17 +106,19 @@
     }
 
     /* --- Footer --- */
-    .footer {
-        background-color: #212529; /* Dark Gray */
+     .footer {
+        background-color: #212529;
         color: #FFF;
-        padding: 2rem 5%; /* Responsive padding */
-        margin-top: auto; /* Push footer to the bottom */
+        text-align: center;
+        padding: 2rem 0;
+        position: relative;
+        width: 100%;
     }
 
     .footer a {
-        color: #008080; /* Teal */
+        color: #008080; /* Teal links */
         text-decoration: none;
-        transition: color 0.3s ease-in-out;
+        transition: color 0.3s;
     }
 
     .footer a:hover {
@@ -124,6 +126,43 @@
         text-decoration: underline;
     }
 
+    /* Footer Content Styling */
+    .footer-content {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .footer-section {
+        margin-bottom: 20px;
+    }
+
+    .footer-section h4 {
+        color: #FFA500;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-section ul li {
+        margin-bottom: 10px;
+    }
+
+    .footer-section ul li a {
+        transition: color 0.3s;
+    }
+
+    .footer-section ul li a:hover {
+        color: #FFA500;
+    }
     /* Social Icons */
     .social-icons {
         margin-top: 1rem; /* Add some space above the icons */
