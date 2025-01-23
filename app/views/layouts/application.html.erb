@@ -106,8 +106,8 @@
     }
 
     /* --- Footer --- */
-     .footer {
-        background-color: #212529;
+    .footer {
+        background-color: #212529; /* Dark Gray */
         color: #FFF;
         text-align: center;
         padding: 2rem 0;
@@ -116,9 +116,9 @@
     }
 
     .footer a {
-        color: #008080; /* Teal links */
+        color: #008080; /* Teal */
         text-decoration: none;
-        transition: color 0.3s;
+        transition: color 0.3s ease-in-out;
     }
 
     .footer a:hover {
@@ -126,43 +126,6 @@
         text-decoration: underline;
     }
 
-    /* Footer Content Styling */
-    .footer-content {
-        display: flex;
-        justify-content: space-around;
-        align-items: flex-start;
-        flex-wrap: wrap;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-    }
-
-    .footer-section {
-        margin-bottom: 20px;
-    }
-
-    .footer-section h4 {
-        color: #FFA500;
-        margin-bottom: 15px;
-        font-weight: 600;
-    }
-
-    .footer-section ul {
-        list-style: none;
-        padding: 0;
-    }
-
-    .footer-section ul li {
-        margin-bottom: 10px;
-    }
-
-    .footer-section ul li a {
-        transition: color 0.3s;
-    }
-
-    .footer-section ul li a:hover {
-        color: #FFA500;
-    }
     /* Social Icons */
     .social-icons {
         margin-top: 1rem; /* Add some space above the icons */
@@ -243,7 +206,7 @@
           <% if user_signed_in? %>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle btn-nav" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-user-circle"></i> <%= current_user&.name || "User" %>
+                <i class="fas fa-user-circle"></i> <%= current_user&.name || current_user.email %>
               </a>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <%= link_to 'Edit Profile', edit_user_registration_path, class: 'dropdown-item', aria: { label: 'Edit Profile' } %>
@@ -276,12 +239,14 @@
         <%= link_to 'Privacy Policy', privacy_path %> |
         <%= link_to 'Terms of Service', terms_path %>
       </p>
+      <% unless user_signed_in? %>
       <div class="social-icons">
-        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
       </div>
+      <% end %>
     </div>
   </footer>
 
