@@ -235,11 +235,12 @@
   <footer class="footer">
     <div class="container">
       <p>GigHive &copy; <%= Time.now.year %></p>
+       <% unless user_signed_in? %>
       <p>
         <%= link_to 'Privacy Policy', privacy_path %> |
         <%= link_to 'Terms of Service', terms_path %>
       </p>
-      <% unless user_signed_in? %>
+     
       <div class="social-icons">
           <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
           <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
